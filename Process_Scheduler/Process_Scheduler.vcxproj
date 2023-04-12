@@ -127,10 +127,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="FirstComeProcessor.cpp" />
+    <ClCompile Include="Processor.cpp" />
     <ClCompile Include="Process_Scheduler.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="C:\Users\Tassneem\Downloads\Code Examples\3-Queues\LinkedQueue.h" />
+    <ClInclude Include="C:\Users\Tassneem\Downloads\Code Examples\3-Queues\Node.h" />
+    <ClInclude Include="C:\Users\Tassneem\Downloads\Code Examples\3-Queues\QueueADT.h" />
+    <ClInclude Include="FirstComeProcessor.h" />
     <ClInclude Include="LoadFromFile.h" />
+    <ClInclude Include="Processor.h" />
+    <ClInclude Include="Supplementary.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

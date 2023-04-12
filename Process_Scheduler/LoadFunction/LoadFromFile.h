@@ -26,4 +26,3 @@ void LoadFile() {
 	}
 	InputFile.close(); //close the opened file
 }
-
