@@ -14,7 +14,8 @@ public:
 private:
 	LinkedQueue<int> ReadyQueue;
 	State ProcessorState;
-	double load;
-	double utilization;
+	double pLoad;
+	double pUtil;
+	double timer;
 };
 

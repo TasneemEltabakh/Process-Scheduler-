@@ -130,6 +130,8 @@
     <ClCompile Include="FirstComeProcessor.cpp" />
     <ClCompile Include="Processor.cpp" />
     <ClCompile Include="Process_Scheduler.cpp" />
+    <ClCompile Include="RoundRobinProcessor.cpp" />
+    <ClCompile Include="ShortestJobProcessor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\Tassneem\Downloads\Code Examples\3-Queues\LinkedQueue.h" />
@@ -138,6 +140,8 @@
     <ClInclude Include="FirstComeProcessor.h" />
     <ClInclude Include="LoadFromFile.h" />
     <ClInclude Include="Processor.h" />
+    <ClInclude Include="RoundRobinProcessor.h" />
+    <ClInclude Include="ShortestJobProcessor.h" />
     <ClInclude Include="Supplementary.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

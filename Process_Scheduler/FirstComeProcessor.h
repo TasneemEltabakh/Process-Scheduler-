@@ -6,6 +6,6 @@ class FirstComeProcessor :
 public:
     FirstComeProcessor();
     ~FirstComeProcessor();
-    void ScheduleAlgo();
+    void ScheduleAlgo() override;
 };
 

@@ -16,16 +16,28 @@
     <Filter Include="Header Files\DataStructures">
       <UniqueIdentifier>{ebd6d6f6-34a3-454c-a485-5e505933d686}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Processors">
+      <UniqueIdentifier>{831ba10d-16f0-43e4-b0da-f53347d2d17b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Processors">
+      <UniqueIdentifier>{a93fc149-1386-4ab8-9a42-fa945393b577}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Process_Scheduler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FirstComeProcessor.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Processors</Filter>
     </ClCompile>
     <ClCompile Include="Processor.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\Processors</Filter>
+    </ClCompile>
+    <ClCompile Include="RoundRobinProcessor.cpp">
+      <Filter>Source Files\Processors</Filter>
+    </ClCompile>
+    <ClCompile Include="ShortestJobProcessor.cpp">
+      <Filter>Source Files\Processors</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -41,14 +53,20 @@
     <ClInclude Include="C:\Users\Tassneem\Downloads\Code Examples\3-Queues\QueueADT.h">
       <Filter>Header Files\DataStructures</Filter>
     </ClInclude>
-    <ClInclude Include="FirstComeProcessor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Supplementary.h">
       <Filter>Header Files\DataStructures</Filter>
     </ClInclude>
     <ClInclude Include="Processor.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Processors</Filter>
+    </ClInclude>
+    <ClInclude Include="RoundRobinProcessor.h">
+      <Filter>Header Files\Processors</Filter>
+    </ClInclude>
+    <ClInclude Include="ShortestJobProcessor.h">
+      <Filter>Header Files\Processors</Filter>
+    </ClInclude>
+    <ClInclude Include="FirstComeProcessor.h">
+      <Filter>Header Files\Processors</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
