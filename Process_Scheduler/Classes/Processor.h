@@ -1,6 +1,7 @@
 #pragma once
 #include"..//DataStructures/QueueADT.h"
 #include "..//DataStructures/LinkedQueue.h"
+#include "..//Supplementary.h"
 
 class Processor
 {
@@ -10,7 +11,7 @@ public:
 	~Processor();
 private:
 	LinkedQueue<int> ReadyQueue;
-	bool State;
+	State ProcessorState;
 	double load;
 	double utilization;
 };

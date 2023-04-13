@@ -1,12 +1,11 @@
 #include "Processor.h"
-#include "Supplementary.h"
+#include "..//Supplementary.h"
 
 Processor::Processor()
 {
 	ProcessorState = IDLE;
-	pLoad = 0;
-	pUtil = 0;
-	timer = 0;
+	load = 0;
+	utilization = 0;
 }
 Processor::~Processor(){}
 

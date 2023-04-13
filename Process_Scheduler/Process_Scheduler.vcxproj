@@ -127,21 +127,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="FirstComeProcessor.cpp" />
-    <ClCompile Include="Processor.cpp" />
+    <ClCompile Include="Classes\FirstComeProcessor.cpp" />
+    <ClCompile Include="Classes\Processor.cpp" />
+    <ClCompile Include="Classes\RoundRobinProcessor.cpp" />
+    <ClCompile Include="Classes\ShortestJobProcessor.cpp" />
     <ClCompile Include="Process_Scheduler.cpp" />
-    <ClCompile Include="RoundRobinProcessor.cpp" />
-    <ClCompile Include="ShortestJobProcessor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\Tassneem\Downloads\Code Examples\3-Queues\LinkedQueue.h" />
     <ClInclude Include="C:\Users\Tassneem\Downloads\Code Examples\3-Queues\Node.h" />
     <ClInclude Include="C:\Users\Tassneem\Downloads\Code Examples\3-Queues\QueueADT.h" />
-    <ClInclude Include="FirstComeProcessor.h" />
-    <ClInclude Include="LoadFromFile.h" />
-    <ClInclude Include="Processor.h" />
-    <ClInclude Include="RoundRobinProcessor.h" />
-    <ClInclude Include="ShortestJobProcessor.h" />
+    <ClInclude Include="Classes\FirstComeProcessor.h" />
+    <ClInclude Include="Classes\Processor.h" />
+    <ClInclude Include="Classes\RoundRobinProcessor.h" />
+    <ClInclude Include="Classes\ShortestJobProcessor.h" />
+    <ClInclude Include="LoadFunction\LoadFromFile.h" />
     <ClInclude Include="Supplementary.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -1,5 +1,5 @@
 #pragma once
-#include "..//Process_Scheduler/Classes/Processor.h"
+#include "Processor.h"
 class FirstComeProcessor :
     public Processor
 {

@@ -27,23 +27,20 @@
     <ClCompile Include="Process_Scheduler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="FirstComeProcessor.cpp">
+    <ClCompile Include="Classes\FirstComeProcessor.cpp">
       <Filter>Source Files\Processors</Filter>
     </ClCompile>
-    <ClCompile Include="Processor.cpp">
+    <ClCompile Include="Classes\Processor.cpp">
       <Filter>Source Files\Processors</Filter>
     </ClCompile>
-    <ClCompile Include="RoundRobinProcessor.cpp">
+    <ClCompile Include="Classes\RoundRobinProcessor.cpp">
       <Filter>Source Files\Processors</Filter>
     </ClCompile>
-    <ClCompile Include="ShortestJobProcessor.cpp">
+    <ClCompile Include="Classes\ShortestJobProcessor.cpp">
       <Filter>Source Files\Processors</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="LoadFromFile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="C:\Users\Tassneem\Downloads\Code Examples\3-Queues\LinkedQueue.h">
       <Filter>Header Files\DataStructures</Filter>
     </ClInclude>
@@ -56,16 +53,19 @@
     <ClInclude Include="Supplementary.h">
       <Filter>Header Files\DataStructures</Filter>
     </ClInclude>
-    <ClInclude Include="Processor.h">
+    <ClInclude Include="LoadFunction\LoadFromFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Classes\FirstComeProcessor.h">
       <Filter>Header Files\Processors</Filter>
     </ClInclude>
-    <ClInclude Include="RoundRobinProcessor.h">
+    <ClInclude Include="Classes\Processor.h">
       <Filter>Header Files\Processors</Filter>
     </ClInclude>
-    <ClInclude Include="ShortestJobProcessor.h">
+    <ClInclude Include="Classes\RoundRobinProcessor.h">
       <Filter>Header Files\Processors</Filter>
     </ClInclude>
-    <ClInclude Include="FirstComeProcessor.h">
+    <ClInclude Include="Classes\ShortestJobProcessor.h">
       <Filter>Header Files\Processors</Filter>
     </ClInclude>
   </ItemGroup>
