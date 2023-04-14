@@ -7,5 +7,11 @@ Processor::Processor()
 	load = 0;
 	utilization = 0;
 }
-Processor::~Processor(){}
+Processor::~Processor(){
+	
+}
 
+void Processor::TimerCalculator()
+{
+	
+}

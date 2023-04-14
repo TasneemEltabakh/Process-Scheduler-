@@ -40,6 +40,12 @@ int Process::getTT() const {
 	return TT;
 }
 
+}
+
+void Process::setIO(int x) {
+	IO = x;
+}
+
 void Process::setCT(int x) {
 	CT = x;
 }
