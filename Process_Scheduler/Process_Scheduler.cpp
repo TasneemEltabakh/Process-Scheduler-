@@ -1,10 +1,10 @@
-#include "..//Process_Scheduler/LoadFunction/LoadFromFile.h"
+
 #include <iostream>
 #include "DataStructures/LinkedQueue.h"
+#include "Scheduler.h"
 
 int main()
 {
-    LinkedQueue<int> NEWList;
-    LoadFile();
+    Scheduler Schedule;
 }
 

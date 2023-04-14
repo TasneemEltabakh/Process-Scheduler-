@@ -39,6 +39,12 @@
     <ClCompile Include="Classes\ShortestJobProcessor.cpp">
       <Filter>Source Files\Processors</Filter>
     </ClCompile>
+    <ClCompile Include="Scheduler.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Process.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\Tassneem\Downloads\Code Examples\3-Queues\LinkedQueue.h">
@@ -53,9 +59,6 @@
     <ClInclude Include="Supplementary.h">
       <Filter>Header Files\DataStructures</Filter>
     </ClInclude>
-    <ClInclude Include="LoadFunction\LoadFromFile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Classes\FirstComeProcessor.h">
       <Filter>Header Files\Processors</Filter>
     </ClInclude>
@@ -67,6 +70,15 @@
     </ClInclude>
     <ClInclude Include="Classes\ShortestJobProcessor.h">
       <Filter>Header Files\Processors</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStructures\LinkedList.h">
+      <Filter>Header Files\DataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="Scheduler.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Process.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -131,7 +131,9 @@
     <ClCompile Include="Classes\Processor.cpp" />
     <ClCompile Include="Classes\RoundRobinProcessor.cpp" />
     <ClCompile Include="Classes\ShortestJobProcessor.cpp" />
+    <ClCompile Include="Process.cpp" />
     <ClCompile Include="Process_Scheduler.cpp" />
+    <ClCompile Include="Scheduler.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="C:\Users\Tassneem\Downloads\Code Examples\3-Queues\LinkedQueue.h" />
@@ -141,7 +143,9 @@
     <ClInclude Include="Classes\Processor.h" />
     <ClInclude Include="Classes\RoundRobinProcessor.h" />
     <ClInclude Include="Classes\ShortestJobProcessor.h" />
-    <ClInclude Include="LoadFunction\LoadFromFile.h" />
+    <ClInclude Include="DataStructures\LinkedList.h" />
+    <ClInclude Include="Process.h" />
+    <ClInclude Include="Scheduler.h" />
     <ClInclude Include="Supplementary.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
