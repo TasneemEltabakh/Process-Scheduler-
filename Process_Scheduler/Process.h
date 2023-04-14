@@ -4,7 +4,7 @@ class Process
 {
 private:
 	Process* IO ;
-	int PID, TT, AT, CT, WT, RT, TRT, IO, IO_R, IO_D, KT;
+	int PID, TT, AT, CT, WT, RT, TRT, IO_R, IO_D, KT;
 
 	enum state {
 		NEW,

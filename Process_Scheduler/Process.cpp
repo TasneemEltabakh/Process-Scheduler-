@@ -40,9 +40,6 @@ int Process::getKT() const {
 	return KT;
 }
 
-int Process::getIO() const {
-	return IO;
-}
 
 void Process::setPID(int x) {
 	PID = x;
@@ -56,9 +53,6 @@ void Process::setKT(int x) {
 	KT = x;
 }
 
-void Process::setIO(int x) {
-	IO = x;
-}
 
 void Process::setCT(int x) {
 	CT = x;
