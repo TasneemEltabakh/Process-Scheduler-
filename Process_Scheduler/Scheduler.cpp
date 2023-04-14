@@ -29,15 +29,15 @@ void Scheduler::load()
 				counter++;
 				string* line = new string;
 				getline(InputFile, *line);
+			
 				if (counter == 1)
 				{
-					CreateProcessors (TranslateData(*line));
-					break;
+					LinkedQueue<int>* PROCDATA= TranslateData(*line);
+					getline(InputFile, *line);
+					CreateProcessors(PROCDATA, stoi(* line));
 				}
 				delete line;
 			}
-			
-
 			
 		}
 		else {
@@ -46,7 +46,7 @@ void Scheduler::load()
 		InputFile.close();
 	
 }
-LinkedQueue<int>* Scheduler ::TranslateData(string linedata) //this Function Translates The data in a single node into information for the system
+LinkedQueue<int>* Scheduler ::TranslateData(string linedata) //this Function Splits the string of one line into information for the system
 {
 	LinkedQueue<int>* dataList = new LinkedQueue<int>;
 	int i = 0;
@@ -69,21 +69,21 @@ LinkedQueue<int>* Scheduler ::TranslateData(string linedata) //this Function Tra
 	}
 	return dataList;
 }
-void Scheduler:: CreateProcessors(LinkedQueue<int>* dataProcessor)
+void inline  Scheduler:: CreateProcessors(LinkedQueue<int>* dataProcessor, int SliceRR) //this function Creates processors of each type by the required count and adds them to the processors list 
 {
 	int Numberof_FCFS, Numberof_RR, Numberof_SJF;
 	dataProcessor->dequeue(Numberof_FCFS);
 	dataProcessor->dequeue(Numberof_SJF);
 	dataProcessor->dequeue(Numberof_RR);
-	cout << Numberof_FCFS << endl;
-	cout << Numberof_RR << endl;
-	cout << Numberof_SJF << endl;
-
     FirstComeProcessor* FCFS_List = new FirstComeProcessor[Numberof_FCFS];
 	RoundRobinProcessor* RR_List = new RoundRobinProcessor[Numberof_RR];
-    ShortestJobProcessor* SJF_List = new ShortestJobProcessor[Numberof_SJF];
+	ShortestJobProcessor* SJF_List = new ShortestJobProcessor[Numberof_SJF];
+	for (int i = 0; i < Numberof_RR; i++)
+	{
+		RR_List[i] = RoundRobinProcessor(SliceRR);
+	}
 	ProcessorsList[0] = FCFS_List;
 	ProcessorsList[1] = RR_List;
 	ProcessorsList[2] = SJF_List;
-	
+
 }

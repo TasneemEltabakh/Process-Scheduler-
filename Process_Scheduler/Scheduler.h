@@ -13,7 +13,6 @@ public:
 	~Scheduler();
 	void load();
 	LinkedQueue<int>* TranslateData(string linedata);
-	void CreateProcessors(LinkedQueue<int>* dataProcessor);
-
+	void inline CreateProcessors(LinkedQueue<int>* dataProcessor, int SlicERR);
 };
 
