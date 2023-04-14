@@ -1,2 +1,9 @@
-﻿  Process_Scheduler.cpp
-  Process_Scheduler.vcxproj -> G:\Academic\Software\DataStructure C++\Project\x64\Debug\Process_Scheduler.exe
+﻿  FirstComeProcessor.cpp
+  Processor.cpp
+  RoundRobinProcessor.cpp
+  ShortestJobProcessor.cpp
+  Process.cpp
+  Process_Scheduler.cpp
+  Scheduler.cpp
+  Generating Code...
+  Process_Scheduler.vcxproj -> E:\Data structure\Project\ll\x64\Debug\Process_Scheduler.exe

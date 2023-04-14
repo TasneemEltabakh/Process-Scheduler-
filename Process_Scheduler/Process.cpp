@@ -1,7 +1,11 @@
 #include "Process.h"\
 
 Process::Process() {
-	
+
+}
+
+Process::Process(int x, int y, int z, int l) {
+	PID = x; AT = y; CT = z;  IO = l;
 }
 
 Process::~Process() {
@@ -34,30 +38,6 @@ int Process::getTRT() const {
 
 int Process::getTT() const {
 	return TT;
-}
-
-int Process::getKT() const {
-	return KT;
-}
-
-int Process::getIO() const {
-	return IO;
-}
-
-void Process::setPID(int x) {
-	PID = x;
-}
-
-void Process::setAT(int x) {
-	AT = x;
-}
-
-void Process::setKT(int x) {
-	KT = x;
-}
-
-void Process::setIO(int x) {
-	IO = x;
 }
 
 void Process::setCT(int x) {

@@ -1,23 +1,18 @@
 #pragma once
+#include "Supplementary.h"
+
 class Process
 
 {
 private:
-	Process* IO ;
-	int PID, TT, AT, CT, WT, RT, TRT, IO, IO_R, IO_D, KT;
+	int PID, TT, AT, CT, WT, RT, TRT,IO;
+	int* IO_R= new int[IO];
+	int* IO_D= new int[IO];
 
-	enum state {
-		NEW,
-		RDY,
-		RUN,
-		BLK,
-		TRM,
-		ORPH
-	};
-	static int count ;
 
 public:
 	Process();
+	Process(int x, int y, int z, int l);
 	~Process();
 	int getPID() const;
 	int getAT()const;
@@ -26,18 +21,14 @@ public:
 	int getRT() const;
 	int getTRT() const;
 	int getTT() const;
-	int getIO() const;
-	int getKT() const;
 
-	void setPID(int x);
-	void setAT(int x);
 	void setCT(int x);
 	void calcWT();
 	void setRT(int x);
 	void calcTRT();
 	void setTT(int x);
-	void setKT(int x);
-	void setIO(int x);
+
+	//void setIO(int x);
 
 	bool RRmigration(int RTF);
 	bool FCFSmigration(int MaxW);
