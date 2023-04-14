@@ -12,3 +12,7 @@ void FirstComeProcessor::ScheduleAlgo()
 {
 
 }
+void  FirstComeProcessor::SetMAXW(int maxw)
+{
+	Maxw = maxw;
+}

@@ -5,11 +5,12 @@ class RoundRobinProcessor :
 {
 public:
     RoundRobinProcessor();
-    RoundRobinProcessor(int sliceTime);
+    void SetSLICETIME(int sliceTime);
     ~RoundRobinProcessor();
+    void SetRTF(int);
     void ScheduleAlgo() override;
 private:
     int sliceTime;
-
+    int RTF;
 };
 

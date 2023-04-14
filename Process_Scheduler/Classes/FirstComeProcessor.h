@@ -6,6 +6,9 @@ class FirstComeProcessor :
 public:
     FirstComeProcessor();
     ~FirstComeProcessor();
+    void SetMAXW(int);
     void ScheduleAlgo() override;
+private:
+    int Maxw;
 };
 
