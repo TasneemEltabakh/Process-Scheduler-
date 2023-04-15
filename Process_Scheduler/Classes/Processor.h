@@ -3,6 +3,7 @@
 #include "..//DataStructures/LinkedQueue.h"
 #include "..//Supplementary.h"
 #include "..//Process.h"
+#include "..//Scheduler.h"
 
 class Processor
 {
@@ -11,8 +12,10 @@ public:
 	virtual void  ScheduleAlgo() = 0;
 	~Processor();
 	void TimerCalculator();
-private:
+
+protected:
 	LinkedQueue<Process>* ReadyQueue = new LinkedQueue<Process>;
+	LinkedQueue<Process>* Runing = new LinkedQueue<Process>;
 	State ProcessorState;
 	double load;
 	double utilization;

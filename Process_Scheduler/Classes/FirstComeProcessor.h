@@ -8,7 +8,10 @@ public:
     ~FirstComeProcessor();
     void SetMAXW(int);
     void ScheduleAlgo() override;
+    void Forking();
 private:
     int Maxw;
+    int Forkprob;
+ 
 };
 
