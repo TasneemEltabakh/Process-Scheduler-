@@ -47,15 +47,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\Tassneem\Downloads\Code Examples\3-Queues\LinkedQueue.h">
-      <Filter>Header Files\DataStructures</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\Tassneem\Downloads\Code Examples\3-Queues\Node.h">
-      <Filter>Header Files\DataStructures</Filter>
-    </ClInclude>
-    <ClInclude Include="C:\Users\Tassneem\Downloads\Code Examples\3-Queues\QueueADT.h">
-      <Filter>Header Files\DataStructures</Filter>
-    </ClInclude>
     <ClInclude Include="Supplementary.h">
       <Filter>Header Files\DataStructures</Filter>
     </ClInclude>
@@ -79,6 +70,21 @@
     </ClInclude>
     <ClInclude Include="Process.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStructures\LinkedQueue.h">
+      <Filter>Header Files\DataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStructures\Node.h">
+      <Filter>Header Files\DataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="DataStructures\QueueADT.h">
+      <Filter>Header Files\DataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="Priority_Queue.h">
+      <Filter>Header Files\DataStructures</Filter>
+    </ClInclude>
+    <ClInclude Include="Tree.h">
+      <Filter>Header Files\DataStructures</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

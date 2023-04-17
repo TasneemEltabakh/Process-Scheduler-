@@ -1,17 +1,18 @@
 #pragma once
-#include "Node.h"
+#include "DataStructures/Node.h"
 #include<iostream>
 using namespace std;
 
 template <typename T>
-class LinkedQueue
+class Queue
 {
 private:
 	Node<T>* Front;
 	Node<T>* Rear;
 public:
 
-	LinkedQueue()
+
+	Queue()
 	{
 		Front = nullptr;
 		Rear = nullptr;
@@ -30,25 +31,8 @@ public:
 		}
 
 	}
-	void enqueue(T item)
-	{
-		Node<T>* newnode = new Node<T>(item);
-		newnode->setItem(item);
-		if (IsEmpty())
-		{
-			Front = newnode;
-			Rear = newnode;
 
-		}
-		else
-		{
-			Rear->setNext(newnode);
-			Rear = newnode;
-		}
-
-	}
-
-	void dequeue()
+	void DeQueue()
 	{
 		if (IsEmpty())
 		{
@@ -66,6 +50,7 @@ public:
 			delete delptr;
 		}
 	}
+
 	void Display()
 	{
 		Node<T>* temp = Front;
@@ -108,24 +93,22 @@ public:
 		return Found;
 	}
 
-	void Dequeue_In_Variable(T& variable) {
-		if (IsEmpty())
-		{
-			cout << "The Queue is Empty";
+	void enqueue(T item) {
+		Node<T>* newnode = new Node<T>(item);
+		newnode->setItem(item);
+		if (Front == nullptr || Front->getItem() >= newnode->getItem()) {
+			newnode->setNext(Front);
+			Front = newnode;
+			return;
 		}
-		else if (Front == Rear)
-		{
-			variable = Front->getItem();
-			delete Front;
-			Front = Rear = NULL;
-		}
-		else
-		{
-			Node<T>* delptr = Front;
-			Front = Front->getNext();
-			variable = delptr->getItem();
-			delete delptr;
+		else {
+			Node<T>* temp = Front;
+			while (temp->getNext() != nullptr && temp->getNext()->getItem() < newnode->getItem()) {
+				temp = temp->getNext();
+			}
+			newnode->setNext(temp->getNext());
+			temp->setNext(newnode);
 		}
 	}
-
 };
+

@@ -26,5 +26,6 @@ public:
 	void  CreateProcessors(LinkedQueue<string>* dataProcessor);
 	void  InsertProcessToNew(LinkedQueue<string>* dataProcess);
 	void KillSignalSearcher();
+	void MoveFromNewToRdy(int Now_Time_step);
 };
 

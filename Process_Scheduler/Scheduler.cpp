@@ -110,14 +110,14 @@ void Scheduler::RemoveParenthesis(string linedata, LinkedQueue<int>* dataProcess
 void  Scheduler:: CreateProcessors(LinkedQueue<string>* dataProcessor) //this function Creates processors of each type by the required count and adds them to the processors list 
 {
 	string slicetime, rtf, fork, stl, maxw, Numberof_FC, Numberof_SJ, Numberof_R;
-	dataProcessor->dequeue(Numberof_FC);
-	dataProcessor->dequeue(Numberof_SJ);
-	dataProcessor->dequeue(Numberof_R);
-	dataProcessor->dequeue(slicetime);
-	dataProcessor->dequeue(rtf);
-	dataProcessor->dequeue(maxw);
-	dataProcessor->dequeue(stl);
-	dataProcessor->dequeue(fork);
+	dataProcessor->Dequeue_In_Variable(Numberof_FC);
+	dataProcessor->Dequeue_In_Variable(Numberof_SJ);
+	dataProcessor->Dequeue_In_Variable(Numberof_R);
+	dataProcessor->Dequeue_In_Variable(slicetime);
+	dataProcessor->Dequeue_In_Variable(rtf);
+	dataProcessor->Dequeue_In_Variable(maxw);
+	dataProcessor->Dequeue_In_Variable(stl);
+	dataProcessor->Dequeue_In_Variable(fork);
 	Numberof_SJF = stoi(Numberof_SJ);
 	Numberof_RR = stoi(Numberof_R);
 	Numberof_FCFS = stoi(Numberof_FC);
@@ -141,26 +141,25 @@ void  Scheduler::InsertProcessToNew(LinkedQueue<string>* dataProcess)
 	string At, id, ct, nio, iop;
 	int IoR, IoD;
 
-	dataProcess->dequeue(At);
-	dataProcess->dequeue(id);
-	dataProcess->dequeue(ct);
-	dataProcess->dequeue(nio);
+	dataProcess->Dequeue_In_Variable(At);
+	dataProcess->Dequeue_In_Variable(id);
+	dataProcess->Dequeue_In_Variable(ct);
+	dataProcess->Dequeue_In_Variable(nio);
 
 	Process* newprocess = new Process(stoi(At), stoi(id), stoi(ct), stoi(nio));
 
 	if (stoi(nio) != 0)
 	{
 		LinkedQueue<int>* Data = new LinkedQueue<int>;
-		dataProcess->dequeue(iop);
+		dataProcess->Dequeue_In_Variable(iop);
 		RemoveParenthesis(iop, Data);
-		Data->dequeue(IoR);
-		Data->dequeue(IoD);
+		Data->Dequeue_In_Variable(IoR);
+		Data->Dequeue_In_Variable(IoD);
 		delete Data;
 		newprocess->InsertToIOlist(IoR, IoD);
 	}
 
-	
-	
+	cout << At << id << ct << nio;
 }
 
 void Scheduler::KillSignalSearcher()
