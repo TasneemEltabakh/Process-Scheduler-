@@ -8,14 +8,14 @@ class FirstComeProcessor :
 public:
     FirstComeProcessor(int MX, int FORK);
     ~FirstComeProcessor();
-    void SetMAXW(int);
+    void SetMAXW(int max);
     void ScheduleAlgo() override;
-    Process* ForkingCheck();
+    void ForkingCheck();
     bool IsThereKilled();
     void KillSignal(Scheduler* schud);
 
 private:
-    LinkedList<Process>* ReadyQueue; // we choosed linked list to be easily killed during operation
+    LinkedQueue <Process*>  ReadyQueue; // we choosed linked list to be easily killed during operation
     int maxw;
     int forkprob;
 };
