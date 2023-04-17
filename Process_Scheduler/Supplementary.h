@@ -5,3 +5,12 @@ enum State
 	busy,
 };
 
+enum stateP {
+	NEW,
+	RDY,
+	RUN,
+	BLK,
+	TRM,
+	ORPH
+};
+

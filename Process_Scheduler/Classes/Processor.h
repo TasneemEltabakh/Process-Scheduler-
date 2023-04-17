@@ -17,5 +17,8 @@ private:
 	State ProcessorState;
 	double load;
 	double utilization;
+	int TimerOfReadyList;
+    int countOfProcesses;
+
 };
 

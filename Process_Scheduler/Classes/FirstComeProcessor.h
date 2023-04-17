@@ -8,6 +8,7 @@ class FirstComeProcessor :
 public:
     FirstComeProcessor(int MX, int FORK);
     ~FirstComeProcessor();
+    void SetMAXW(int);
     void ScheduleAlgo() override;
     Process* ForkingCheck();
     bool IsThereKilled();
