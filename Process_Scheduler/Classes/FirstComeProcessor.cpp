@@ -13,7 +13,7 @@ FirstComeProcessor::~FirstComeProcessor()
 
 void FirstComeProcessor::ScheduleAlgo()
 {
-	ReadyQueue.dequeue(RunningProcess);
+	ReadyQueue.Dequeue_In_Variable(RunningProcess);
 
 	while (RunningProcess->getCT() != 0 ) {
 

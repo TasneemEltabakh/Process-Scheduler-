@@ -15,7 +15,7 @@ void RoundRobinProcessor::ScheduleAlgo()
 		if(RunningProcess != nullptr)
 			ReadyQueue->enqueue(RunningProcess);
 
-		ReadyQueue->dequeue(current);
+		ReadyQueue->Dequeue_In_Variable(current);
 		RunningProcess = current;
 
 	}
