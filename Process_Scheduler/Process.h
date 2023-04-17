@@ -13,6 +13,7 @@ private:
 	bool iskilled;
 
 public:
+
 	Process(int x, int y, int z, int l);
 
 	~Process();

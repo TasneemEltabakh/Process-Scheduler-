@@ -1,6 +1,7 @@
 #pragma once
 #include"..//DataStructures/QueueADT.h"
 #include "..//DataStructures/LinkedQueue.h"
+#include "..//DataStructures/LinkedList.h"
 #include "..//Supplementary.h"
 #include "..//Process.h"
 
@@ -12,7 +13,6 @@ public:
 	~Processor();
 
 private:
-	LinkedQueue<int> ReadyQueue;
 	Process* RunningProcess;
 	State ProcessorState;
 	double load;

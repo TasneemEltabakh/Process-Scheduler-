@@ -157,9 +157,13 @@ void  Scheduler::InsertProcessToNew(LinkedQueue<string>* dataProcess)
 		Data->dequeue(IoD);
 		delete Data;
 		newprocess->InsertToIOlist(IoR, IoD);
-		cout << IoR << endl << IoD;
 	}
 
 	
 	
+}
+
+void Scheduler::KillSignalSearcher()
+{
+
 }
