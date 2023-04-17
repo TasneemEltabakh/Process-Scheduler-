@@ -11,7 +11,4 @@ Processor::~Processor(){
 	
 }
 
-void Processor::TimerCalculator()
-{
-	
-}
+
