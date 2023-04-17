@@ -4,8 +4,13 @@ class FirstComeProcessor :
     public Processor
 {
 public:
-    FirstComeProcessor();
+    FirstComeProcessor(int MX, int FORK);
     ~FirstComeProcessor();
     void ScheduleAlgo() override;
+    Process* ForkingCheck();
+
+private:
+    int maxw;
+    int forkprob;
 };
 

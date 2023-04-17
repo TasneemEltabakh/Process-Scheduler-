@@ -5,6 +5,9 @@
 
 int main()
 {
-    Scheduler Schedule;
+    cout << "enter your input file name: " << endl;
+    string name;
+    cin >> name;
+    Scheduler Schedule(name);
 }
 
