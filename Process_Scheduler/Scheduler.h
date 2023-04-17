@@ -26,5 +26,7 @@ public:
 	void  CreateProcessors(LinkedQueue<string>* dataProcessor);
 	void  InsertProcessToNew(LinkedQueue<string>* dataProcess);
 	void KillSignalSearcher();
+	
+	void fork(Process* p);    // added ariam
 };
 

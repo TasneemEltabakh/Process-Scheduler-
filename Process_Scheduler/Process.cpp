@@ -1,5 +1,8 @@
 #include "Process.h"
 
+Process::Process() {
+
+}
 
 Process::Process(int x, int y, int z, int l) {
 
@@ -57,6 +60,7 @@ bool  Process::IsKilled()
 {
 	return iskilled;
 }
+
 void  Process::KillThisProcess()
 {
 	iskilled = true;

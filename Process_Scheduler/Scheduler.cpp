@@ -167,3 +167,7 @@ void Scheduler::KillSignalSearcher()
 {
 
 }
+
+void Scheduler::fork(Process * p)
+{
+}

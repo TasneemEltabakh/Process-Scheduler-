@@ -12,6 +12,6 @@ public:
 private:
     int sliceTime;
     int RTF;
-    LinkedQueue<Process>* ReadyQueue; // we choosed queue to be easily dequeued and enqueued during operation
+    LinkedQueue <Process*> * ReadyQueue; // we choosed queue to be easily dequeued and enqueued during operation
 };
 

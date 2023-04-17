@@ -67,6 +67,7 @@ public:
 		}
 		
 	}
+
 	Node<T>* returnTail()
 	{
 

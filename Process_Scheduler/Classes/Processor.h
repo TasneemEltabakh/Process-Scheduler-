@@ -12,13 +12,13 @@ public:
 	virtual void  ScheduleAlgo() = 0;
 	~Processor();
 
-private:
+protected:
 	Process* RunningProcess;
 	State ProcessorState;
 	double load;
 	double utilization;
 	int TimerOfReadyList;
     int countOfProcesses;
-
+	int runingTime;
 };
 
