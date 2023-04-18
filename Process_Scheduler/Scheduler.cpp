@@ -27,7 +27,7 @@ Scheduler::~Scheduler()
 }
 void Scheduler :: FakeSimulator()
 {
-	
+	srand(time(0));
     double numOfprocessesAdded = 0;
 	Process* added;
 	Process* process = new Process;
@@ -60,18 +60,21 @@ void Scheduler :: FakeSimulator()
 		{
 			BLK.enqueue(process);
 			ProcessorsList.returnkth(i)->RunningIsFree();
+			cout << "blocked" << endl;
 		}
 		else if (random >= 20 && random <= 30)
 		{
+			cout << "AddedToReadyQueueAgain" << endl;
 			ProcessorsList.returnkth(numOfprocessesAdded)->AddToMyReadyList(process);
 			numOfprocessesAdded++;
 			ProcessorsList.returnkth(i)->RunningIsFree();
+
 		}
 		else if (random >= 50 && random <= 60)
 		{
 			Terminal.enqueue(process);
 			ProcessorsList.returnkth(i)->RunningIsFree();
-
+			cout << "terminated" << endl;
 		}
 	}
 	int random = 1 + (rand() % 100);
@@ -82,13 +85,13 @@ void Scheduler :: FakeSimulator()
 		numOfprocessesAdded++;
 
 	}
-	for (int i = 0; i < Numberof_FCFS; i++)
+	/*for (int i = 0; i < Numberof_FCFS; i++)
 	{
 		 random = 1 + (rand() % 10);
-		 FirstComeProcessor* childPointer = dynamic_cast<FirstComeProcessor*>(ProcessorsList.returnkth(i));
-		 if(childPointer->IsThereKilled(random))
-			Terminal.enqueue(childPointer->KillSignal());
-	}
+		 FirstComeProcessor* childPointer = dynamic_cast<FirstComeProcessor*>(ProcessorsList.returnkth(0));
+		 if (childPointer->IsThereKilled(random)) 
+			 Terminal.enqueue(childPointer->KillSignal());
+	}*/
 	output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR);
 	
 }

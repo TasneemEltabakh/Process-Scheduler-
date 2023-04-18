@@ -50,8 +50,10 @@ bool FirstComeProcessor::IsThereKilled(int idOfProcess)
 	{
 		CopyOfReady.returnkth(i);
 		if (Temp->findProcess(idOfProcess)) {
+			cout << "I am killed with id" << idOfProcess << endl;
 			KilledOne = Temp;
 			ReadyQueue.DeleteNode(Temp);
+			cout << "I am killed with id" << idOfProcess<< endl;
 			return true;
 		}
 	}
@@ -59,6 +61,7 @@ bool FirstComeProcessor::IsThereKilled(int idOfProcess)
 }
 Process* FirstComeProcessor:: KillSignal()
 {
+
 	return KilledOne;
 }
 

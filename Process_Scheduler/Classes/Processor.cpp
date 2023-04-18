@@ -8,6 +8,7 @@ Processor::Processor()
 	load = 0;
 	utilization = 0;
 	Id = Count;
+	RunningProcess = nullptr;
 }
 
 Processor::~Processor(){
@@ -27,10 +28,12 @@ bool Processor::IsIDlE() const
 }
 Process* Processor::RunningNow()
 {
+	cout << "Iam Now Running" << endl;
 	return RunningProcess;
 }
 void Processor:: RunningIsFree()
 {
+	cout << "Iam Now a free running processor " << endl;
 	RunningProcess = nullptr;
 	ProcessorState = IDLE;
 }
