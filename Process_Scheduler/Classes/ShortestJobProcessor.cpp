@@ -42,7 +42,7 @@ void ShortestJobProcessor::AddToRun()
 	}
 
 	ReadyQueue.Dequeue_In_Variable(RunningProcess);
-	
+	downtimer = RunningProcess->getCT();
 }
 int ShortestJobProcessor::getcount()
 {
@@ -51,4 +51,17 @@ int ShortestJobProcessor::getcount()
 Process* ShortestJobProcessor::getkth(int k)
 {
 	return ReadyQueue.returnkth(k);
+}
+Process* ShortestJobProcessor::MoveMeToTerminal()
+{
+	TerminatProcess = RunningProcess;
+	RunningIsFree();
+	AddToRun();
+	return TerminatProcess;
+}
+bool ShortestJobProcessor::CheckIfemptyready()
+{
+	if (ReadyQueue.IsEmpty())
+		return true;
+	return false;
 }

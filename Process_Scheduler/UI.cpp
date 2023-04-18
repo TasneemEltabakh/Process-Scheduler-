@@ -16,7 +16,7 @@ void UI::InPut() {
 }
 
 void UI::OutPutScreen(LinkedQueue<Process*>& Terminal, LinkedQueue<Process*>& BLK, LinkedList<Processor*>& ProcessorsList,int TotaLNumberOfProcesses,int Numberof_SJF,int Numberof_FCFS,int Numberof_RR, int ThisTimer) {
-	cout <<"current time  : "<< ThisTimer << endl;
+	cout <<endl<< "current time  : "<< ThisTimer << endl;
 	cout << "-------------RDY Processes------------" << endl;
 	
 	for (int i = 0; i < (Numberof_FCFS+Numberof_RR+Numberof_SJF); i++) {
@@ -44,12 +44,9 @@ void UI::OutPutScreen(LinkedQueue<Process*>& Terminal, LinkedQueue<Process*>& BL
 
 	cout <<endl << "-------------BLK Processes------------" << endl;
 	cout << BLK.Count() << " " << "BLK: ";
-	BLK.Display();
 
 	for (int k = 0; k < BLK.Count(); k++) {
-		Process* temp;
-		BLK.Dequeue_In_Variable(temp);
-		cout << temp->getPID() << ", ";
+		cout << BLK.returnkth(k)->getPID() << ", ";
 	}
 	cout << endl<< "-------------RUN Processes------------" << endl;
 	int c=0;
@@ -69,8 +66,6 @@ void UI::OutPutScreen(LinkedQueue<Process*>& Terminal, LinkedQueue<Process*>& BL
 	cout << endl<< "-------------TRM Processes------------" << endl;
 	cout << Terminal.Count() << " " << "TRM: ";
 	for (int k = 0; k < Terminal.Count(); k++) {
-		Process* temp;
-		Terminal.Dequeue_In_Variable(temp);
-		cout << temp->getPID() << ", ";
+		cout << Terminal.returnkth(k)->getPID() << ", ";
 	}
 }

@@ -9,11 +9,13 @@ public:
     RoundRobinProcessor();
     ~RoundRobinProcessor();
     void SetRTF(int);
+    Process* MoveMeToTerminal();
     void ScheduleAlgo() override;
     void  AddToMyReadyList(Process* NewProcess) override;
     void  AddToRun();
     int getcount() override;
     Process* getkth(int k) override;
+    bool CheckIfemptyready();
 private:
     int sliceTime;
     int RTF;

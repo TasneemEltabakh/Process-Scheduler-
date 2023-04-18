@@ -44,16 +44,12 @@ void FirstComeProcessor::SetMAXW(int max)
 }
 bool FirstComeProcessor::IsThereKilled(int idOfProcess)
 {
-	LinkedList <Process*> CopyOfReady = ReadyQueue;
-	Process* Temp=  new Process;
-	for (int i = 1; i <= countOfProcesses; i++)
+	for (int i = 0; i < ReadyQueue.Count(); i++)
 	{
-		CopyOfReady.returnkth(i);
-		if (Temp->findProcess(idOfProcess)) {
-			cout << "I am killed with id" << idOfProcess << endl;
-			KilledOne = Temp;
-			ReadyQueue.DeleteNode(Temp);
-			cout << "I am killed with id" << idOfProcess<< endl;
+		if (ReadyQueue.returnkth(i)->getPID() == idOfProcess)
+		{
+			KilledOne = ReadyQueue.returnkth(i);
+			ReadyQueue.DeleteNode(ReadyQueue.returnkth(i));
 			return true;
 		}
 	}
@@ -61,10 +57,15 @@ bool FirstComeProcessor::IsThereKilled(int idOfProcess)
 }
 Process* FirstComeProcessor:: KillSignal()
 {
-
 	return KilledOne;
 }
-
+Process* FirstComeProcessor::MoveMeToTerminal()
+{
+	TerminatProcess = RunningProcess;
+	RunningIsFree();
+	AddToRun();
+	return TerminatProcess;
+}
 
 /*void FirstComeProcessor::ForkingCheck() {
 
@@ -100,6 +101,7 @@ void FirstComeProcessor::AddToRun()
 {
 	ProcessorState = busy;
 	RunningProcess = ReadyQueue.returnkth(0);
+	downtimer = RunningProcess->getCT();
 	ReadyQueue.DeleteFirst();
 
 }
@@ -112,3 +114,9 @@ Process* FirstComeProcessor::getkth(int k)
 	return ReadyQueue.returnkth(k);
 }
 
+bool FirstComeProcessor::CheckIfemptyready()
+{
+	if (ReadyQueue.IsEmpty())
+		return true;
+	return false;
+}

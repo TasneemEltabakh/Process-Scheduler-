@@ -11,7 +11,7 @@ public:
     ~FirstComeProcessor();
     void SetMAXW(int max);
     void ScheduleAlgo() override;
-
+    Process* MoveMeToTerminal();
     void ForkingCheck();
     void  AddToMyReadyList(Process* NewProcess) override;
     bool IsThereKilled(int c);
@@ -19,6 +19,7 @@ public:
     void  AddToRun();
     int getcount() override;
     Process* getkth(int k) override;
+    bool CheckIfemptyready() override;
 
 private:
     //LinkedList <Process*> * ReadyQueue = new  LinkedList <Process*>;

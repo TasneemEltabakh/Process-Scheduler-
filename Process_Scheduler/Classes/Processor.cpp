@@ -9,16 +9,14 @@ Processor::Processor()
 	utilization = 0;
 	Id = Count;
 	RunningProcess = nullptr;
+	TerminatProcess = nullptr;
 }
 
 Processor::~Processor(){
 	
 }
 
-Process* Processor:: MoveMeToTerminal()
-{
-	return RunningProcess;
-}
+
 bool Processor::IsIDlE() const
 {
 	if (ProcessorState == IDLE)
@@ -34,7 +32,8 @@ bool Processor::CheckIfRun() {  //R add
 }
 Process* Processor::RunningNow()
 {
-	//cout << "Iam Now Running" << endl;
+	downtimer--;
+	RunningProcess->setCT(downtimer);
 	return RunningProcess;
 }
 void Processor:: RunningIsFree()
@@ -47,5 +46,4 @@ int Processor::getId()
 {
 	return Id;
 }
-
 

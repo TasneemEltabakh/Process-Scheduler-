@@ -99,7 +99,7 @@ void RoundRobinProcessor::AddToMyReadyList(Process* NewProcess)
 {
 	countOfProcesses++;
 	ReadyQueue.enqueue(NewProcess);
-	cout << "HI this is Algo for round " << endl;
+
 
 }
 void RoundRobinProcessor::AddToRun()
@@ -108,8 +108,9 @@ void RoundRobinProcessor::AddToRun()
 	if (ReadyQueue.IsEmpty()) {
 		return;
 	}
+	
 	ReadyQueue.Dequeue_In_Variable(RunningProcess);
-
+	downtimer = RunningProcess->getCT();
 }
 int RoundRobinProcessor::getcount()
 {
@@ -120,3 +121,16 @@ Process* RoundRobinProcessor::getkth(int k)
 	return ReadyQueue.returnkth(k);
 }
 
+Process* RoundRobinProcessor::MoveMeToTerminal()
+{
+	TerminatProcess = RunningProcess;
+	RunningIsFree();
+	AddToRun();
+	return TerminatProcess;
+}
+bool RoundRobinProcessor::CheckIfemptyready()
+{
+	if (ReadyQueue.IsEmpty())
+		return true;
+	return false;
+}

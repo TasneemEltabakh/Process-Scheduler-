@@ -52,11 +52,18 @@ void Scheduler::FakeSimulator()
 			}
 			Timer++;
 		}
-		output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
+	
 		for (int i = 0; i < totalnum; i++)
 		{
-			if (ProcessorsList.returnkth(i)->IsIDlE())
+			int timerun;
+			if (ProcessorsList.returnkth(i)->IsIDlE()) {
 				ProcessorsList.returnkth(i)->AddToRun();
+			}
+			while (!ProcessorsList.returnkth(i)->CheckIfemptyready())
+			{
+				timerun = ProcessorsList.returnkth(i)->RunningNow()->getCT();
+				if (timerun == 0) Terminal.enqueue(ProcessorsList.returnkth(i)->MoveMeToTerminal());
+			}
 		}
 		for (int i = 0; i < totalnum; i++)
 		{
@@ -92,17 +99,18 @@ void Scheduler::FakeSimulator()
 			numOfprocessesAdded++;
 
 		}
-		/*for (int i = 0; i < Numberof_FCFS; i++)
+		for (int i = 0; i < Numberof_FCFS; i++)
 		{
-				random = 1 + (rand() % 10);
-				FirstComeProcessor* childPointer = dynamic_cast<FirstComeProcessor*>(ProcessorsList.returnkth(0));
-				if (childPointer->IsThereKilled(random))
-					Terminal.enqueue(childPointer->KillSignal());
-		}*/
+			random = 1 + (rand() % 10);
+			FirstComeProcessor* childPointer = dynamic_cast<FirstComeProcessor*>(ProcessorsList.returnkth(0));
+			if (childPointer->IsThereKilled(random))
+				Terminal.enqueue(childPointer->KillSignal());
+		}
 		output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
 		Timer++;
-		if (terminatedcount == TotaLNumberOfProcesses) flag = false;
+		if (Terminal.Count() == TotaLNumberOfProcesses) flag = false;
 	}
+	
 }
 void Scheduler ::TimeStepsiterator()
 {
