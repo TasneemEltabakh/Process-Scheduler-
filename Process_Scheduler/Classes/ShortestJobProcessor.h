@@ -14,6 +14,6 @@ public:
 
 private:
     static int countOfProcesses;
-    PriorityQueue<Process*> * ReadyQueue; //we need here a sorted queue or priority queue
+    PriorityQueue<Process*>  ReadyQueue; //we need here a sorted queue or priority queue
 };
 

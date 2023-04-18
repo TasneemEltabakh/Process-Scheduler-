@@ -20,7 +20,7 @@ public:
 
 	bool IsEmpty()
 	{
-		if (Front == NULL && Rear == NULL)
+		if (Front == nullptr && Rear == nullptr)
 		{
 			return true;
 		}
@@ -57,7 +57,7 @@ public:
 		{
 			variable = Front->getItem();
 			delete Front;
-			Front = Rear = NULL;
+			Front = Rear =nullptr;
 		}
 		else
 		{
@@ -70,7 +70,7 @@ public:
 	void Display()
 	{
 		Node<T>* temp = Front;
-		while (temp != NULL)
+		while (temp != nullptr)
 		{
 			cout << temp->getItem() << ", ";
 			temp = temp->getNext();
@@ -87,7 +87,7 @@ public:
 	{
 		int Counter = 0;
 		Node<T>* temp = Front;
-		while (temp != NULL)
+		while (temp != nullptr)
 		{
 			Counter += 1;
 			temp = temp->getNext();
@@ -98,7 +98,7 @@ public:
 	{
 		bool Found = false;
 		Node<T>* temp = Front;
-		while (temp != NULL)
+		while (temp != nullptr)
 		{
 			if (temp->getItem() == item)
 			{
