@@ -1,17 +1,22 @@
 #include "Process.h"
 
 Process::Process() {
-
+	PID = 0;
+	AT = 0;
+	CT = 0;
+	nIO = 0;
+	iskilled = false;
+	
 }
 
-Process::Process(int x, int y, int z, int l,bool askforking) {
+Process::Process(int x, int y, int z, int l) {
 
 	PID = y; 
 	AT = x;
 	CT = z;
 	nIO = l;
 	iskilled = false;
-	Isforking = askforking;  //R add
+	
 
 }
 

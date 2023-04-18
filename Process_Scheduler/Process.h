@@ -19,7 +19,7 @@ private:
 
 public:
 	Process();
-	Process(int x, int y, int z, int l, bool askforking);
+	Process(int x, int y, int z, int l);
 
 	~Process();
 	int getPID() const;

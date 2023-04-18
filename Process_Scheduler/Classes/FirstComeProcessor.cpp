@@ -105,6 +105,10 @@ void FirstComeProcessor::AddToRun()
 }
 int FirstComeProcessor::getcount()
 {
-	return countOfProcesses;
+	return ReadyQueue.Count();
+}
+Process* FirstComeProcessor::getkth(int k)
+{
+	return ReadyQueue.returnkth(k);
 }
 

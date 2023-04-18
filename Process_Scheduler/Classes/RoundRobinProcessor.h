@@ -13,6 +13,7 @@ public:
     void  AddToMyReadyList(Process* NewProcess) override;
     void  AddToRun();
     int getcount() override;
+    Process* getkth(int k) override;
 private:
     int sliceTime;
     int RTF;

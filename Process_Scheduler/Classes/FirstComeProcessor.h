@@ -18,6 +18,7 @@ public:
     Process* KillSignal();
     void  AddToRun();
     int getcount() override;
+    Process* getkth(int k) override;
 
 private:
     //LinkedList <Process*> * ReadyQueue = new  LinkedList <Process*>;

@@ -46,5 +46,9 @@ void ShortestJobProcessor::AddToRun()
 }
 int ShortestJobProcessor::getcount()
 {
-	return countOfProcesses;
+	return ReadyQueue.Count();
+}
+Process* ShortestJobProcessor::getkth(int k)
+{
+	return ReadyQueue.returnkth(k);
 }

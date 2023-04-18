@@ -18,6 +18,7 @@ public:
 	Process* RunningNow();
 	void RunningIsFree();
 	virtual int getcount() = 0;
+	virtual Process* getkth(int k) = 0;
 	int getId();
 protected:
 	Process* RunningProcess;

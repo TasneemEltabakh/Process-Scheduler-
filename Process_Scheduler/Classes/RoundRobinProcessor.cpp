@@ -113,5 +113,10 @@ void RoundRobinProcessor::AddToRun()
 }
 int RoundRobinProcessor::getcount()
 {
-	return countOfProcesses;
+	return ReadyQueue.Count();
 }
+Process* RoundRobinProcessor::getkth(int k)
+{
+	return ReadyQueue.returnkth(k);
+}
+

@@ -18,22 +18,13 @@ private:
 	LinkedQueue<Process*> Terminal;
 	LinkedQueue<Process*> BLK;
 	LinkedQueue<Process*> KilledProcesses;
-	int Timer;
+	static int Timer;
 
 	UI* output;  //r add
 
 
 public:
-	//LinkedList<Processor*> ProcessorsList;
-	//int Numberof_FCFS, Numberof_RR, Numberof_SJF, TotaLNumberOfProcesses;
-	//LinkedQueue<Process*> NewList;
-	//LinkedQueue<Process*> Terminal;
-	//LinkedQueue<Process*> BLK;
-	//LinkedQueue<Process*> KilledSignal;
-	//int CurrentTime;  //R add
-
-
-
+	
 	Scheduler(string inputfilename);
 	Scheduler();
 	~Scheduler();

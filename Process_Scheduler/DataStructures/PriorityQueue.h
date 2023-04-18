@@ -111,5 +111,20 @@ public:
 		}
 		return Found;
 	}
+	T returnkth(int k)
+	{
+		Node<T>* p = Front;
+		int count = 0;
+		while (p)
+		{
+			if (count == k)
+			{
+				return p->getItem();
+			}
+			p = p->getNext();
+			count++;
+		}
 
+
+	}
 };

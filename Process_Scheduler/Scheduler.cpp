@@ -10,11 +10,13 @@
 #include "Classes/Processor.h"
 #include "UI.h"
 
-
+int Scheduler::Timer = 0;
 Scheduler::Scheduler(string inputfilename)
 {
+	
 	load(inputfilename);
 	FakeSimulator();
+	
 }
 Scheduler::Scheduler()
 {
@@ -25,75 +27,82 @@ Scheduler::~Scheduler()
 {
 
 }
-void Scheduler :: FakeSimulator()
+void Scheduler::FakeSimulator()
 {
-	srand(time(0));
-    double numOfprocessesAdded = 0;
-	Process* added;
-	Process* process = new Process;
-	Timer = 0;
-	int totalnum =Numberof_SJF+Numberof_RR+Numberof_FCFS;
-	while (!NewList.IsEmpty())
+	bool flag = true;
+	while (true)
 	{
-		
-		if (NewList.Peek()->getAT() == Timer)
+		srand(time(0));
+		double numOfprocessesAdded = 0;
+		Process* added;
+		Process* process = new Process;
+		int totalnum = Numberof_SJF + Numberof_RR + Numberof_FCFS;
+		int terminatedcount = 0;
+		while (!NewList.IsEmpty())
 		{
-			NewList.Dequeue_In_Variable(added);
-			if (numOfprocessesAdded >= totalnum) {
-				numOfprocessesAdded = floor((numOfprocessesAdded-1) / (totalnum));
+
+			if (NewList.Peek()->getAT() == Timer)
+			{
+				NewList.Dequeue_In_Variable(added);
+				if (numOfprocessesAdded >= totalnum) {
+					numOfprocessesAdded = floor((numOfprocessesAdded - 1) / (totalnum));
+				}
+				ProcessorsList.returnkth(numOfprocessesAdded)->AddToMyReadyList(added);
+				numOfprocessesAdded++;
 			}
-			ProcessorsList.returnkth(numOfprocessesAdded)->AddToMyReadyList(added);
-			numOfprocessesAdded++;
+			Timer++;
 		}
-		Timer++;
-	}
-	for (int i = 0; i < totalnum; i++)
-	{
-		if (ProcessorsList.returnkth(i)->IsIDlE())
-			ProcessorsList.returnkth(i)->AddToRun();
-	}
-	for (int i = 0; i < totalnum; i++)
-	{
+		output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
+		for (int i = 0; i < totalnum; i++)
+		{
+			if (ProcessorsList.returnkth(i)->IsIDlE())
+				ProcessorsList.returnkth(i)->AddToRun();
+		}
+		for (int i = 0; i < totalnum; i++)
+		{
+			int random = 1 + (rand() % 100);
+			process = ProcessorsList.returnkth(i)->RunningNow();
+			if (random >= 1 && random <= 15)
+			{
+				BLK.enqueue(process);
+				ProcessorsList.returnkth(i)->RunningIsFree();
+				cout << "blocked" << endl;
+			}
+			else if (random >= 20 && random <= 30)
+			{
+				cout << "AddedToReadyQueueAgain" << endl;
+				ProcessorsList.returnkth(numOfprocessesAdded)->AddToMyReadyList(process);
+				numOfprocessesAdded++;
+				ProcessorsList.returnkth(i)->RunningIsFree();
+
+			}
+			else if (random >= 50 && random <= 60)
+			{
+				Terminal.enqueue(process);
+				ProcessorsList.returnkth(i)->RunningIsFree();
+				cout << "terminated" << endl;
+				terminatedcount++;
+			}
+		}
 		int random = 1 + (rand() % 100);
-		process = ProcessorsList.returnkth(i)->RunningNow();
-		if (random >= 1 && random <= 15)
+		if (random < 10)
 		{
-			BLK.enqueue(process);
-			ProcessorsList.returnkth(i)->RunningIsFree();
-			cout << "blocked" << endl;
-		}
-		else if (random >= 20 && random <= 30)
-		{
-			cout << "AddedToReadyQueueAgain" << endl;
+			BLK.Dequeue_In_Variable(process);
 			ProcessorsList.returnkth(numOfprocessesAdded)->AddToMyReadyList(process);
 			numOfprocessesAdded++;
-			ProcessorsList.returnkth(i)->RunningIsFree();
 
 		}
-		else if (random >= 50 && random <= 60)
+		/*for (int i = 0; i < Numberof_FCFS; i++)
 		{
-			Terminal.enqueue(process);
-			ProcessorsList.returnkth(i)->RunningIsFree();
-			cout << "terminated" << endl;
-		}
+				random = 1 + (rand() % 10);
+				FirstComeProcessor* childPointer = dynamic_cast<FirstComeProcessor*>(ProcessorsList.returnkth(0));
+				if (childPointer->IsThereKilled(random))
+					Terminal.enqueue(childPointer->KillSignal());
+		}*/
+		output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
+		Timer++;
+		if (terminatedcount == TotaLNumberOfProcesses) flag = false;
 	}
-	int random = 1 + (rand() % 100);
-	if (random < 10)
-	{
-		BLK.Dequeue_In_Variable(process);
-		ProcessorsList.returnkth(numOfprocessesAdded)->AddToMyReadyList(process);
-		numOfprocessesAdded++;
-
-	}
-	/*for (int i = 0; i < Numberof_FCFS; i++)
-	{
-		 random = 1 + (rand() % 10);
-		 FirstComeProcessor* childPointer = dynamic_cast<FirstComeProcessor*>(ProcessorsList.returnkth(0));
-		 if (childPointer->IsThereKilled(random)) 
-			 Terminal.enqueue(childPointer->KillSignal());
-	}*/
-	output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR);
-	
 }
 void Scheduler ::TimeStepsiterator()
 {
@@ -195,20 +204,20 @@ void  Scheduler:: CreateProcessors(LinkedQueue<string>* dataProcessor) //this fu
 	Numberof_RR = stoi(Numberof_R);
 	Numberof_FCFS = stoi(Numberof_FC);
 
-
-	for (int i = 0; i < Numberof_RR; i++)
-	{
-		ProcessorsList.InsertBeg(new RoundRobinProcessor(stoi(slicetime), stoi( rtf)));
-	}
-	for (int i = 0; i < Numberof_SJF; i++)
-	{
-		ProcessorsList.InsertBeg(new ShortestJobProcessor());
-	}
 	for (int i = 0; i < Numberof_FCFS; i++)
 	{
-		ProcessorsList.InsertBeg(new FirstComeProcessor(stoi(maxw),stoi(fork)));
+		ProcessorsList.InsertEnd(new FirstComeProcessor(stoi(maxw), stoi(fork)));
 	}
+
 	
+	for (int i = 0; i < Numberof_SJF; i++)
+	{
+		ProcessorsList.InsertEnd(new ShortestJobProcessor());
+	}
+	for (int i = 0; i < Numberof_RR; i++)
+	{
+		ProcessorsList.InsertEnd(new RoundRobinProcessor(stoi(slicetime), stoi(rtf)));
+	}
 }
 void Scheduler::InsertProcessToNew(LinkedQueue<string>* dataProcess)
 {
@@ -220,7 +229,7 @@ void Scheduler::InsertProcessToNew(LinkedQueue<string>* dataProcess)
 	dataProcess->Dequeue_In_Variable(ct);
 	dataProcess->Dequeue_In_Variable(nio);
 
-	Process* newprocess = new Process(stoi(At), stoi(id), stoi(ct), stoi(nio),false);
+	Process* newprocess = new Process(stoi(At), stoi(id), stoi(ct), stoi(nio));
 	
 	/*if (stoi(nio) != 0)
 	{
