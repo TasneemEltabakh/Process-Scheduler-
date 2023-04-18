@@ -29,7 +29,7 @@ void ShortestJobProcessor::ScheduleAlgo()
 }
 void ShortestJobProcessor::AddToMyReadyList(Process* NewProcess)
 {
-	ReadyQueue->enqueue(NewProcess);
+	//ReadyQueue->enqueue(NewProcess);
 	cout << "HI this is Algo for shortest " << endl;
 	countOfProcesses++;
 }
