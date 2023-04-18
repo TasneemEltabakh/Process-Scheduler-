@@ -13,12 +13,19 @@ FirstComeProcessor::~FirstComeProcessor()
 
 void FirstComeProcessor::ScheduleAlgo()
 {
+	if (ReadyQueue.isEmpty()) {
+		return;
+	}
+
 	ReadyQueue.dequeue(RunningProcess);
 
-	while (RunningProcess->getCT() != 0 ) {
-
-			runingTime++;
+	for (int i = 0; i < RunningProcess->getCT(); i++) {
+		runingTime++;
 	}
+
+	sch->moveToTrm(RunningProcess);
+
+	ScheduleAlgo();
 }
 
 void  FirstComeProcessor::SetMAXW(int max)
@@ -32,8 +39,8 @@ void FirstComeProcessor::ForkingCheck() {
 
 	if (random <= forkprob) 
 	{
-		//Scheduler* sch ;
-		//sch->fork(RunningProcess);
-		//delete sch;
+		sch->fork(RunningProcess);
+
 	};
 }
+

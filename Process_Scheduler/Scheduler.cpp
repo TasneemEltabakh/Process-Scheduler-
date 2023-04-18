@@ -136,6 +136,7 @@ void  Scheduler:: CreateProcessors(LinkedQueue<string>* dataProcessor) //this fu
 		ProcessorsList.InsertBeg(new FirstComeProcessor(stoi(maxw),stoi(fork)));
 	}
 }
+
 void  Scheduler::InsertProcessToNew(LinkedQueue<string>* dataProcess)
 {
 	string At, id, ct, nio, iop;
@@ -160,7 +161,6 @@ void  Scheduler::InsertProcessToNew(LinkedQueue<string>* dataProcess)
 	}
 
 	
-	
 }
 
 void Scheduler::KillSignalSearcher()
@@ -169,5 +169,10 @@ void Scheduler::KillSignalSearcher()
 }
 
 void Scheduler::fork(Process * p)
+{
+
+}
+
+void Scheduler::moveToTrm(Process* p)
 {
 }

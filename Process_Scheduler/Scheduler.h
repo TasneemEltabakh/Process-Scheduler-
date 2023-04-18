@@ -28,5 +28,6 @@ public:
 	void KillSignalSearcher();
 	
 	void fork(Process* p);    // added ariam
+	void moveToTrm(Process* p);
 };
 

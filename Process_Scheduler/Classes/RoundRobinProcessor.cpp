@@ -7,17 +7,25 @@ RoundRobinProcessor::RoundRobinProcessor(int sliceTime, int RTF) {
 }
 
 RoundRobinProcessor::~RoundRobinProcessor(){}
-void RoundRobinProcessor::ScheduleAlgo()
+
+Process* RoundRobinProcessor::ScheduleAlgo()
 {
-	Process* current, c2;
+	if (ReadyQueue.isEmpty()) {
+		return ;
+	}
 
-	for (int i = 0; i < (sliceTime * countOfProcesses); i + sliceTime) {
-		if(RunningProcess != nullptr)
-			ReadyQueue->enqueue(RunningProcess);
+	for (int i = 0; ReadyQueue.isEmpty() ; i + sliceTime) {
 
-		ReadyQueue->dequeue(current);
-		RunningProcess = current;
+		if (RunningProcess != nullptr) 
+		{
+			if (RunningProcess->getrunt() < RunningProcess->getCT()) {
+				ReadyQueue.enqueue(RunningProcess);
+			}
+			sch->moveToTrm(RunningProcess);
+		}
 
+		ReadyQueue.dequeue(RunningProcess);
+		RunningProcess->addruntime(sliceTime);
 	}
 }
 

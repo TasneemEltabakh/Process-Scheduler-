@@ -10,7 +10,9 @@ private:
 	int PID, TT, AT, CT, WT, RT, TRT, nIO;
 	string IOPairS;
 	LinkedQueue<int> IOpairs;
-	bool iskilled;
+	//bool iskilled;
+	//bool finished;
+	int runningtime;
 
 public:
 	Process();
@@ -24,14 +26,16 @@ public:
 	int getRT() const;
 	int getTRT() const;
 	int getTT() const;
-
-
+	void addruntime(int x);
+	int getrunt() const;
 	void calcWT();
 	void calcTRT();
 
 	bool IsKilled();
 	void KillThisProcess();
 
+	//bool Isfinished();
+	//void FinishProcess();
 
 	void InsertToIOlist(int x, int y);
 

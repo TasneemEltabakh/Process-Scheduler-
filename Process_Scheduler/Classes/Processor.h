@@ -4,6 +4,7 @@
 #include "..//DataStructures/LinkedList.h"
 #include "..//Supplementary.h"
 #include "..//Process.h"
+#include "..//Scheduler.h"
 
 class Processor
 {
@@ -13,6 +14,7 @@ public:
 	~Processor();
 
 protected:
+	Scheduler* sch;
 	Process* RunningProcess;
 	State ProcessorState;
 	double load;
