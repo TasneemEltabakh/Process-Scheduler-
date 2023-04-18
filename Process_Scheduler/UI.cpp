@@ -16,7 +16,7 @@ void UI::InPut() {
 }
 
 void UI::OutPutScreen(LinkedQueue<Process*>& Terminal, LinkedQueue<Process*>& BLK, LinkedList<Processor*>& ProcessorsList,int TotaLNumberOfProcesses,int Numberof_SJF,int Numberof_FCFS,int Numberof_RR, int ThisTimer) {
-	cout <<"current time  : "<< ThisTimer << endl;
+	cout <<endl<<"current time  : "<< ThisTimer << endl;
 	cout << "-------------RDY Processes------------" << endl;
 	
 	for (int i = 0; i < (Numberof_FCFS+Numberof_RR+Numberof_SJF); i++) {

@@ -52,7 +52,7 @@ void Scheduler::FakeSimulator()
 			}
 			Timer++;
 		}
-		output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
+		//output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
 		for (int i = 0; i < totalnum; i++)
 		{
 			if (ProcessorsList.returnkth(i)->IsIDlE())
@@ -102,6 +102,7 @@ void Scheduler::FakeSimulator()
 		output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
 		Timer++;
 		if (terminatedcount == TotaLNumberOfProcesses) flag = false;
+		system("pause");
 	}
 }
 void Scheduler ::TimeStepsiterator()
