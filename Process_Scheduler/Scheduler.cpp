@@ -46,7 +46,7 @@ void Scheduler :: FakeSimulator()
 		}
 		Timer++;
 	}
-	for (int i = 0; i < totalnum; i++)
+/*	for (int i = 0; i < totalnum; i++)
 	{
 		if (ProcessorsList.returnkth(i)->IsIDlE())
 			ProcessorsList.returnkth(i)->AddToRun();
@@ -83,7 +83,7 @@ void Scheduler :: FakeSimulator()
 	}
 	output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR);
 
-
+	*/
 }
 void Scheduler ::TimeStepsiterator()
 {
