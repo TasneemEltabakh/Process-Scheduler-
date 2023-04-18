@@ -171,7 +171,7 @@ void Scheduler::InsertProcessToNew(LinkedQueue<string>* dataProcess)
 	dataProcess->Dequeue_In_Variable(ct);
 	dataProcess->Dequeue_In_Variable(nio);
 
-	Process* newprocess = new Process(stoi(At), stoi(id), stoi(ct), stoi(nio));
+	Process* newprocess = new Process(stoi(At), stoi(id), stoi(ct), stoi(nio),false);
 	
 	/*if (stoi(nio) != 0)
 	{
@@ -228,7 +228,4 @@ void Scheduler::fork(Process* p) {
 	}
 }
 
-int Scheduler::getCurrentTime() {
-	return CurrentTime;
-}
 

@@ -73,15 +73,14 @@ void RoundRobinProcessor::ScheduleAlgo()
 		}
 
 	}
-	}*/
-	cout << "HI this is Algo for round " << endl;
+	//cout << "HI this is Algo for round " << endl;
 }
 
 void RoundRobinProcessor::SetRTF(int rt) {
 	RTF = rt;
 
 }
-void RoundRobinProcessor::Migrate() {
+//void RoundRobinProcessor::Migrate() {
 	//for (int i = 0; i < ReadyQueue.Count(); i++) {
 	//	Node* temp= ReadyQueue.gethead();
 	//	//Node<T>* tmp;
@@ -92,8 +91,8 @@ void RoundRobinProcessor::Migrate() {
 	//		tmp = tmp->next;
 	//	}
 	//}
-}
-}
+//}
+
 void RoundRobinProcessor::AddToMyReadyList(Process* NewProcess)
 {
 	//ReadyQueue->enqueue(NewProcess);

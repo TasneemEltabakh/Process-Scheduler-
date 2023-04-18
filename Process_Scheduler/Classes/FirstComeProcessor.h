@@ -19,7 +19,9 @@ public:
 
 
 private:
-    LinkedList <Process*> * ReadyQueue = new  LinkedList <Process*>;
+    //LinkedList <Process*> * ReadyQueue = new  LinkedList <Process*>;
+    LinkedList <Process*> ReadyQueue;
+
     int maxw;
     int forkprob;
     Process* KilledOne;

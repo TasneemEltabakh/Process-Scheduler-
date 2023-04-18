@@ -18,9 +18,9 @@ FirstComeProcessor::~FirstComeProcessor()
 
 void FirstComeProcessor::ScheduleAlgo()
 {
-	cout << "HI this is Algo for first come" << endl;
-	/*
-	ReadyQueue->Dequeue_In_Variable(RunningProcess);
+	//cout << "HI this is Algo for first come" << endl;
+	
+	//ReadyQueue->Dequeue_In_Variable(RunningProcess);
 	if (ReadyQueue.IsEmpty()) {
 		return;
 	}
@@ -42,14 +42,14 @@ void FirstComeProcessor::SetMAXW(int max)
 }
 bool FirstComeProcessor::IsThereKilled(int idOfProcess)
 {
-	LinkedList <Process*>* CopyOfReady = ReadyQueue;
+	LinkedList <Process*> CopyOfReady = ReadyQueue;
 	Process* Temp=  new Process;
 	for (int i = 1; i <= countOfProcesses; i++)
 	{
-		CopyOfReady->returnkth(i);
+		CopyOfReady.returnkth(i);
 		if (Temp->findProcess(idOfProcess)) {
 			KilledOne = Temp;
-			ReadyQueue->DeleteNode(Temp);
+			ReadyQueue.DeleteNode(Temp);
 			return true;
 		}
 	}
@@ -61,7 +61,7 @@ Process* FirstComeProcessor:: KillSignal()
 }
 
 
-void FirstComeProcessor::ForkingCheck() {
+/*void FirstComeProcessor::ForkingCheck() {
 
 
 	if (random <= forkprob) 
@@ -71,7 +71,7 @@ void FirstComeProcessor::ForkingCheck() {
 		//Scheduler* sch ;
 		//sch->fork(RunningProcess);
 		//delete sch;
-	};
+};*/
 
 //void FirstComeProcessor::ForkingCheck() {
 //
@@ -86,7 +86,7 @@ void FirstComeProcessor::ForkingCheck() {
 //}
 void  FirstComeProcessor::AddToMyReadyList(Process* NewProcess)
 {
-	ReadyQueue->InsertBeg(NewProcess);
+	//ReadyQueue->InsertBeg(NewProcess);
 	cout << "HI this is Algo for first come" << endl;
 }
 	

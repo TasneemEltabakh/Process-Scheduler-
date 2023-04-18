@@ -23,8 +23,8 @@ void ShortestJobProcessor::ScheduleAlgo()
 	if (ReadyQueue.IsEmpty()) {
 		cout << "The Ready List is Empty" << endl;
 	}
-}
-	cout << "HI this is Algo for shortest " << endl;
+
+	//cout << "HI this is Algo for shortest " << endl;
 }
 void ShortestJobProcessor::AddToMyReadyList(Process* NewProcess)
 {

@@ -114,7 +114,7 @@ int Process::operator<< (const Process& c) const  //R add for UI
 {
 	return c.getPID();
 }
-}
+
 bool Process:: findProcess(int i)
 {
 	bool Found = false;
