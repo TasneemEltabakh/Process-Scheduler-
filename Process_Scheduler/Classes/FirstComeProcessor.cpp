@@ -13,11 +13,11 @@ FirstComeProcessor::~FirstComeProcessor()
 
 void FirstComeProcessor::ScheduleAlgo()
 {
-	if (ReadyQueue.isEmpty()) {
+	if (ReadyQueue.IsEmpty()) {
 		return;
 	}
 
-	ReadyQueue.dequeue(RunningProcess);
+	ReadyQueue.Dequeue_In_Variable(RunningProcess);
 
 	for (int i = 0; i < RunningProcess->getCT(); i++) {
 		runingTime++;

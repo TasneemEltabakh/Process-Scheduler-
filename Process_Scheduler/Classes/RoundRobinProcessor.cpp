@@ -8,13 +8,13 @@ RoundRobinProcessor::RoundRobinProcessor(int sliceTime, int RTF) {
 
 RoundRobinProcessor::~RoundRobinProcessor(){}
 
-Process* RoundRobinProcessor::ScheduleAlgo()
+void RoundRobinProcessor::ScheduleAlgo()
 {
-	if (ReadyQueue.isEmpty()) {
+	if (ReadyQueue.IsEmpty()) {
 		return ;
 	}
 
-	for (int i = 0; ReadyQueue.isEmpty() ; i + sliceTime) {
+	for (int i = 0; ReadyQueue.IsEmpty() ; i + sliceTime) {
 
 		if (RunningProcess != nullptr) 
 		{
@@ -24,7 +24,7 @@ Process* RoundRobinProcessor::ScheduleAlgo()
 			sch->moveToTrm(RunningProcess);
 		}
 
-		ReadyQueue.dequeue(RunningProcess);
+		ReadyQueue.Dequeue_In_Variable(RunningProcess);
 		RunningProcess->addruntime(sliceTime);
 	}
 }

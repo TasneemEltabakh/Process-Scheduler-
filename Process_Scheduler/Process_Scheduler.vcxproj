@@ -136,17 +136,19 @@
     <ClCompile Include="Scheduler.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="C:\Users\Tassneem\Downloads\Code Examples\3-Queues\LinkedQueue.h" />
-    <ClInclude Include="C:\Users\Tassneem\Downloads\Code Examples\3-Queues\Node.h" />
-    <ClInclude Include="C:\Users\Tassneem\Downloads\Code Examples\3-Queues\QueueADT.h" />
     <ClInclude Include="Classes\FirstComeProcessor.h" />
     <ClInclude Include="Classes\Processor.h" />
     <ClInclude Include="Classes\RoundRobinProcessor.h" />
     <ClInclude Include="Classes\ShortestJobProcessor.h" />
     <ClInclude Include="DataStructures\LinkedList.h" />
+    <ClInclude Include="DataStructures\LinkedQueue.h" />
+    <ClInclude Include="DataStructures\Node.h" />
+    <ClInclude Include="DataStructures\QueueADT.h" />
+    <ClInclude Include="Priority_Queue.h" />
     <ClInclude Include="Process.h" />
     <ClInclude Include="Scheduler.h" />
     <ClInclude Include="Supplementary.h" />
+    <ClInclude Include="Tree.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

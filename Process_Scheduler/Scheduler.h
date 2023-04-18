@@ -19,6 +19,7 @@ private:
 
 public:
 	Scheduler(string inputfilename);
+	Scheduler();
 	~Scheduler();
 	void load(string inputfilename);
 	void TranslateData(string linedata, LinkedQueue<string>* dataProcessor);

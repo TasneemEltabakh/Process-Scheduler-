@@ -8,7 +8,7 @@ public:
     RoundRobinProcessor(int sliceTime, int RTF);
     ~RoundRobinProcessor();
     void SetRTF(int);
-    Process* ScheduleAlgo() override;
+    void ScheduleAlgo() override;
 private:
     int sliceTime;
     int RTF;

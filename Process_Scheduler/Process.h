@@ -10,7 +10,7 @@ private:
 	int PID, TT, AT, CT, WT, RT, TRT, nIO;
 	string IOPairS;
 	LinkedQueue<int> IOpairs;
-	//bool iskilled;
+	bool iskilled;
 	//bool finished;
 	int runningtime;
 

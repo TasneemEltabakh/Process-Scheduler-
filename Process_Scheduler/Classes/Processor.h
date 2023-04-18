@@ -14,13 +14,14 @@ public:
 	~Processor();
 
 protected:
-	Scheduler* sch;
 	Process* RunningProcess;
 	State ProcessorState;
 	double load;
 	double utilization;
 	int TimerOfReadyList;
     int countOfProcesses;
+
+	Scheduler* sch = new Scheduler();
 	int runingTime;
 };
 
