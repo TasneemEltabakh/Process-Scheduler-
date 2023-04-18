@@ -32,7 +32,6 @@ void FirstComeProcessor::ScheduleAlgo()
 		runingTime++;
 	}
 
-	sch->moveToTrm(RunningProcess);
 
 	ScheduleAlgo();
 }
@@ -77,11 +76,6 @@ Process* FirstComeProcessor:: KillSignal()
 void  FirstComeProcessor::AddToMyReadyList(Process* NewProcess)
 {
 	ReadyQueue->InsertBeg(NewProcess);
+	cout << "HI this is Algo for first come" << endl;
 }
-	if (random <= forkprob) 
-	{
-		sch->fork(RunningProcess);
-
-	};
-}
-
+	

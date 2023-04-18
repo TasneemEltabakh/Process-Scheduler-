@@ -4,7 +4,6 @@
 #include "..//DataStructures/LinkedList.h"
 #include "..//Supplementary.h"
 #include "..//Process.h"
-#include "..//Scheduler.h"
 
 class Processor
 {
@@ -23,7 +22,6 @@ protected:
 	int TimerOfReadyList;
     int countOfProcesses;
 
-	Scheduler* sch = new Scheduler();
 	int runingTime;
 };
 
