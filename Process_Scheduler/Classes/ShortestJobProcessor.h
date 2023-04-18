@@ -1,6 +1,7 @@
 #pragma once
 #include "Processor.h"
-//#include "..//DataStructures/Priority_Queue.h"
+#include "..//DataStructures/PriorityQueue.h"
+
 class ShortestJobProcessor :
     public Processor
 {
@@ -11,6 +12,6 @@ public:
     void  AddToMyReadyList(Process* NewProcess) override;
 private:
 
-    LinkedQueue<Process*> ReadyQueue; //we need here a sorted queue or priority queue
+    PriorityQueue<Process*> ReadyQueue; //we need here a sorted queue or priority queue
 };
 

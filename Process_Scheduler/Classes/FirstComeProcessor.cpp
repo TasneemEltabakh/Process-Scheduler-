@@ -86,7 +86,7 @@ Process* FirstComeProcessor:: KillSignal()
 //}
 void  FirstComeProcessor::AddToMyReadyList(Process* NewProcess)
 {
-	//ReadyQueue->InsertBeg(NewProcess);
+	ReadyQueue.InsertBeg(NewProcess);
 	cout << "HI this is Algo for first come" << endl;
 }
 	

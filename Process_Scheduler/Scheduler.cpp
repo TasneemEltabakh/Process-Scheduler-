@@ -37,7 +37,7 @@ void Scheduler :: FakeSimulator()
 		if (NewList.Peek()->getAT() == Timer)
 		{
 			NewList.Dequeue_In_Variable(added);
-			if (numOfprocessesAdded > totalnum) numOfprocessesAdded = floor(numOfprocessesAdded);
+			if (numOfprocessesAdded >= totalnum) numOfprocessesAdded = floor((numOfprocessesAdded-1)/totalnum);
 			ProcessorsList.returnkth(numOfprocessesAdded)->AddToMyReadyList(added);
 			numOfprocessesAdded++;
 			
