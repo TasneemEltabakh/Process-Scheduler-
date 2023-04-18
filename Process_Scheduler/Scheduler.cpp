@@ -26,22 +26,62 @@ Scheduler::~Scheduler()
 }
 void Scheduler :: FakeSimulator()
 {
-    int numOfprocessesAdded = 0;
+    double numOfprocessesAdded = 0;
 	Process* added;
+	Process* process = new Process;
 	Timer = 0;
-	int totalnum = Numberof_SJF + Numberof_RR + Numberof_FCFS;
+	int totalnum =Numberof_SJF+Numberof_RR+Numberof_FCFS;
 	while (!NewList.IsEmpty())
 	{
+		
 		if (NewList.Peek()->getAT() == Timer)
 		{
 			NewList.Dequeue_In_Variable(added);
-			if (numOfprocessesAdded > totalnum) numOfprocessesAdded = floor(numOfprocessesAdded);
+			if (numOfprocessesAdded >= totalnum) {
+				numOfprocessesAdded = floor((numOfprocessesAdded-1) / (totalnum));
+			}
 			ProcessorsList.returnkth(numOfprocessesAdded)->AddToMyReadyList(added);
 			numOfprocessesAdded++;
-			
 		}
 		Timer++;
 	}
+	for (int i = 0; i < totalnum; i++)
+	{
+		if (ProcessorsList.returnkth(i)->IsIDlE())
+			ProcessorsList.returnkth(i)->AddToRun();
+	}
+	for (int i = 0; i < totalnum; i++)
+	{
+		int random = 1 + (rand() % 100);
+		process = ProcessorsList.returnkth(i)->RunningNow();
+		if (random >= 1 && random <= 15)
+		{
+			BLK.enqueue(process);
+			ProcessorsList.returnkth(i)->RunningIsFree();
+		}
+		else if (random >= 20 && random <= 30)
+		{
+			ProcessorsList.returnkth(numOfprocessesAdded)->AddToMyReadyList(process);
+			numOfprocessesAdded++;
+			ProcessorsList.returnkth(i)->RunningIsFree();
+		}
+		else if (random >= 50 && random <= 60)
+		{
+			Terminal.enqueue(process);
+			ProcessorsList.returnkth(i)->RunningIsFree();
+		}
+
+	}
+	int random = 1 + (rand() % 100);
+	if (random < 10)
+	{
+		BLK.Dequeue_In_Variable(process);
+		ProcessorsList.returnkth(numOfprocessesAdded)->AddToMyReadyList(process);
+		numOfprocessesAdded++;
+
+	}
+
+
 
 }
 void Scheduler ::TimeStepsiterator()
