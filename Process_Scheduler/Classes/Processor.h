@@ -12,8 +12,12 @@ public:
 	virtual void  ScheduleAlgo() = 0;
 	~Processor();
 	virtual void  AddToMyReadyList(Process* NewProcess) = 0;
+	virtual void  AddToRun() = 0;
     Process* MoveMeToTerminal();
-	
+	bool IsIDlE() const;
+	Process* RunningNow();
+	void RunningIsFree();
+
 protected:
 	Process* RunningProcess;
 	State ProcessorState;
@@ -21,7 +25,6 @@ protected:
 	double utilization;
 	int TimerOfReadyList;
     int countOfProcesses;
-
 	int runingTime;
 };
 

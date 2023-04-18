@@ -11,9 +11,10 @@ public:
     void SetRTF(int);
     void ScheduleAlgo() override;
     void  AddToMyReadyList(Process* NewProcess) override;
+    void  AddToRun();
 private:
     int sliceTime;
     int RTF;
-    LinkedQueue <Process*>  ReadyQueue; // we choosed queue to be easily dequeued and enqueued during operation
+    LinkedQueue <Process*> * ReadyQueue; // we choosed queue to be easily dequeued and enqueued during operation
 };
 

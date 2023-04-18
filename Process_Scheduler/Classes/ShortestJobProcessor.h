@@ -10,6 +10,7 @@ public:
     ~ShortestJobProcessor();
     void ScheduleAlgo() override;
     void  AddToMyReadyList(Process* NewProcess) override;
+    void  AddToRun();
 private:
 
     PriorityQueue<Process*> ReadyQueue; //we need here a sorted queue or priority queue

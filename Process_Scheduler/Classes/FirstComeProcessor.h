@@ -16,6 +16,7 @@ public:
     void  AddToMyReadyList(Process* NewProcess) override;
     bool IsThereKilled(int c);
     Process* KillSignal();
+    void  AddToRun();
 
 
 private:

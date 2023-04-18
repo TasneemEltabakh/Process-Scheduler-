@@ -95,7 +95,15 @@ void RoundRobinProcessor::SetRTF(int rt) {
 
 void RoundRobinProcessor::AddToMyReadyList(Process* NewProcess)
 {
-	ReadyQueue.enqueue(NewProcess);
+	ReadyQueue->enqueue(NewProcess);
 	cout << "HI this is Algo for round " << endl;
-	//ReadyQueue.Display();
+}
+void RoundRobinProcessor::AddToRun()
+{
+	ProcessorState = busy;
+	if (ReadyQueue->IsEmpty()) {
+		return;
+	}
+	ReadyQueue->Dequeue_In_Variable(RunningProcess);
+	cout << RunningProcess->getPID() << endl;
 }

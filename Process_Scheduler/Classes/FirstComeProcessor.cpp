@@ -89,4 +89,12 @@ void  FirstComeProcessor::AddToMyReadyList(Process* NewProcess)
 	ReadyQueue.InsertBeg(NewProcess);
 	cout << "HI this is Algo for first come" << endl;
 }
+void FirstComeProcessor::AddToRun()
+{
+	ProcessorState = busy;
+	RunningProcess = ReadyQueue->returnkth(0);
+	ReadyQueue->DeleteFirst();
+	cout << RunningProcess->getPID() << endl;
+
+}
 	
