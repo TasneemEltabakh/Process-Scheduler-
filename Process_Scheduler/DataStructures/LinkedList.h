@@ -322,14 +322,14 @@ public:
 		int count = 0;
 		while (p)
 		{
-			count++;
-			p = p->getNext();
+			
+			
 			if (count == k)
 			{
-
 				return p->getItem();
 			}
-
+			p = p->getNext();
+			count++;
 		}
 
 

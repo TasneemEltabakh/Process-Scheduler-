@@ -24,3 +24,10 @@ void ShortestJobProcessor::ScheduleAlgo()
 		cout << "The Ready List is Empty" << endl;
 	}
 }
+	cout << "HI this is Algo for shortest " << endl;
+}
+void ShortestJobProcessor::AddToMyReadyList(Process* NewProcess)
+{
+	//ReadyQueue->enqueue(NewProcess);
+	cout << "HI this is Algo for shortest " << endl;
+}

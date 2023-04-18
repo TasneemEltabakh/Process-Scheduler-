@@ -47,6 +47,12 @@ int Process::getTT() const {
 	return TT;
 }
 
+int Process::getrunt() const {
+	return runningtime;
+}
+void Process::addruntime(int x) {
+	runningtime += x;
+}
 
 void Process::calcWT() {
 	WT = TRT - CT;
@@ -71,7 +77,6 @@ void  Process::KillThisProcess()
 {
 	iskilled = true;
 }
-
 
 void Process::InsertToIOlist(int x, int y)
 {
@@ -108,4 +113,12 @@ Process* Process::getAllList() {  //R add
 int Process::operator<< (const Process& c) const  //R add for UI
 {
 	return c.getPID();
+}
+}
+bool Process:: findProcess(int i)
+{
+	bool Found = false;
+	if (this->PID == i)
+		return true;
+	return false;
 }

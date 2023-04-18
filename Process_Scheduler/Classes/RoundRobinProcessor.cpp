@@ -73,6 +73,8 @@ void RoundRobinProcessor::ScheduleAlgo()
 		}
 
 	}
+	}*/
+	cout << "HI this is Algo for round " << endl;
 }
 
 void RoundRobinProcessor::SetRTF(int rt) {
@@ -90,4 +92,10 @@ void RoundRobinProcessor::Migrate() {
 	//		tmp = tmp->next;
 	//	}
 	//}
+}
+}
+void RoundRobinProcessor::AddToMyReadyList(Process* NewProcess)
+{
+	//ReadyQueue->enqueue(NewProcess);
+	cout << "HI this is Algo for round " << endl;
 }

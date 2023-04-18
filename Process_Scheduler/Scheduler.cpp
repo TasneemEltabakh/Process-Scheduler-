@@ -2,6 +2,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <sstream>
 #include "Process.h"
 #include "Classes/FirstComeProcessor.h"
 #include "Classes/RoundRobinProcessor.h"
@@ -14,10 +15,41 @@ Scheduler::Scheduler(string inputfilename)
 {
 	load(inputfilename);
 	output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses,  Numberof_SJF,  Numberof_FCFS,  Numberof_RR);
+	FakeSimulator();
 }
+Scheduler::Scheduler()
+{
+
+}
+
 Scheduler::~Scheduler()
 {
 
+}
+void Scheduler :: FakeSimulator()
+{
+    int numOfprocessesAdded = 0;
+	Process* added;
+	Timer = 0;
+	int totalnum = Numberof_SJF + Numberof_RR + Numberof_FCFS;
+	while (!NewList.IsEmpty())
+	{
+		if (NewList.Peek()->getAT() == Timer)
+		{
+			NewList.Dequeue_In_Variable(added);
+			if (numOfprocessesAdded > totalnum) numOfprocessesAdded = floor(numOfprocessesAdded);
+			ProcessorsList.returnkth(numOfprocessesAdded)->AddToMyReadyList(added);
+			numOfprocessesAdded++;
+			
+		}
+		Timer++;
+	}
+
+}
+void Scheduler ::TimeStepsiterator()
+{
+	
+	
 }
 void Scheduler::load(string inputfile)
 {
@@ -26,8 +58,7 @@ void Scheduler::load(string inputfile)
 	InputFile.open(inputfile+ ".txt");
 
 	if (InputFile.is_open()) {
-		while (!InputFile.eof())
-		{
+		
 			string* line = new string;
 			LinkedQueue<string>* Data = new LinkedQueue<string>;
 
@@ -48,17 +79,19 @@ void Scheduler::load(string inputfile)
 			}
 			for (int i = 0; i < TotaLNumberOfProcesses; i++)
 			{
-				LinkedQueue<string>* newd = new LinkedQueue<string>;
+				
 				getline(InputFile, *line);
-				TranslateData(*line, newd);
-				InsertProcessToNew(newd);
+				TranslateData(*line, Data);
+				InsertProcessToNew(Data);
 				counter++;
 			}
-			if (counter == 4 + TotaLNumberOfProcesses) break;
+			while (!InputFile.eof())
+			{
+				getline(InputFile, *line);
+				TranslateData(*line, Data);
+				KillSignalSearcher(Data);
+			}
 
-			//delete line;
-		}
-			
 	}
 	else {
 		cout << "Couldn't open file\n";
@@ -66,28 +99,17 @@ void Scheduler::load(string inputfile)
 	InputFile.close();
 	
 }
-void Scheduler ::TranslateData(string linedata, LinkedQueue<string>*  dataP) //this Function Splits the string of one line into information for the system
+void Scheduler ::TranslateData(string& linedata, LinkedQueue<string>*  dataP) //this Function Splits the string of one line into information for the system
 {
-	int i = 0;
-	string data;
-	char x = linedata.at(i);
-	while (i< linedata.size()-1)
-	{
-		if (x != ' ') {
-			data = data + x;
-			i++;
-			x = linedata.at(i);
-		}
-		else 
-		{
-			dataP->enqueue(data);
-			
-			data.clear();
-			i++;
-			x = linedata.at(i);
-		}
+	stringstream s(linedata);
+
+
+	int num;
+	while (s >> num) {
+		
+		dataP->enqueue(to_string(num));
+		
 	}
-	
 }
 void Scheduler::RemoveParenthesis(string linedata, LinkedQueue<int>* dataProcessor)
 {
@@ -137,20 +159,21 @@ void  Scheduler:: CreateProcessors(LinkedQueue<string>* dataProcessor) //this fu
 	{
 		ProcessorsList.InsertBeg(new FirstComeProcessor(stoi(maxw),stoi(fork)));
 	}
+	
 }
-void  Scheduler::InsertProcessToNew(LinkedQueue<string>* dataProcess)
+void Scheduler::InsertProcessToNew(LinkedQueue<string>* dataProcess)
 {
-	string At, id, ct, nio, iop;
-	int IoR, IoD;
+	string At, id, ct, nio;
+	//int IoR, IoD;
 
 	dataProcess->Dequeue_In_Variable(At);
 	dataProcess->Dequeue_In_Variable(id);
 	dataProcess->Dequeue_In_Variable(ct);
 	dataProcess->Dequeue_In_Variable(nio);
 
-	Process* newprocess = new Process(stoi(At), stoi(id), stoi(ct), stoi(nio),false);
-
-	if (stoi(nio) != 0)
+	Process* newprocess = new Process(stoi(At), stoi(id), stoi(ct), stoi(nio));
+	
+	/*if (stoi(nio) != 0)
 	{
 		LinkedQueue<int>* Data = new LinkedQueue<int>;
 		dataProcess->Dequeue_In_Variable(iop);
@@ -159,14 +182,38 @@ void  Scheduler::InsertProcessToNew(LinkedQueue<string>* dataProcess)
 		Data->Dequeue_In_Variable(IoD);
 		delete Data;
 		newprocess->InsertToIOlist(IoR, IoD);
-	}
+		cout << IoR << IoD;
+	}*/
 
-	//cout << At << id << ct << nio;
+	NewList.enqueue(newprocess);
+
 }
 
-void Scheduler::KillSignalSearcher()
+void Scheduler::KillSignalSearcher(LinkedQueue<string>* KillData)
 {
+	//string time, id;
+	//KillData->Dequeue_In_Variable(time);
+	//KillData->Dequeue_In_Variable(id);
+	//cout << time;
+	//cout << endl;
+	//cout << id;
+	//if (Timer == stoi(time))
+	//{
+	//	for (int i = 0; i < Numberof_FCFS; i++)
+	//	{
 
+	//		FirstComeProcessor* childPointer = dynamic_cast<FirstComeProcessor*>(ProcessorsList.returnkth(i));
+	//		childPointer->~FirstComeProcessor();
+	//		if (childPointer->IsThereKilled(stoi(id)))
+	//		{
+	//			KilledProcesses.enqueue(childPointer->KillSignal());
+	//		}
+	//	}
+	//}
+}
+void  Scheduler:: MoveProcessToReadyList()
+{
+	
 }
 
 void Scheduler::fork(Process* p) {

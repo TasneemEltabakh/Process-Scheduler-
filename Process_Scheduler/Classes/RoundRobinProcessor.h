@@ -6,16 +6,14 @@ class RoundRobinProcessor :
 {
 public:
     RoundRobinProcessor(int sliceTime, int RTF);
+    RoundRobinProcessor();
     ~RoundRobinProcessor();
     void SetRTF(int);
     void ScheduleAlgo() override;
+    void  AddToMyReadyList(Process* NewProcess) override;
 private:
-    int id;  //R add
     int sliceTime;
     int RTF;
-    void Migrate();  //R add
-    //LinkedQueue <Process*> * ReadyQueue; // we choosed queue to be easily dequeued and enqueued during operation
-    LinkedQueue <Process*> ReadyQueue; // we choosed queue to be easily dequeued and enqueued during operation
-
+    LinkedQueue <Process*>  ReadyQueue; // we choosed queue to be easily dequeued and enqueued during operation
 };
 

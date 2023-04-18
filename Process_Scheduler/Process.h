@@ -14,6 +14,8 @@ private:
 	bool Isforking;  //R add
 	LinkedQueue<Process*> ForkedList;  //R add
 	Process* ParentQueue;  //R add
+	//bool finished;
+	int runningtime;
 
 public:
 	Process();
@@ -30,6 +32,8 @@ public:
 
 	void setCT(int newCT);  //R add
 
+	void addruntime(int x);
+	int getrunt() const;
 	void calcWT();
 	void calcTRT();
 
@@ -37,6 +41,9 @@ public:
 	bool IsKilled();
 	void KillThisProcess();
 
+	//bool Isfinished();
+	//void FinishProcess();
+	bool findProcess(int i);
 
 	void InsertToIOlist(int x, int y);
 

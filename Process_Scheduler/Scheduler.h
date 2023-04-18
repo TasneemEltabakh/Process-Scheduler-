@@ -17,8 +17,8 @@ private:
 	LinkedQueue<Process*> NewList;
 	LinkedQueue<Process*> Terminal;
 	LinkedQueue<Process*> BLK;
-	LinkedQueue<Process*> KilledSignal;
-	int CurrentTime;  //R add
+	LinkedQueue<Process*> KilledProcesses;
+	int Timer;
 
 	UI* output;  //r add
 
@@ -35,15 +35,20 @@ public:
 
 
 	Scheduler(string inputfilename);
+	Scheduler();
 	~Scheduler();
 	void load(string inputfilename);
-	void TranslateData(string linedata, LinkedQueue<string>* dataProcessor);
+	void TranslateData(string& linedata, LinkedQueue<string>* dataProcessor);
 	void RemoveParenthesis(string linedata, LinkedQueue<int>* dataProcessor);
 	void  CreateProcessors(LinkedQueue<string>* dataProcessor);
 	void  InsertProcessToNew(LinkedQueue<string>* dataProcess);
+	void  MoveProcessToReadyList();
+	void KillSignalSearcher(LinkedQueue<string>* KillData);
+	void TimeStepsiterator();
+	void  FakeSimulator();
 	void KillSignalSearcher();
 	
 	void fork(Process* p);    // added ariam
-	int getCurrentTime();  //R add
+	void moveToTrm(Process* p);
 };
 
