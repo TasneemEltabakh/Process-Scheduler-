@@ -8,17 +8,27 @@ RoundRobinProcessor::RoundRobinProcessor(int sliceTime, int RTF) {
 RoundRobinProcessor::RoundRobinProcessor() {}
 
 RoundRobinProcessor::~RoundRobinProcessor(){}
+
 void RoundRobinProcessor::ScheduleAlgo()
 {
+	if (ReadyQueue.IsEmpty()) {
+		return ;
+	}
 	/*Process* current, c2;
 
-	for (int i = 0; i < (sliceTime * countOfProcesses); i + sliceTime) {
-		if(RunningProcess != nullptr)
-			ReadyQueue->enqueue(RunningProcess);
+	for (int i = 0; ReadyQueue.IsEmpty() ; i + sliceTime) {
 
-		ReadyQueue->dequeue(current);
-		RunningProcess = current;
+		if (RunningProcess != nullptr) 
+		{
+			if (RunningProcess->getrunt() < RunningProcess->getCT()) {
+				ReadyQueue.enqueue(RunningProcess);
+			}
+			sch->moveToTrm(RunningProcess);
+		}
 
+		ReadyQueue.Dequeue_In_Variable(RunningProcess);
+		RunningProcess->addruntime(sliceTime);
+	}
 	}*/
 	cout << "HI this is Algo for round " << endl;
 }

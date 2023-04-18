@@ -11,6 +11,8 @@ private:
 	string IOPairS;
 	LinkedQueue<int> IOpairs;
 	bool iskilled;
+	//bool finished;
+	int runningtime;
 
 public:
 	Process();
@@ -24,13 +26,16 @@ public:
 	int getRT() const;
 	int getTRT() const;
 	int getTT() const;
-
-
+	void addruntime(int x);
+	int getrunt() const;
 	void calcWT();
 	void calcTRT();
 
 	bool IsKilled();
 	void KillThisProcess();
+
+	//bool Isfinished();
+	//void FinishProcess();
 	bool findProcess(int i);
 
 	void InsertToIOlist(int x, int y);

@@ -20,6 +20,7 @@ private:
 
 public:
 	Scheduler(string inputfilename);
+	Scheduler();
 	~Scheduler();
 	void load(string inputfilename);
 	void TranslateData(string& linedata, LinkedQueue<string>* dataProcessor);
@@ -30,5 +31,9 @@ public:
 	void KillSignalSearcher(LinkedQueue<string>* KillData);
 	void TimeStepsiterator();
 	void  FakeSimulator();
+	void KillSignalSearcher();
+	
+	void fork(Process* p);    // added ariam
+	void moveToTrm(Process* p);
 };
 

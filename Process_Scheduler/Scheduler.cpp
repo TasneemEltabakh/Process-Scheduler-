@@ -15,6 +15,11 @@ Scheduler::Scheduler(string inputfilename)
 	load(inputfilename);
 	FakeSimulator();
 }
+Scheduler::Scheduler()
+{
+
+}
+
 Scheduler::~Scheduler()
 {
 

@@ -20,11 +20,21 @@ void FirstComeProcessor::ScheduleAlgo()
 	cout << "HI this is Algo for first come" << endl;
 	/*
 	ReadyQueue->Dequeue_In_Variable(RunningProcess);
+	if (ReadyQueue.IsEmpty()) {
+		return;
+	}
 
-	while (RunningProcess->getCT() != 0 ) {
+	ReadyQueue.Dequeue_In_Variable(RunningProcess);
 
 			runingTime++;
 	}*/
+	for (int i = 0; i < RunningProcess->getCT(); i++) {
+		runingTime++;
+	}
+
+	sch->moveToTrm(RunningProcess);
+
+	ScheduleAlgo();
 }
 
 void FirstComeProcessor::SetMAXW(int max)
@@ -68,3 +78,10 @@ void  FirstComeProcessor::AddToMyReadyList(Process* NewProcess)
 {
 	ReadyQueue->InsertBeg(NewProcess);
 }
+	if (random <= forkprob) 
+	{
+		sch->fork(RunningProcess);
+
+	};
+}
+
