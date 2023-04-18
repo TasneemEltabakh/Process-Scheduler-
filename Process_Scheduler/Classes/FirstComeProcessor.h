@@ -10,6 +10,7 @@ public:
     ~FirstComeProcessor();
     void SetMAXW(int max);
     void ScheduleAlgo() override;
+
     void ForkingCheck();
     bool IsThereKilled();
     void KillSignal(Scheduler* schud);

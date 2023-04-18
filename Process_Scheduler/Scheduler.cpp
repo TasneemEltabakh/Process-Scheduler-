@@ -7,11 +7,13 @@
 #include "Classes/RoundRobinProcessor.h"
 #include "Classes/ShortestJobProcessor.h"
 #include "Classes/Processor.h"
+#include "UI.h"
 
 
 Scheduler::Scheduler(string inputfilename)
 {
 	load(inputfilename);
+	output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses,  Numberof_SJF,  Numberof_FCFS,  Numberof_RR);
 }
 Scheduler::~Scheduler()
 {
@@ -146,7 +148,7 @@ void  Scheduler::InsertProcessToNew(LinkedQueue<string>* dataProcess)
 	dataProcess->Dequeue_In_Variable(ct);
 	dataProcess->Dequeue_In_Variable(nio);
 
-	Process* newprocess = new Process(stoi(At), stoi(id), stoi(ct), stoi(nio));
+	Process* newprocess = new Process(stoi(At), stoi(id), stoi(ct), stoi(nio),false);
 
 	if (stoi(nio) != 0)
 	{
@@ -159,10 +161,27 @@ void  Scheduler::InsertProcessToNew(LinkedQueue<string>* dataProcess)
 		newprocess->InsertToIOlist(IoR, IoD);
 	}
 
-	cout << At << id << ct << nio;
+	//cout << At << id << ct << nio;
 }
 
 void Scheduler::KillSignalSearcher()
 {
 
 }
+
+void Scheduler::fork(Process* p) {
+	Process* ForkedProcess = new Process;
+	Process* ParentsQu;
+	if (p->IsForked()) {
+		//ParentsQu = p->getAllList();
+		//ParentsQu.
+	}
+	else {
+
+	}
+}
+
+int Scheduler::getCurrentTime() {
+	return CurrentTime;
+}
+

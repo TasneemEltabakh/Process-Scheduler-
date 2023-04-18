@@ -143,6 +143,17 @@ public:
 		}
 		return count;
 	}
+	int Count()
+	{
+		int count = 0;
+		Node<T>* p = Head;
+		while (p)
+		{
+			count++;
+			p = p->getNext();
+		}
+		return count;
+	}
 	//[4] DeleteFirst
 	//Deletes the first node in the list
 	

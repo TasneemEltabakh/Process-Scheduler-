@@ -1,18 +1,18 @@
+
 #pragma once
-#include "DataStructures/Node.h"
+#include "Node.h"
 #include<iostream>
 using namespace std;
 
 template <typename T>
-class Queue
+class PriorityQueue
 {
 private:
 	Node<T>* Front;
 	Node<T>* Rear;
 public:
 
-
-	Queue()
+	PriorityQueue()
 	{
 		Front = nullptr;
 		Rear = nullptr;
@@ -31,8 +31,27 @@ public:
 		}
 
 	}
+	void enqueue(T item)
+	{
+		Node<T>* newnode = new Node<T>(item);
+		newnode->setItem(item);
+		if (Front == nullptr || Front->getItem() >= newnode->getItem()) {
+			newnode->setNext(Front);
+			Front = newnode;
+			return;
+		}
+		else {
+			Node<T>* temp = Front;
+			while (temp->getNext() != nullptr && temp->getNext()->getItem() < newnode->getItem()) {
+				temp = temp->getNext();
+			}
+			newnode->setNext(temp->getNext());
+			temp->setNext(newnode);
+		}
 
-	void DeQueue()
+	}
+
+	void dequeue()
 	{
 		if (IsEmpty())
 		{
@@ -50,7 +69,6 @@ public:
 			delete delptr;
 		}
 	}
-
 	void Display()
 	{
 		Node<T>* temp = Front;
@@ -93,22 +111,4 @@ public:
 		return Found;
 	}
 
-	void enqueue(T item) {
-		Node<T>* newnode = new Node<T>(item);
-		newnode->setItem(item);
-		if (Front == nullptr || Front->getItem() >= newnode->getItem()) {
-			newnode->setNext(Front);
-			Front = newnode;
-			return;
-		}
-		else {
-			Node<T>* temp = Front;
-			while (temp->getNext() != nullptr && temp->getNext()->getItem() < newnode->getItem()) {
-				temp = temp->getNext();
-			}
-			newnode->setNext(temp->getNext());
-			temp->setNext(newnode);
-		}
-	}
 };
-
