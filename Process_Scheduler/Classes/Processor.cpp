@@ -26,9 +26,15 @@ bool Processor::IsIDlE() const
 	return false;
 
 }
+bool Processor::CheckIfRun() {  //R add
+	if (RunningProcess==nullptr) {
+		return false;
+	}
+	return true;
+}
 Process* Processor::RunningNow()
 {
-	cout << "Iam Now Running" << endl;
+	//cout << "Iam Now Running" << endl;
 	return RunningProcess;
 }
 void Processor:: RunningIsFree()

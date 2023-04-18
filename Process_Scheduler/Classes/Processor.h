@@ -19,6 +19,8 @@ public:
 	void RunningIsFree();
 	virtual int getcount() = 0;
 	int getId();
+
+	bool CheckIfRun();  //R add
 protected:
 	Process* RunningProcess;
 	State ProcessorState;
@@ -28,5 +30,8 @@ protected:
 	int runingTime;
 	static int Count;
 	int Id;
+
+	
+
 };
 
