@@ -27,6 +27,7 @@ Scheduler::~Scheduler()
 }
 void Scheduler :: FakeSimulator()
 {
+	
     double numOfprocessesAdded = 0;
 	Process* added;
 	Process* process = new Process;
@@ -46,7 +47,7 @@ void Scheduler :: FakeSimulator()
 		}
 		Timer++;
 	}
-/*	for (int i = 0; i < totalnum; i++)
+	for (int i = 0; i < totalnum; i++)
 	{
 		if (ProcessorsList.returnkth(i)->IsIDlE())
 			ProcessorsList.returnkth(i)->AddToRun();
@@ -70,6 +71,7 @@ void Scheduler :: FakeSimulator()
 		{
 			Terminal.enqueue(process);
 			ProcessorsList.returnkth(i)->RunningIsFree();
+
 		}
 		
 	}
@@ -81,9 +83,15 @@ void Scheduler :: FakeSimulator()
 		numOfprocessesAdded++;
 
 	}
+	for (int i = 0; i < Numberof_FCFS; i++)
+	{
+		 random = 1 + (rand() % 10);
+		 FirstComeProcessor* childPointer = dynamic_cast<FirstComeProcessor*>(ProcessorsList.returnkth(i));
+		 if(childPointer->IsThereKilled(random))
+			Terminal.enqueue(childPointer->KillSignal());
+	}
 	output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR);
-
-	*/
+	
 }
 void Scheduler ::TimeStepsiterator()
 {
@@ -256,15 +264,16 @@ void  Scheduler:: MoveProcessToReadyList()
 }
 
 void Scheduler::fork(Process* p) {
-	Process* ForkedProcess = new Process;
-	Process* ParentsQu;
-	if (p->IsForked()) {
-		//ParentsQu = p->getAllList();
-		//ParentsQu.
+//	Process* ForkedProcess = new Process;
+//	Process* ParentsQu;
+//	if (p->IsForked()) {
+//		//ParentsQu = p->getAllList();
+//		//ParentsQu.
+//	}
+//	else {
+//
+//	}
+//}
 	}
-	else {
-
-	}
-}
 
 
