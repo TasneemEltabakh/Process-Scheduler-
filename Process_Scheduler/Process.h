@@ -31,7 +31,7 @@ public:
 
 	bool IsKilled();
 	void KillThisProcess();
-
+	bool findProcess(int i);
 
 	void InsertToIOlist(int x, int y);
 

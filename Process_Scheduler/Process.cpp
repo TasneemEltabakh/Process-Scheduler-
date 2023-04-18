@@ -73,3 +73,10 @@ void Process::InsertToIOlist(int x, int y)
 	IOpairs.enqueue(y);
 
 }
+bool Process:: findProcess(int i)
+{
+	bool Found = false;
+	if (this->PID == i)
+		return true;
+	return false;
+}

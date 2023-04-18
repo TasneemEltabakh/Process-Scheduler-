@@ -6,9 +6,11 @@ class RoundRobinProcessor :
 {
 public:
     RoundRobinProcessor(int sliceTime, int RTF);
+    RoundRobinProcessor();
     ~RoundRobinProcessor();
     void SetRTF(int);
     void ScheduleAlgo() override;
+    void  AddToMyReadyList(Process* NewProcess) override;
 private:
     int sliceTime;
     int RTF;

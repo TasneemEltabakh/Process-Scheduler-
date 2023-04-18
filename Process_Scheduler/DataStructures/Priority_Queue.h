@@ -1,5 +1,5 @@
 #pragma once
-#include "DataStructures/Node.h"
+#include "Node.h"
 #include<iostream>
 using namespace std;
 

@@ -11,7 +11,9 @@ public:
 	Processor();
 	virtual void  ScheduleAlgo() = 0;
 	~Processor();
-
+	virtual void  AddToMyReadyList(Process* NewProcess) = 0;
+    Process* MoveMeToTerminal();
+	
 protected:
 	Process* RunningProcess;
 	State ProcessorState;

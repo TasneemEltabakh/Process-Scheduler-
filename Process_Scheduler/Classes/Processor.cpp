@@ -12,4 +12,8 @@ Processor::~Processor(){
 	
 }
 
+Process* Processor:: MoveMeToTerminal()
+{
+	return RunningProcess;
+}
 

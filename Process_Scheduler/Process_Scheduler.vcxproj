@@ -143,8 +143,8 @@
     <ClInclude Include="DataStructures\LinkedList.h" />
     <ClInclude Include="DataStructures\LinkedQueue.h" />
     <ClInclude Include="DataStructures\Node.h" />
+    <ClInclude Include="DataStructures\Priority_Queue.h" />
     <ClInclude Include="DataStructures\QueueADT.h" />
-    <ClInclude Include="Priority_Queue.h" />
     <ClInclude Include="Process.h" />
     <ClInclude Include="Scheduler.h" />
     <ClInclude Include="Supplementary.h" />

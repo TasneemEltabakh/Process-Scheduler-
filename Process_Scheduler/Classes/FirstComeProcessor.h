@@ -7,16 +7,20 @@ class FirstComeProcessor :
 {
 public:
     FirstComeProcessor(int MX, int FORK);
+    FirstComeProcessor();
     ~FirstComeProcessor();
     void SetMAXW(int max);
     void ScheduleAlgo() override;
     void ForkingCheck();
-    bool IsThereKilled();
-    void KillSignal(Scheduler* schud);
+    void  AddToMyReadyList(Process* NewProcess) override;
+    bool IsThereKilled(int c);
+    Process* KillSignal();
+
 
 private:
-    LinkedQueue <Process*>  ReadyQueue; // we choosed linked list to be easily killed during operation
+    LinkedList <Process*> * ReadyQueue = new  LinkedList <Process*>;
     int maxw;
     int forkprob;
+    Process* KilledOne;
 };
 
