@@ -134,6 +134,7 @@
     <ClCompile Include="Process.cpp" />
     <ClCompile Include="Process_Scheduler.cpp" />
     <ClCompile Include="Scheduler.cpp" />
+    <ClCompile Include="UI.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Classes\FirstComeProcessor.h" />
@@ -143,12 +144,13 @@
     <ClInclude Include="DataStructures\LinkedList.h" />
     <ClInclude Include="DataStructures\LinkedQueue.h" />
     <ClInclude Include="DataStructures\Node.h" />
-    <ClInclude Include="DataStructures\Priority_Queue.h" />
+    <ClInclude Include="DataStructures\PriorityQueue.h" />
     <ClInclude Include="DataStructures\QueueADT.h" />
     <ClInclude Include="Process.h" />
     <ClInclude Include="Scheduler.h" />
     <ClInclude Include="Supplementary.h" />
     <ClInclude Include="Tree.h" />
+    <ClInclude Include="UI.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

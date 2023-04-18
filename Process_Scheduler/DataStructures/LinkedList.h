@@ -143,6 +143,17 @@ public:
 		}
 		return count;
 	}
+	int Count()
+	{
+		int count = 0;
+		Node<T>* p = Head;
+		while (p)
+		{
+			count++;
+			p = p->getNext();
+		}
+		return count;
+	}
 	//[4] DeleteFirst
 	//Deletes the first node in the list
 	
@@ -426,5 +437,37 @@ public:
 			}
 		}
 	}
+	bool IsEmpty()
+	{
+		if (Head == NULL && Tail == NULL)
+		{
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+
+	}
+	void Dequeue_In_Variable(T& variable) {
+		if (IsEmpty())
+		{
+			cout << "The List is Empty";
+		}
+		else if (Head == Tail)
+		{
+			variable = Head->getItem();
+			delete Head;
+			Head = Tail = NULL;
+		}
+		else
+		{
+			Node<T>* delptr = Head;
+			Head = Head->getNext();
+			variable = delptr->getItem();
+			delete delptr;
+		}
+	}
+
 };
 

@@ -11,12 +11,15 @@ private:
 	string IOPairS;
 	LinkedQueue<int> IOpairs;
 	bool iskilled;
+	bool Isforking;  //R add
+	LinkedQueue<Process*> ForkedList;  //R add
+	Process* ParentQueue;  //R add
 	//bool finished;
 	int runningtime;
 
 public:
 	Process();
-	Process(int x, int y, int z, int l);
+	Process(int x, int y, int z, int l, bool askforking);
 
 	~Process();
 	int getPID() const;
@@ -26,11 +29,15 @@ public:
 	int getRT() const;
 	int getTRT() const;
 	int getTT() const;
+
+	void setCT(int newCT);  //R add
+
 	void addruntime(int x);
 	int getrunt() const;
 	void calcWT();
 	void calcTRT();
 
+	void SetFOrk(); //R add
 	bool IsKilled();
 	void KillThisProcess();
 
@@ -40,5 +47,11 @@ public:
 
 	void InsertToIOlist(int x, int y);
 
+	bool checkforklist();  //R add
+	bool IsForked();  //R add
+	Process* getParentQueue(); //R add
+	void setParentQueue(Process* parent); //R add
+	Process* getAllList();  //R add
+	int operator<< (const Process& c) const;  //R add
 };
 

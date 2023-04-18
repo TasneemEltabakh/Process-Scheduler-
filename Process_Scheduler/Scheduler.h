@@ -3,11 +3,13 @@
 #include "DataStructures/QueueADT.h"
 #include "DataStructures/LinkedList.h"
 #include "Process.h"
-
+#include "UI.h"
 class processor; //dir dec
 
 class Scheduler
 {
+protected:
+	
 private:
 	
 	LinkedList<Processor*> ProcessorsList;
@@ -18,7 +20,20 @@ private:
 	LinkedQueue<Process*> KilledProcesses;
 	int Timer;
 
+	UI* output;  //r add
+
+
 public:
+	//LinkedList<Processor*> ProcessorsList;
+	//int Numberof_FCFS, Numberof_RR, Numberof_SJF, TotaLNumberOfProcesses;
+	//LinkedQueue<Process*> NewList;
+	//LinkedQueue<Process*> Terminal;
+	//LinkedQueue<Process*> BLK;
+	//LinkedQueue<Process*> KilledSignal;
+	//int CurrentTime;  //R add
+
+
+
 	Scheduler(string inputfilename);
 	Scheduler();
 	~Scheduler();

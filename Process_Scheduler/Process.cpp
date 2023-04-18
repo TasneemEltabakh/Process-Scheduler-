@@ -4,13 +4,15 @@ Process::Process() {
 
 }
 
-Process:: Process (int x, int y, int z, int l) {
+Process::Process(int x, int y, int z, int l,bool askforking) {
 
 	PID = y; 
 	AT = x;
 	CT = z;
 	nIO = l;
 	iskilled = false;
+	Isforking = askforking;  //R add
+
 }
 
 Process::~Process() {
@@ -67,6 +69,10 @@ bool  Process::IsKilled()
 	return iskilled;
 }
 
+void Process::SetFOrk() {  //R add
+	Isforking = true;
+}
+
 void  Process::KillThisProcess()
 {
 	iskilled = true;
@@ -78,6 +84,37 @@ void Process::InsertToIOlist(int x, int y)
 	IOpairs.enqueue(y);
 
 }
+
+void Process::setCT(int newCT) { //R add
+	CT = newCT;
+}
+
+bool Process::checkforklist() {  //R add
+	if (ForkedList.IsEmpty()) {
+		return false;
+	}
+	else
+		return true;
+}
+bool Process::IsForked() {  //R add
+	return Isforking;
+} 
+void Process::setParentQueue(Process* Parent) {  //R add
+	ParentQueue = Parent;
+}
+Process* Process::getParentQueue() {  //R add
+	return ParentQueue;
+}
+Process* Process::getAllList() {  //R add 
+	return ForkedList.Peek();
+}
+
+
+int Process::operator<< (const Process& c) const  //R add for UI
+{
+	return c.getPID();
+}
+
 bool Process:: findProcess(int i)
 {
 	bool Found = false;

@@ -11,6 +11,7 @@ public:
     ~FirstComeProcessor();
     void SetMAXW(int max);
     void ScheduleAlgo() override;
+
     void ForkingCheck();
     void  AddToMyReadyList(Process* NewProcess) override;
     bool IsThereKilled(int c);
@@ -19,7 +20,9 @@ public:
 
 
 private:
-    LinkedList <Process*> * ReadyQueue = new  LinkedList <Process*>;
+    //LinkedList <Process*> * ReadyQueue = new  LinkedList <Process*>;
+    LinkedList <Process*> ReadyQueue;
+
     int maxw;
     int forkprob;
     Process* KilledOne;

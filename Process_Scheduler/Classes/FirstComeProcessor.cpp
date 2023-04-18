@@ -1,5 +1,6 @@
 #include "FirstComeProcessor.h"
 
+
 FirstComeProcessor::FirstComeProcessor(int max, int fork)
 {
 	forkprob = fork;
@@ -17,23 +18,22 @@ FirstComeProcessor::~FirstComeProcessor()
 
 void FirstComeProcessor::ScheduleAlgo()
 {
-	cout << "HI this is Algo for first come" << endl;
-	/*
-	ReadyQueue->Dequeue_In_Variable(RunningProcess);
+	//cout << "HI this is Algo for first come" << endl;
+	
+	//ReadyQueue->Dequeue_In_Variable(RunningProcess);
 	if (ReadyQueue.IsEmpty()) {
 		return;
 	}
 
 	ReadyQueue.Dequeue_In_Variable(RunningProcess);
 
-			runingTime++;
-	}*/
-	for (int i = 0; i < RunningProcess->getCT(); i++) {
-		runingTime++;
+	while (RunningProcess->getCT() != 0 ) {
+
+		//runingTime++;
+		RunningProcess->setCT(RunningProcess->getCT() - 1);
 	}
-
-
-	ScheduleAlgo();
+	//Here the previuse must go to TERM
+	ReadyQueue.Dequeue_In_Variable(RunningProcess);
 }
 
 void FirstComeProcessor::SetMAXW(int max)
@@ -42,14 +42,14 @@ void FirstComeProcessor::SetMAXW(int max)
 }
 bool FirstComeProcessor::IsThereKilled(int idOfProcess)
 {
-	LinkedList <Process*>* CopyOfReady = ReadyQueue;
+	LinkedList <Process*> CopyOfReady = ReadyQueue;
 	Process* Temp=  new Process;
 	for (int i = 1; i <= countOfProcesses; i++)
 	{
-		CopyOfReady->returnkth(i);
+		CopyOfReady.returnkth(i);
 		if (Temp->findProcess(idOfProcess)) {
 			KilledOne = Temp;
-			ReadyQueue->DeleteNode(Temp);
+			ReadyQueue.DeleteNode(Temp);
 			return true;
 		}
 	}
@@ -61,6 +61,17 @@ Process* FirstComeProcessor:: KillSignal()
 }
 
 
+/*void FirstComeProcessor::ForkingCheck() {
+
+
+	if (random <= forkprob) 
+	{
+		RunningProcess->SetFOrk();
+
+		//Scheduler* sch ;
+		//sch->fork(RunningProcess);
+		//delete sch;
+};*/
 
 //void FirstComeProcessor::ForkingCheck() {
 //
@@ -75,7 +86,7 @@ Process* FirstComeProcessor:: KillSignal()
 //}
 void  FirstComeProcessor::AddToMyReadyList(Process* NewProcess)
 {
-	ReadyQueue->InsertBeg(NewProcess);
+	//ReadyQueue->InsertBeg(NewProcess);
 	cout << "HI this is Algo for first come" << endl;
 }
 void FirstComeProcessor::AddToRun()

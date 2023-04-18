@@ -72,7 +72,7 @@ public:
 		Node<T>* temp = Front;
 		while (temp != NULL)
 		{
-			cout << temp->getItem() << " ";
+			cout << temp->getItem() << ", ";
 			temp = temp->getNext();
 		}
 		cout << endl;
@@ -127,6 +127,11 @@ public:
 			variable = delptr->getItem();
 			delete delptr;
 		}
+	}
+
+	Node<T>* gethead()
+	{
+		return Front;
 	}
 
 };
