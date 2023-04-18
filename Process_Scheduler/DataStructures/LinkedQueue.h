@@ -109,26 +109,6 @@ public:
 		return Found;
 	}
 
-	void Dequeue_In_Variable(T& variable) {
-		if (IsEmpty())
-		{
-			cout << "The Queue is Empty";
-		}
-		else if (Front == Rear)
-		{
-			variable = Front->getItem();
-			delete Front;
-			Front = Rear = NULL;
-		}
-		else
-		{
-			Node<T>* delptr = Front;
-			Front = Front->getNext();
-			variable = delptr->getItem();
-			delete delptr;
-		}
-	}
-
 	Node<T>* gethead()
 	{
 		return Front;

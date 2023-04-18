@@ -17,14 +17,15 @@ public:
     bool IsThereKilled(int c);
     Process* KillSignal();
     void  AddToRun();
-
+    int getcount() override;
 
 private:
     //LinkedList <Process*> * ReadyQueue = new  LinkedList <Process*>;
-    LinkedList <Process*> ReadyQueue;
-
+    LinkedList <Process*>  ReadyQueue;
+    static int countOfProcesses;
     int maxw;
     int forkprob;
     Process* KilledOne;
 };
+
 

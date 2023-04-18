@@ -17,14 +17,13 @@ public:
 	bool IsIDlE() const;
 	Process* RunningNow();
 	void RunningIsFree();
-
+	virtual int getcount() = 0;
 protected:
 	Process* RunningProcess;
 	State ProcessorState;
 	double load;
 	double utilization;
 	int TimerOfReadyList;
-    int countOfProcesses;
 	int runingTime;
 };
 

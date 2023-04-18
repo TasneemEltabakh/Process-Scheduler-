@@ -14,7 +14,6 @@
 Scheduler::Scheduler(string inputfilename)
 {
 	load(inputfilename);
-	output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses,  Numberof_SJF,  Numberof_FCFS,  Numberof_RR);
 	FakeSimulator();
 }
 Scheduler::Scheduler()
@@ -72,7 +71,7 @@ void Scheduler :: FakeSimulator()
 			Terminal.enqueue(process);
 			ProcessorsList.returnkth(i)->RunningIsFree();
 		}
-
+		
 	}
 	int random = 1 + (rand() % 100);
 	if (random < 10)
@@ -82,7 +81,7 @@ void Scheduler :: FakeSimulator()
 		numOfprocessesAdded++;
 
 	}
-
+	output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR);
 
 
 }

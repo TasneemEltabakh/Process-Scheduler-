@@ -1,5 +1,6 @@
 #include "ShortestJobProcessor.h"
 
+int ShortestJobProcessor::countOfProcesses = 0;
 ShortestJobProcessor::ShortestJobProcessor()
 {
 
@@ -12,15 +13,15 @@ ShortestJobProcessor::~ShortestJobProcessor()
 void ShortestJobProcessor::ScheduleAlgo()
 {
 
-	while (ReadyQueue.Count() !=0) {
+	while (ReadyQueue->Count() !=0) {
 
-			ReadyQueue.Dequeue_In_Variable(RunningProcess);
+			ReadyQueue->Dequeue_In_Variable(RunningProcess);
 			while (RunningProcess->getCT()!=0) {
 				RunningProcess->setCT(RunningProcess->getCT() - 1);
 			}
 			//Here the previuse must go to TERM
 	}
-	if (ReadyQueue.IsEmpty()) {
+	if (ReadyQueue->IsEmpty()) {
 		cout << "The Ready List is Empty" << endl;
 	}
 
@@ -28,16 +29,21 @@ void ShortestJobProcessor::ScheduleAlgo()
 }
 void ShortestJobProcessor::AddToMyReadyList(Process* NewProcess)
 {
-	ReadyQueue->enqueue(NewProcess);
+	//ReadyQueue->enqueue(NewProcess);
 	cout << "HI this is Algo for shortest " << endl;
+	countOfProcesses++;
 }
 void ShortestJobProcessor::AddToRun()
 {
-	ProcessorState = busy;
+	/*ProcessorState = busy;
 	if (ReadyQueue->IsEmpty()) {
 		return;
 	}
 
 	ReadyQueue->Dequeue_In_Variable(RunningProcess);
-	cout << RunningProcess->getPID() << endl;
+	cout << RunningProcess->getPID() << endl;*/
+}
+int ShortestJobProcessor::getcount()
+{
+	return countOfProcesses;
 }

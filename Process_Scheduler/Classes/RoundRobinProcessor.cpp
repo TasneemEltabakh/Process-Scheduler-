@@ -1,5 +1,6 @@
 #include "RoundRobinProcessor.h"
 
+int RoundRobinProcessor::countOfProcesses = 0;
 RoundRobinProcessor::RoundRobinProcessor(int sliceTime, int RTF) {
 
 	this->sliceTime = sliceTime;
@@ -38,18 +39,18 @@ void RoundRobinProcessor::ScheduleAlgo()
 	//
 
 	for (int i = 0; i < (sliceTime * countOfProcesses); i + sliceTime) {
-		if (ReadyQueue.IsEmpty()) {
+		if (ReadyQueue->IsEmpty()) {
 			cout << "The Ready List is Empty" << endl;
 			return;
 		}
-		else if (!ReadyQueue.IsEmpty() && RunningProcess == nullptr) {
-			ReadyQueue.Dequeue_In_Variable(RunningProcess);
+		else if (!ReadyQueue->IsEmpty() && RunningProcess == nullptr) {
+			ReadyQueue->Dequeue_In_Variable(RunningProcess);
 		}
 		else {
 			//Process* newProcess = new Process;
 			//newProcess = RunningProcess;
-			ReadyQueue.enqueue(RunningProcess);
-			ReadyQueue.Dequeue_In_Variable(RunningProcess);
+			ReadyQueue->enqueue(RunningProcess);
+			ReadyQueue->Dequeue_In_Variable(RunningProcess);
 		}
 
 		//for (int j = 0; j < sliceTime; j++) {
@@ -95,15 +96,20 @@ void RoundRobinProcessor::SetRTF(int rt) {
 
 void RoundRobinProcessor::AddToMyReadyList(Process* NewProcess)
 {
-	ReadyQueue->enqueue(NewProcess);
+	//ReadyQueue->enqueue(NewProcess);
 	cout << "HI this is Algo for round " << endl;
+	countOfProcesses++;
 }
 void RoundRobinProcessor::AddToRun()
 {
-	ProcessorState = busy;
+	/*ProcessorState = busy;
 	if (ReadyQueue->IsEmpty()) {
 		return;
 	}
 	ReadyQueue->Dequeue_In_Variable(RunningProcess);
-	cout << RunningProcess->getPID() << endl;
+	cout << RunningProcess->getPID() << endl;*/
+}
+int RoundRobinProcessor::getcount()
+{
+	return countOfProcesses;
 }
