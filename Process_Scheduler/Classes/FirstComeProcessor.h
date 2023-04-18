@@ -22,7 +22,7 @@ public:
 private:
     //LinkedList <Process*> * ReadyQueue = new  LinkedList <Process*>;
     LinkedList <Process*>  ReadyQueue;
-    static int countOfProcesses;
+    int countOfProcesses;
     int maxw;
     int forkprob;
     Process* KilledOne;

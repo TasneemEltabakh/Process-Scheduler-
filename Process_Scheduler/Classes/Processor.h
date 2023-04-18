@@ -18,6 +18,7 @@ public:
 	Process* RunningNow();
 	void RunningIsFree();
 	virtual int getcount() = 0;
+	int getId();
 protected:
 	Process* RunningProcess;
 	State ProcessorState;
@@ -25,5 +26,7 @@ protected:
 	double utilization;
 	int TimerOfReadyList;
 	int runingTime;
+	static int Count;
+	int Id;
 };
 

@@ -1,10 +1,11 @@
 #include "RoundRobinProcessor.h"
 
-int RoundRobinProcessor::countOfProcesses = 0;
+
 RoundRobinProcessor::RoundRobinProcessor(int sliceTime, int RTF) {
 
 	this->sliceTime = sliceTime;
 	this->RTF = RTF;
+	countOfProcesses = 0;
 }
 
 RoundRobinProcessor::~RoundRobinProcessor(){}
@@ -96,18 +97,19 @@ void RoundRobinProcessor::SetRTF(int rt) {
 
 void RoundRobinProcessor::AddToMyReadyList(Process* NewProcess)
 {
+	countOfProcesses++;
 	ReadyQueue.enqueue(NewProcess);
 	cout << "HI this is Algo for round " << endl;
-	//countOfProcesses++;
+
 }
 void RoundRobinProcessor::AddToRun()
 {
-	/*ProcessorState = busy;
-	if (ReadyQueue->IsEmpty()) {
+	ProcessorState = busy;
+	if (ReadyQueue.IsEmpty()) {
 		return;
 	}
-	ReadyQueue->Dequeue_In_Variable(RunningProcess);
-	cout << RunningProcess->getPID() << endl;*/
+	ReadyQueue.Dequeue_In_Variable(RunningProcess);
+
 }
 int RoundRobinProcessor::getcount()
 {

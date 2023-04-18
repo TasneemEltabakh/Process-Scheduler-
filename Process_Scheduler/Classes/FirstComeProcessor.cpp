@@ -1,11 +1,12 @@
 #include "FirstComeProcessor.h"
 
 
-int FirstComeProcessor::countOfProcesses = 0;
+
 FirstComeProcessor::FirstComeProcessor(int max, int fork)
 {
 	forkprob = fork;
 	maxw = max;
+	countOfProcesses = 0;
 }
 FirstComeProcessor::FirstComeProcessor()
 {
@@ -87,16 +88,16 @@ Process* FirstComeProcessor:: KillSignal()
 //}
 void  FirstComeProcessor::AddToMyReadyList(Process* NewProcess)
 {
+	countOfProcesses++;
 	ReadyQueue.InsertBeg(NewProcess);
 	cout << "HI this is Algo for first come" << endl;
-	countOfProcesses++;
+	
 }
 void FirstComeProcessor::AddToRun()
 {
-	/*ProcessorState = busy;
+	ProcessorState = busy;
 	RunningProcess = ReadyQueue.returnkth(0);
 	ReadyQueue.DeleteFirst();
-	cout << RunningProcess->getPID() << endl;*/
 
 }
 int FirstComeProcessor::getcount()

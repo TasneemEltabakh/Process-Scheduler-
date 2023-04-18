@@ -13,7 +13,7 @@ public:
     int getcount() override;
 
 private:
-    static int countOfProcesses;
+    int countOfProcesses;
     PriorityQueue<Process*>  ReadyQueue; //we need here a sorted queue or priority queue
 };
 

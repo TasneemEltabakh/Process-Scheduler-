@@ -16,7 +16,7 @@ public:
 private:
     int sliceTime;
     int RTF;
-    static int countOfProcesses;
+    int countOfProcesses;
     LinkedQueue <Process*>  ReadyQueue; // we choosed queue to be easily dequeued and enqueued during operation
 };
 

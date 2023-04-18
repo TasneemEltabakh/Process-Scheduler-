@@ -73,7 +73,6 @@ void Scheduler :: FakeSimulator()
 			ProcessorsList.returnkth(i)->RunningIsFree();
 
 		}
-		
 	}
 	int random = 1 + (rand() % 100);
 	if (random < 10)
