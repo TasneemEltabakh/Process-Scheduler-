@@ -20,6 +20,8 @@ public:
 	virtual int getcount() = 0;
 	virtual Process* getkth(int k) = 0;
 	int getId();
+
+	bool CheckIfRun();  //R add
 protected:
 	Process* RunningProcess;
 	State ProcessorState;
@@ -29,5 +31,8 @@ protected:
 	int runingTime;
 	static int Count;
 	int Id;
+
+	
+
 };
 

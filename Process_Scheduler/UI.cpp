@@ -46,11 +46,31 @@ void UI::OutPutScreen(LinkedQueue<Process*>& Terminal, LinkedQueue<Process*>& BL
 	cout << BLK.Count() << " " << "BLK: ";
 	BLK.Display();
 
+	for (int k = 0; k < BLK.Count(); k++) {
+		Process* temp;
+		BLK.Dequeue_In_Variable(temp);
+		cout << temp->getPID() << ", ";
+	}
 	cout << endl<< "-------------RUN Processes------------" << endl;
-	cout << ProcessorsList.Count() << " RUN: ";
-
+	int c=0;
+	for (int k = 0; k < ProcessorsList.Count(); k++) {
+		if (ProcessorsList.returnkth(k)->CheckIfRun()) {
+			c = c + 1;
+		}
+	}
+	cout << c << " RUN: ";
+	
+	for (int k = 0; k < ProcessorsList.Count(); k++) {
+		if (ProcessorsList.returnkth(k)->CheckIfRun()) {
+			cout << ProcessorsList.returnkth(k)->RunningNow()->getPID() << "(P" << ProcessorsList.returnkth(k)->getId() << ")" << ", ";
+		}
+	}
 
 	cout << endl<< "-------------TRM Processes------------" << endl;
 	cout << Terminal.Count() << " " << "TRM: ";
-	Terminal.Display();
+	for (int k = 0; k < Terminal.Count(); k++) {
+		Process* temp;
+		Terminal.Dequeue_In_Variable(temp);
+		cout << temp->getPID() << ", ";
+	}
 }
