@@ -37,7 +37,9 @@ void Scheduler::FakeSimulator()
 		Process* added;
 		Process* process = new Process;
 		int totalnum = Numberof_SJF + Numberof_RR + Numberof_FCFS;
+		int timerun = 3;
 		int terminatedcount = 0;
+		int countflag = 0;
 		while (!NewList.IsEmpty())
 		{
 
@@ -55,60 +57,88 @@ void Scheduler::FakeSimulator()
 	
 		for (int i = 0; i < totalnum; i++)
 		{
-			int timerun;
-			if (ProcessorsList.returnkth(i)->IsIDlE()) {
-				ProcessorsList.returnkth(i)->AddToRun();
-			}
-			while (!ProcessorsList.returnkth(i)->CheckIfemptyready())
+			
+			if (ProcessorsList.returnkth(i)->IsIDlE())
 			{
-				timerun = ProcessorsList.returnkth(i)->RunningNow()->getCT();
-				if (timerun == 0) Terminal.enqueue(ProcessorsList.returnkth(i)->MoveMeToTerminal());
+				
+				if (!ProcessorsList.returnkth(i)->CheckIfemptyready()) {
+					ProcessorsList.returnkth(i)->AddToRun();
+					countflag++;
+				}
+				else
+				{
+					timerun--;
+				}
 			}
+			else
+			{
+				timerun--;
+			}
+			if (timerun <= 0) {
+
+				Terminal.enqueue(ProcessorsList.returnkth(i)->MoveMeToTerminal()); cout << "terminated from loop" << endl;
+
+			}
+			
 		}
 		for (int i = 0; i < totalnum; i++)
 		{
+			while (!ProcessorsList.returnkth(i)->CheckIfemptyready())
+			{
+				int random = 1 + (rand() % 100);
+				process = ProcessorsList.returnkth(i)->RunningNow();
+				if (random >= 1 && random <= 15)
+				{
+					BLK.enqueue(process);
+					ProcessorsList.returnkth(i)->RunningIsFree();
+					if (!ProcessorsList.returnkth(i)->CheckIfemptyready()) ProcessorsList.returnkth(i)->AddToRun();
+					cout << "blocked" << endl;
+				}
+				else if (random >= 20 && random <= 30)
+				{
+					cout << "AddedToReadyQueueAgain" << endl;
+					ProcessorsList.returnkth(numOfprocessesAdded)->AddToMyReadyList(process);
+					ProcessorsList.returnkth(i)->RunningIsFree();
+					if (!ProcessorsList.returnkth(i)->CheckIfemptyready()) ProcessorsList.returnkth(i)->AddToRun();
+					numOfprocessesAdded++;
+
+				}
+				else if (random >= 50 && random <= 60)
+				{
+					Terminal.enqueue(process);
+					ProcessorsList.returnkth(i)->RunningIsFree();
+					if (!ProcessorsList.returnkth(i)->CheckIfemptyready()) ProcessorsList.returnkth(i)->AddToRun();
+					cout << "terminated" << endl;
+					terminatedcount++;
+				}
+			}
 			int random = 1 + (rand() % 100);
-			process = ProcessorsList.returnkth(i)->RunningNow();
-			if (random >= 1 && random <= 15)
+			if (random < 10)
 			{
-				BLK.enqueue(process);
-				ProcessorsList.returnkth(i)->RunningIsFree();
-				cout << "blocked" << endl;
-			}
-			else if (random >= 20 && random <= 30)
-			{
-				cout << "AddedToReadyQueueAgain" << endl;
-				ProcessorsList.returnkth(numOfprocessesAdded)->AddToMyReadyList(process);
-				numOfprocessesAdded++;
-				ProcessorsList.returnkth(i)->RunningIsFree();
+				if (!BLK.IsEmpty()) {
+					BLK.Dequeue_In_Variable(process);
+					ProcessorsList.returnkth(numOfprocessesAdded)->AddToMyReadyList(process);
+					numOfprocessesAdded++;
+				}
 
 			}
-			else if (random >= 50 && random <= 60)
+			for (int i = 0; i < Numberof_FCFS; i++)
 			{
-				Terminal.enqueue(process);
-				ProcessorsList.returnkth(i)->RunningIsFree();
-				cout << "terminated" << endl;
-				terminatedcount++;
+				random = 1 + (rand() % 10);
+				FirstComeProcessor* childPointer = dynamic_cast<FirstComeProcessor*>(ProcessorsList.returnkth(0));
+				if (!ProcessorsList.returnkth(i)->CheckIfemptyready())
+				{
+					if (childPointer->IsThereKilled(random))
+						Terminal.enqueue(childPointer->KillSignal());
+				}
 			}
+			output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
+			system("pause");
 		}
-		int random = 1 + (rand() % 100);
-		if (random < 10)
-		{
-			BLK.Dequeue_In_Variable(process);
-			ProcessorsList.returnkth(numOfprocessesAdded)->AddToMyReadyList(process);
-			numOfprocessesAdded++;
-
-		}
-		for (int i = 0; i < Numberof_FCFS; i++)
-		{
-			random = 1 + (rand() % 10);
-			FirstComeProcessor* childPointer = dynamic_cast<FirstComeProcessor*>(ProcessorsList.returnkth(0));
-			if (childPointer->IsThereKilled(random))
-				Terminal.enqueue(childPointer->KillSignal());
-		}
-		output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
 		Timer++;
+	
 		if (Terminal.Count() == TotaLNumberOfProcesses) flag = false;
+		
 	}
 	
 }

@@ -23,18 +23,21 @@ void UI::OutPutScreen(LinkedQueue<Process*>& Terminal, LinkedQueue<Process*>& BL
 		if (ProcessorsList.returnkth(i)->getId() >= 1 && ProcessorsList.returnkth(i)->getId() <= Numberof_FCFS) {
 			cout << endl<< "processor " << ProcessorsList.returnkth(i)->getId() << " [FCFS]: " << ProcessorsList.returnkth(i)->getcount() << " RDY: ";
 			for (int j = 0; j < ProcessorsList.returnkth(i)->getcount(); j++) {
-				cout<<(ProcessorsList.returnkth(i))->getkth(j)->getPID() << ", ";
+				
+					cout << (ProcessorsList.returnkth(i))->getkth(j)->getPID() << ", ";
 			}
 			
 		}else if (ProcessorsList.returnkth(i)->getId() >= Numberof_FCFS+1 && ProcessorsList.returnkth(i)->getId() <= Numberof_FCFS + Numberof_SJF) {
 			cout << endl << "processor " << ProcessorsList.returnkth(i)->getId() << " [SJF]: " << ProcessorsList.returnkth(i)->getcount() << " RDY: ";
 			for (int j = 0; j < ProcessorsList.returnkth(i)->getcount(); j++) {
-				cout << (ProcessorsList.returnkth(i))->getkth(j)->getPID() << ", ";
+			
+					cout << (ProcessorsList.returnkth(i))->getkth(j)->getPID() << ", ";
 			}
 			
 		}else if(ProcessorsList.returnkth(i)->getId() >= Numberof_FCFS + Numberof_SJF +1 && ProcessorsList.returnkth(i)->getId() <= Numberof_FCFS + Numberof_SJF + Numberof_RR) {
 			cout << endl << "processor " << ProcessorsList.returnkth(i)->getId() << " [RR]: " << ProcessorsList.returnkth(i)->getcount() << " RDY: ";
 			for (int j = 0; j < ProcessorsList.returnkth(i)->getcount(); j++) {
+				
 				cout << (ProcessorsList.returnkth(i))->getkth(j)->getPID() << ", ";
 			}
 		
@@ -46,6 +49,7 @@ void UI::OutPutScreen(LinkedQueue<Process*>& Terminal, LinkedQueue<Process*>& BL
 	cout << BLK.Count() << " " << "BLK: ";
 
 	for (int k = 0; k < BLK.Count(); k++) {
+		
 		cout << BLK.returnkth(k)->getPID() << ", ";
 	}
 	cout << endl<< "-------------RUN Processes------------" << endl;

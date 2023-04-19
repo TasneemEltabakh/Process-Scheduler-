@@ -56,7 +56,7 @@ Process* ShortestJobProcessor::MoveMeToTerminal()
 {
 	TerminatProcess = RunningProcess;
 	RunningIsFree();
-	AddToRun();
+	if (!ReadyQueue.IsEmpty()) AddToRun();
 	return TerminatProcess;
 }
 bool ShortestJobProcessor::CheckIfemptyready()

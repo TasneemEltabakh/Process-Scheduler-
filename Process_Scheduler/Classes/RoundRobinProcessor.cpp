@@ -125,7 +125,7 @@ Process* RoundRobinProcessor::MoveMeToTerminal()
 {
 	TerminatProcess = RunningProcess;
 	RunningIsFree();
-	AddToRun();
+	if (!ReadyQueue.IsEmpty()) AddToRun();
 	return TerminatProcess;
 }
 bool RoundRobinProcessor::CheckIfemptyready()

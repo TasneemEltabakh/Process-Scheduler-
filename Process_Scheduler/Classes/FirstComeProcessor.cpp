@@ -61,9 +61,10 @@ Process* FirstComeProcessor:: KillSignal()
 }
 Process* FirstComeProcessor::MoveMeToTerminal()
 {
+
 	TerminatProcess = RunningProcess;
 	RunningIsFree();
-	AddToRun();
+	if (!ReadyQueue.IsEmpty()) AddToRun();
 	return TerminatProcess;
 }
 

@@ -16,7 +16,7 @@ private:
 	Process* ParentQueue;  //R add
 	//bool finished;
 	int runningtime;
-
+	
 public:
 	Process();
 	Process(int x, int y, int z, int l);
