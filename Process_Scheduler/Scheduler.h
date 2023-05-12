@@ -29,7 +29,7 @@ public:
 	Scheduler();
 	~Scheduler();
 	void load(string inputfilename);
-	void TranslateData(string& linedata, LinkedQueue<string>* dataProcessor);
+	void TranslateData( string linedata, LinkedQueue<string>* dataP);
 	void RemoveParenthesis(string linedata, LinkedQueue<int>* dataProcessor);
 	void  CreateProcessors(LinkedQueue<string>* dataProcessor);
 	void  InsertProcessToNew(LinkedQueue<string>* dataProcess);

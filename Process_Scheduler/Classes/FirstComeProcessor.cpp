@@ -1,6 +1,6 @@
 #include "FirstComeProcessor.h"
 
-
+Process* FirstComeProcessor::KilledOne = nullptr;
 
 FirstComeProcessor::FirstComeProcessor(int max, int fork)
 {

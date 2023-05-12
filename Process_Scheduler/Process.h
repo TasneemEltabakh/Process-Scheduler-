@@ -3,13 +3,16 @@
 #include "Supplementary.h"
 #include "DataStructures/LinkedQueue.h"
 
+struct ProcessPairs {
+	
+	LinkedQueue<pair<int, int>> pairs;
+};
 class Process
 
 {
 private:
 	int PID, TT, AT, CT, WT, RT, TRT, nIO;
-	string IOPairS;
-	LinkedQueue<int> IOpairs;
+	ProcessPairs IOpairs;
 	bool iskilled;
 	bool Isforking;  //R add
 	LinkedQueue<Process*> ForkedList;  //R add
@@ -20,7 +23,7 @@ private:
 public:
 	Process();
 	Process(int x, int y, int z, int l);
-
+	void addDatatoIOPairs(int x, int y);
 	~Process();
 	int getPID() const;
 	int getAT()const;
@@ -29,9 +32,7 @@ public:
 	int getRT() const;
 	int getTRT() const;
 	int getTT() const;
-
 	void setCT(int newCT);  //R add
-
 	void addruntime(int x);
 	int getrunt() const;
 	void calcWT();
@@ -40,9 +41,6 @@ public:
 	void SetFOrk(); //R add
 	bool IsKilled();
 	void KillThisProcess();
-
-	//bool Isfinished();
-	//void FinishProcess();
 	bool findProcess(int i);
 
 	void InsertToIOlist(int x, int y);

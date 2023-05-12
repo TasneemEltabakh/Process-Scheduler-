@@ -17,6 +17,7 @@ Process::Process(int x, int y, int z, int l) {
 	nIO = l;
 	iskilled = false;
 	
+	cout << "new process is created with VALUES" << endl<< PID << endl << AT <<endl<< CT <<endl<< nIO << endl;
 
 }
 
@@ -83,11 +84,11 @@ void  Process::KillThisProcess()
 	iskilled = true;
 }
 
-void Process::InsertToIOlist(int x, int y)
+void  Process::addDatatoIOPairs(int x, int y)
 {
-	IOpairs.enqueue(x);
-	IOpairs.enqueue(y);
-
+	
+	IOpairs.pairs.enqueue(make_pair(x, y));
+	cout << "pairs are"<<endl << x << endl << y << endl;
 }
 
 void Process::setCT(int newCT) { //R add

@@ -27,7 +27,7 @@ private:
     int countOfProcesses;
     int maxw;
     int forkprob;
-    Process* KilledOne;
+   static Process* KilledOne;
 };
 
 

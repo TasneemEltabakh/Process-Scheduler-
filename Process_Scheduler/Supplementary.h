@@ -14,3 +14,9 @@ enum stateP {
 	ORPH
 };
 
+
+
+struct Pair {
+	int first;
+	int second;
+};

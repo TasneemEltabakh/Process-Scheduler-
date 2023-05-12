@@ -9,7 +9,8 @@
 #include "Classes/ShortestJobProcessor.h"
 #include "Classes/Processor.h"
 #include "UI.h"
-
+#include <windows.h>
+using namespace std;
 int Scheduler::Timer = 0;
 Scheduler::Scheduler(string inputfilename)
 {
@@ -18,11 +19,6 @@ Scheduler::Scheduler(string inputfilename)
 	FakeSimulator();
 	
 }
-Scheduler::Scheduler()
-{
-
-}
-
 Scheduler::~Scheduler()
 {
 
@@ -30,7 +26,7 @@ Scheduler::~Scheduler()
 void Scheduler::FakeSimulator()
 {
 	bool flag = true;
-	while (true)
+	while (flag)
 	{
 		srand(time(0));
 		double numOfprocessesAdded = 0;
@@ -145,6 +141,11 @@ void Scheduler::FakeSimulator()
 void Scheduler ::TimeStepsiterator()
 {
 	
+	while (true) {
+		Sleep(1000);
+		
+		Timer++;
+	}
 	
 }
 void Scheduler::load(string inputfile)
@@ -172,10 +173,10 @@ void Scheduler::load(string inputfile)
 			if (counter == 4) {
 				getline(InputFile, *line); 
 				TotaLNumberOfProcesses = stoi(*line);
+				
 			}
 			for (int i = 0; i < TotaLNumberOfProcesses; i++)
 			{
-				
 				getline(InputFile, *line);
 				TranslateData(*line, Data);
 				InsertProcessToNew(Data);
@@ -195,38 +196,34 @@ void Scheduler::load(string inputfile)
 	InputFile.close();
 	
 }
-void Scheduler ::TranslateData(string& linedata, LinkedQueue<string>*  dataP) //this Function Splits the string of one line into information for the system
+void Scheduler::TranslateData(string line, LinkedQueue<string>* Data)
 {
-	stringstream s(linedata);
+	istringstream iss(line);
+	string word;
 
-
-	int num;
-	while (s >> num) {
+	while (iss >> word)
+	{
+		if (word.front() == '(' && word.back() == ')') {
 		
-		dataP->enqueue(to_string(num));
+			int comma_pos = word.find(',');
+			string first = word.substr(1, comma_pos - 1);
+			string second = word.substr(comma_pos + 1, word.size() - comma_pos - 2);
+			
+			Data->enqueue(first);
+			Data->enqueue(second);
+			cout << first << endl;
 		
+		}
+		else {
+			
+			Data->enqueue(word);
+		
+		}
+	
+	
 	}
 }
-void Scheduler::RemoveParenthesis(string linedata, LinkedQueue<int>* dataProcessor)
-{
-	int n1 = linedata.find("(");
-	int n2 = linedata.find(")");
-	int n3 = linedata.find(",");
-	string FirstNumber, SecondNumber;
-	for (int i = n1 + 1; i < n3; i++)
-	{
-		FirstNumber = FirstNumber + linedata.at(i);
-		
-	}
-	for (int i = n3 + 1; i < n2; i++)
-	{
-		SecondNumber = SecondNumber + linedata.at(i);
 
-	}
-	dataProcessor->enqueue(stoi(FirstNumber));
-	dataProcessor->enqueue(stoi(SecondNumber));
-
-}
 void  Scheduler:: CreateProcessors(LinkedQueue<string>* dataProcessor) //this function Creates processors of each type by the required count and adds them to the processors list 
 {
 	string slicetime, rtf, fork, stl, maxw, Numberof_FC, Numberof_SJ, Numberof_R;
@@ -260,7 +257,7 @@ void  Scheduler:: CreateProcessors(LinkedQueue<string>* dataProcessor) //this fu
 void Scheduler::InsertProcessToNew(LinkedQueue<string>* dataProcess)
 {
 	string At, id, ct, nio;
-	//int IoR, IoD;
+	string IoR, IoD;
 
 	dataProcess->Dequeue_In_Variable(At);
 	dataProcess->Dequeue_In_Variable(id);
@@ -269,17 +266,16 @@ void Scheduler::InsertProcessToNew(LinkedQueue<string>* dataProcess)
 
 	Process* newprocess = new Process(stoi(At), stoi(id), stoi(ct), stoi(nio));
 	
-	/*if (stoi(nio) != 0)
+	if (stoi(nio) != 0)
 	{
-		LinkedQueue<int>* Data = new LinkedQueue<int>;
-		dataProcess->Dequeue_In_Variable(iop);
-		RemoveParenthesis(iop, Data);
-		Data->Dequeue_In_Variable(IoR);
-		Data->Dequeue_In_Variable(IoD);
-		delete Data;
-		newprocess->InsertToIOlist(IoR, IoD);
-		cout << IoR << IoD;
-	}*/
+		for (int i = 0; i < stoi(nio); i++)
+		{
+			dataProcess->Dequeue_In_Variable(IoR);
+			dataProcess->Dequeue_In_Variable(IoD);
+			newprocess->addDatatoIOPairs(stoi(IoR), stoi(IoD));
+		}
+	
+	}
 
 	NewList.enqueue(newprocess);
 
@@ -287,42 +283,31 @@ void Scheduler::InsertProcessToNew(LinkedQueue<string>* dataProcess)
 
 void Scheduler::KillSignalSearcher(LinkedQueue<string>* KillData)
 {
-	//string time, id;
-	//KillData->Dequeue_In_Variable(time);
-	//KillData->Dequeue_In_Variable(id);
-	//cout << time;
-	//cout << endl;
-	//cout << id;
-	//if (Timer == stoi(time))
-	//{
-	//	for (int i = 0; i < Numberof_FCFS; i++)
-	//	{
+	string time, id;
+	KillData->Dequeue_In_Variable(time);
+	KillData->Dequeue_In_Variable(id);
+	cout << time;
+	cout << endl;
+	cout << id;
+	if (Timer == stoi(time))
+	{
+		for (int i = 0; i < Numberof_FCFS; i++)
+		{
 
-	//		FirstComeProcessor* childPointer = dynamic_cast<FirstComeProcessor*>(ProcessorsList.returnkth(i));
-	//		childPointer->~FirstComeProcessor();
-	//		if (childPointer->IsThereKilled(stoi(id)))
-	//		{
-	//			KilledProcesses.enqueue(childPointer->KillSignal());
-	//		}
-	//	}
-	//}
+			FirstComeProcessor* childPointer = dynamic_cast<FirstComeProcessor*>(ProcessorsList.returnkth(i));
+			childPointer->~FirstComeProcessor();
+			if (childPointer->IsThereKilled(stoi(id)))
+			{
+				KilledProcesses.enqueue(childPointer->KillSignal());
+			}
+		}
+	}
 }
 void  Scheduler:: MoveProcessToReadyList()
 {
 	
 }
 
-void Scheduler::fork(Process* p) {
-//	Process* ForkedProcess = new Process;
-//	Process* ParentsQu;
-//	if (p->IsForked()) {
-//		//ParentsQu = p->getAllList();
-//		//ParentsQu.
-//	}
-//	else {
-//
-//	}
-//}
-	}
+
 
 

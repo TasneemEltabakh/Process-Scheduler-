@@ -322,8 +322,6 @@ public:
 		int count = 0;
 		while (p)
 		{
-			
-			
 			if (count == k)
 			{
 				return p->getItem();
