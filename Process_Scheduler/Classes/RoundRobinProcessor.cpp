@@ -82,18 +82,7 @@ void RoundRobinProcessor::SetRTF(int rt) {
 	RTF = rt;
 
 }
-//void RoundRobinProcessor::Migrate() {
-	//for (int i = 0; i < ReadyQueue.Count(); i++) {
-	//	Node* temp= ReadyQueue.gethead();
-	//	//Node<T>* tmp;
-	//	tmp = head;
-	//	while (tmp != NULL)
-	//	{
-	//		cout << tmp->data << endl;
-	//		tmp = tmp->next;
-	//	}
-	//}
-//}
+
 
 void RoundRobinProcessor::AddToMyReadyList(Process* NewProcess)
 {

@@ -4,11 +4,13 @@
 #include "DataStructures/LinkedList.h"
 #include "Process.h"
 #include "UI.h"
+#include <thread>
+#include <chrono>
 class processor; //dir dec
 
 class Scheduler
 {
-protected:
+
 	
 private:
 	
@@ -18,8 +20,9 @@ private:
 	LinkedQueue<Process*> Terminal;
 	LinkedQueue<Process*> BLK;
 	LinkedQueue<Process*> KilledProcesses;
-	static int Timer;
-
+	
+	bool stopflag;
+	int Timer;
 	UI* output;  //r add
 
 

@@ -10,17 +10,23 @@
 #include "Classes/Processor.h"
 #include "UI.h"
 #include <windows.h>
+#include <thread>
+#include <chrono>
+
 using namespace std;
-int Scheduler::Timer = 0;
+
 Scheduler::Scheduler(string inputfilename)
 {
-	
+
+	Timer = 0;
+	stopflag = false;
 	load(inputfilename);
-	FakeSimulator();
 	
+
 }
 Scheduler::~Scheduler()
 {
+	stopflag = true;
 
 }
 void Scheduler::FakeSimulator()
@@ -75,7 +81,6 @@ void Scheduler::FakeSimulator()
 				Terminal.enqueue(ProcessorsList.returnkth(i)->MoveMeToTerminal()); cout << "terminated from loop" << endl;
 
 			}
-			
 		}
 		for (int i = 0; i < totalnum; i++)
 		{
@@ -108,6 +113,7 @@ void Scheduler::FakeSimulator()
 					terminatedcount++;
 				}
 			}
+
 			int random = 1 + (rand() % 100);
 			if (random < 10)
 			{
@@ -131,22 +137,17 @@ void Scheduler::FakeSimulator()
 			output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
 			system("pause");
 		}
-		Timer++;
-	
+		
 		if (Terminal.Count() == TotaLNumberOfProcesses) flag = false;
-		
-	}
-	
-}
-void Scheduler ::TimeStepsiterator()
-{
-	
-	while (true) {
-		Sleep(1000);
-		
 		Timer++;
 	}
-	
+}
+void Scheduler::TimeStepsiterator()
+{
+	while (!stopflag) {
+
+		++Timer;
+	}
 }
 void Scheduler::load(string inputfile)
 {
@@ -187,6 +188,7 @@ void Scheduler::load(string inputfile)
 				getline(InputFile, *line);
 				TranslateData(*line, Data);
 				KillSignalSearcher(Data);
+				
 			}
 
 	}
@@ -211,7 +213,7 @@ void Scheduler::TranslateData(string line, LinkedQueue<string>* Data)
 			
 			Data->enqueue(first);
 			Data->enqueue(second);
-			cout << first << endl;
+			
 		
 		}
 		else {
@@ -283,22 +285,23 @@ void Scheduler::InsertProcessToNew(LinkedQueue<string>* dataProcess)
 
 void Scheduler::KillSignalSearcher(LinkedQueue<string>* KillData)
 {
+	if (KillData->IsEmpty()) {
+		
+		return;
+	}
 	string time, id;
 	KillData->Dequeue_In_Variable(time);
 	KillData->Dequeue_In_Variable(id);
-	cout << time;
-	cout << endl;
-	cout << id;
+	
 	if (Timer == stoi(time))
 	{
 		for (int i = 0; i < Numberof_FCFS; i++)
 		{
 
 			FirstComeProcessor* childPointer = dynamic_cast<FirstComeProcessor*>(ProcessorsList.returnkth(i));
-			childPointer->~FirstComeProcessor();
 			if (childPointer->IsThereKilled(stoi(id)))
 			{
-				KilledProcesses.enqueue(childPointer->KillSignal());
+				return;
 			}
 		}
 	}

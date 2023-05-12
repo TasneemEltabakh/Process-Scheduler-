@@ -12,7 +12,6 @@ public:
     void SetMAXW(int max);
     void ScheduleAlgo() override;
     Process* MoveMeToTerminal();
-    void ForkingCheck();
     void  AddToMyReadyList(Process* NewProcess) override;
     bool IsThereKilled(int c);
     Process* KillSignal();
@@ -27,7 +26,8 @@ private:
     int countOfProcesses;
     int maxw;
     int forkprob;
-   static Process* KilledOne;
+    static LinkedQueue<Process*> Killedprocesses;
+    Process* KilledOne;
 };
 
 

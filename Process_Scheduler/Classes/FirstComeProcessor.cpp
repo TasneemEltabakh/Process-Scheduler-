@@ -1,9 +1,10 @@
 #include "FirstComeProcessor.h"
 
-Process* FirstComeProcessor::KilledOne = nullptr;
+
 
 FirstComeProcessor::FirstComeProcessor(int max, int fork)
 {
+	KilledOne = nullptr;
 	forkprob = fork;
 	maxw = max;
 	countOfProcesses = 0;
@@ -20,9 +21,7 @@ FirstComeProcessor::~FirstComeProcessor()
 
 void FirstComeProcessor::ScheduleAlgo()
 {
-	//cout << "HI this is Algo for first come" << endl;
 	
-	//ReadyQueue->Dequeue_In_Variable(RunningProcess);
 	if (ReadyQueue.IsEmpty()) {
 		return;
 	}
@@ -44,13 +43,17 @@ void FirstComeProcessor::SetMAXW(int max)
 }
 bool FirstComeProcessor::IsThereKilled(int idOfProcess)
 {
-	for (int i = 0; i < ReadyQueue.Count(); i++)
+	if (!ReadyQueue.IsEmpty())
 	{
-		if (ReadyQueue.returnkth(i)->getPID() == idOfProcess)
+		for (int i = 0; i < ReadyQueue.Count(); i++)
 		{
-			KilledOne = ReadyQueue.returnkth(i);
-			ReadyQueue.DeleteNode(ReadyQueue.returnkth(i));
-			return true;
+			if (ReadyQueue.returnkth(i)->getPID() == idOfProcess)
+			{
+				KilledOne = ReadyQueue.returnkth(i);
+				Killedprocesses.enqueue(KilledOne);
+				ReadyQueue.DeleteNode(ReadyQueue.returnkth(i));
+				return true;
+			}
 		}
 	}
 	return false;
@@ -66,37 +69,15 @@ Process* FirstComeProcessor::MoveMeToTerminal()
 	RunningIsFree();
 	if (!ReadyQueue.IsEmpty()) AddToRun();
 	return TerminatProcess;
+
 }
 
-/*void FirstComeProcessor::ForkingCheck() {
-
-
-	if (random <= forkprob) 
-	{
-		RunningProcess->SetFOrk();
-
-		//Scheduler* sch ;
-		//sch->fork(RunningProcess);
-		//delete sch;
-};*/
-
-//void FirstComeProcessor::ForkingCheck() {
-//
-//	int random = 1 + (rand() % 100);
-//
-//	if (random <= forkprob) 
-//	{
-//		//Scheduler* sch ;
-//		//sch->fork(RunningProcess);
-//		//delete sch;
-//	};
-//}
 void  FirstComeProcessor::AddToMyReadyList(Process* NewProcess)
 {
 	countOfProcesses++;
-	ReadyQueue.InsertBeg(NewProcess);
-	cout << "HI this is Algo for first come" << endl;
+	ReadyQueue.InsertEnd(NewProcess);
 	
+
 }
 void FirstComeProcessor::AddToRun()
 {

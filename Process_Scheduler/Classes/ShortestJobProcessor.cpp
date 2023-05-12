@@ -19,7 +19,7 @@ void ShortestJobProcessor::ScheduleAlgo()
 			while (RunningProcess->getCT()!=0) {
 				RunningProcess->setCT(RunningProcess->getCT() - 1);
 			}
-			//Here the previuse must go to TERM
+			
 	}
 	if (ReadyQueue.IsEmpty()) {
 		cout << "The Ready List is Empty" << endl;
