@@ -11,7 +11,7 @@ public:
 	Processor();
 	virtual void  ScheduleAlgo() = 0;
 	~Processor();
-	virtual void  AddToMyReadyList(Process* NewProcess) = 0;
+	virtual void  AddToMyReadyList(Process& process) = 0;
 	virtual void  AddToRun() = 0;
 	virtual Process* MoveMeToTerminal() = 0;
 	bool IsIDlE() const;
@@ -26,6 +26,7 @@ public:
 	virtual bool CheckIfemptyready() = 0;
 	int getnowctforrunning();
 	void CurrentTime(int time);
+	virtual int getExpectedTime() = 0;
 	
 protected:
 	Process* RunningProcess;   //****************
@@ -40,8 +41,6 @@ protected:
 	int downtimer;
 	int Id;
 	int currentTime;
-
-	
-
+	int expectedtime;
 };
 

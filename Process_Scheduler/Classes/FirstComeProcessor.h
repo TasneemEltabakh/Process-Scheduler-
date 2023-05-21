@@ -12,17 +12,20 @@ public:
     void SetMAXW(int max);
     void ScheduleAlgo() override;
     Process* MoveMeToTerminal();
-    void  AddToMyReadyList(Process* NewProcess) override;
+    void  AddToMyReadyList(Process& process) override;
     bool IsThereKilled(int c);
     Process* KillSignal();
     void  AddToRun();
     int getcount() override;
     Process* getkth(int k) override;
     bool CheckIfemptyready() override;
+    int getExpectedTime() override;
 
 private:
     //LinkedList <Process*> * ReadyQueue = new  LinkedList <Process*>;
     LinkedList <Process*>  ReadyQueue;
+    LinkedList <Process*>  RunQueue;
+    static  LinkedList <Process*>  TRMQueue;
     int countOfProcesses;
     int maxw;
     int forkprob;

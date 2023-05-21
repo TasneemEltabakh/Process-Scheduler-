@@ -43,7 +43,9 @@ public:
 	void  FakeSimulator();
 	void KillSignalSearcher();
 	void getTime() const;
-	void fork(Process* p);    // added ariam
+	void fork(Process* p);  
+	int ShortestQueue();
 	void moveToTrm(Process* p);
+
 };
 

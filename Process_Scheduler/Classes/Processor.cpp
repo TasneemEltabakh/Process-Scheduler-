@@ -8,6 +8,7 @@ Processor::Processor()
 	load = 0;
 	utilization = 0;
 	Id = Count;
+	expectedtime = 0;
 	RunningProcess = new Process;
 	TerminatProcess = new Process;
 }
@@ -51,4 +52,5 @@ int Processor::getId()
 {
 	return Id;
 }
+
 

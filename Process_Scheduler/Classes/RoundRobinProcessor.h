@@ -11,11 +11,12 @@ public:
     void SetRTF(int);
     Process* MoveMeToTerminal();
     void ScheduleAlgo() override;
-    void  AddToMyReadyList(Process* NewProcess) override;
+    void  AddToMyReadyList(Process& process) override;
     void  AddToRun();
     int getcount() override;
     Process* getkth(int k) override;
     bool CheckIfemptyready();
+    int getExpectedTime() override;
 private:
     int sliceTime;
     int RTF;

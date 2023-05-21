@@ -147,4 +147,15 @@ public:
 		//cout<<"\n Is LinkedQueue Empty now?? ==> "<<boolalpha<<isEmpty();
 		//cout<<"\nEnding LinkedQueue destructor..."<<endl;
 	}
+	LinkedQueue(const LinkedQueue<T>& other)
+	{
+		Front = nullptr;
+		Rear = nullptr;
+		Node<T>* current = other.Front;
+		while (current != nullptr) {
+			enqueue(current->getItem());
+			current = current->getNext();
+		}
+	}
 };
+

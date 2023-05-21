@@ -477,7 +477,17 @@ public:
 			return true;
 		}
 	}
+	LinkedList(const LinkedList<T>& other)
+	{
+		Head = nullptr;
+		Tail = nullptr;
 
-
+		Node<T>* current = other.Head;
+		while (current != nullptr) {
+			T data = current->getItem();
+			InsertEnd(data);
+			current = current->getNext();
+		}
+	}
 };
 

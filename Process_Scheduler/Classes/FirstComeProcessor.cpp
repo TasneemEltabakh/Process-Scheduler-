@@ -1,7 +1,7 @@
 #include "FirstComeProcessor.h"
 
 
-
+LinkedQueue<Process*> FirstComeProcessor::Killedprocesses;
 FirstComeProcessor::FirstComeProcessor(int max, int fork)
 {
 	KilledOne = nullptr;
@@ -51,11 +51,29 @@ bool FirstComeProcessor::IsThereKilled(int idOfProcess)
 			{
 				KilledOne = ReadyQueue.returnkth(i);
 				Killedprocesses.enqueue(KilledOne);
-				ReadyQueue.DeleteNode(ReadyQueue.returnkth(i));
+				// here i have to send it to terminal queue  ask ? if will need the terminal updetaed somewhere 
+				TRMQueue.InsertEnd(KilledOne);
+				ReadyQueue.DeleteNode(ReadyQueue.returnkth(i)); 
 				return true;
 			}
 		}
 	}
+	//N
+	if (!RunQueue.IsEmpty()) {
+		
+		for (int i = 0; i < RunQueue.Count(); i++) {
+			if (RunQueue.returnkth(i)->getPID() == idOfProcess)
+			{
+				KilledOne = RunQueue.returnkth(i);
+				Killedprocesses.enqueue(KilledOne);
+				TRMQueue.InsertEnd(KilledOne);
+				RunQueue.DeleteNode(RunQueue.returnkth(i));
+				return true;
+			}
+		}
+
+	}
+
 	return false;
 }
 Process* FirstComeProcessor:: KillSignal()
@@ -72,12 +90,12 @@ Process* FirstComeProcessor::MoveMeToTerminal()
 
 }
 
-void  FirstComeProcessor::AddToMyReadyList(Process* NewProcess)
+void  FirstComeProcessor::AddToMyReadyList(Process& NewProcess)
 {
+	Process* newprocess = new Process(NewProcess);
 	countOfProcesses++;
-	ReadyQueue.InsertEnd(NewProcess);
+	ReadyQueue.InsertEnd(newprocess);
 	
-
 }
 void FirstComeProcessor::AddToRun()
 {
@@ -101,4 +119,15 @@ bool FirstComeProcessor::CheckIfemptyready()
 	if (ReadyQueue.IsEmpty())
 		return true;
 	return false;
+}
+int FirstComeProcessor::getExpectedTime()
+{
+	LinkedList<Process*> copy(ReadyQueue);
+	Process* process;
+	while (!copy.IsEmpty())
+	{
+		copy.Dequeue_In_Variable(process);
+		expectedtime += process->getCT();
+	}
+	return expectedtime;
 }

@@ -20,7 +20,19 @@ Process::Process(int x, int y, int z, int l) {
 	
 
 }
+Process::Process(const Process& other)
+{
+	
+	PID = other.PID;
+	AT = other.AT;
+	CT = other.CT;
+	nIO = other.nIO;
+	iskilled = other.iskilled;
 
+	IOpairs = other.IOpairs; 
+
+	
+}
 Process::~Process() {
 
 }
