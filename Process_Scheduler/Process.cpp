@@ -16,8 +16,6 @@ Process::Process(int x, int y, int z, int l) {
 	CT = z;
 	nIO = l;
 	iskilled = false;
-	
-	
 
 }
 Process::Process(const Process& other)
@@ -115,19 +113,6 @@ int Process::seeTimeForAskForIO() {  //R add for algo SJP
 	pair<int, int> pairsValue = IOpairs.pairs.Peek();
 	return pairsValue.first;
 }
-void Process::setaskedforOI(bool state) {  //R add
-	askedforOI = state;
-}
-void Process::setIsFinshed(bool state) {  //R add
-	IsFinshed = state;
-}
-bool Process::getaskedforOI() {  //R add
-	return askedforOI;
-}
-bool Process::getIsFinshed() {  //R add
-	return IsFinshed;
-}
-////////////////////////////////////////////////////////////////
 
 
 void Process::setCT(int newCT) { //R add
@@ -168,4 +153,6 @@ bool Process:: findProcess(int i)
 	return false;
 }
 
-
+int Process::getnIO() {  //R add2
+	return nIO;
+}

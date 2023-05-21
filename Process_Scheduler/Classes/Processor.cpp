@@ -10,7 +10,8 @@ Processor::Processor()
 	Id = Count;
 	expectedtime = 0;
 	RunningProcess = new Process;
-	TerminatProcess = new Process;
+	TerminatProcess = nullptr;
+	IORequest = nullptr;
 }
 
 Processor::~Processor(){

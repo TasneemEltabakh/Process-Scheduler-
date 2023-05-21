@@ -31,11 +31,17 @@ void Scheduler::Run()
 
 		updateTimer();
 		MoveProcessToReadyList();
-		for (int i = 1; i < ProcessorsList.Count(); i++)
+		for (int i = 0; i < ProcessorsList.Count(); i++)
 		{
 			ProcessorsList.returnkth(i)->CurrentTime(Timer);
 			
 		}
+		for (int i = 0; i < ProcessorsList.Count(); i++)
+		{
+			ProcessorsList.returnkth(i)->ScheduleAlgo();
+
+		}
+
 		if (Timer == (STL * loop))
 		{
 		//	WorkStealing();
@@ -43,7 +49,7 @@ void Scheduler::Run()
 		}
 		output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
 	    system("pause");
-		if (Timer == 13) break;
+		//if (Timer == 13) break;
 	}
 }
 Scheduler::~Scheduler()

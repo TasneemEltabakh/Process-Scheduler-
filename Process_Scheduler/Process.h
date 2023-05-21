@@ -24,9 +24,6 @@ private:
 	//bool finished;
 	int runningtime;
 
-	//Phase Two
-	bool askedforOI; //R add2
-	bool IsFinshed; //R add2
 	
 public:
 	Process();
@@ -62,12 +59,8 @@ public:
 	Process* getAllList();  //R add
 	int operator<< (const Process& c) const;  //R add
 
+	int getnIO();  //R add2
 
-	//Phase Two
-	void setaskedforOI(bool state); //R add2
-	void setIsFinshed(bool state); //R add2
-	bool getaskedforOI(); //R add2
-	bool getIsFinshed(); //R add2
 
 };
 

@@ -33,7 +33,8 @@ public:
 protected:
 	Process* RunningProcess; 
 	State ProcessorState;
-	Process* TerminatProcess;
+	Process* TerminatProcess;  ///****************
+	Process* IORequest;  ///****************
 	double load;
 	double utilization;
 	int TimerOfReadyList;
