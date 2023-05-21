@@ -26,7 +26,8 @@ private:
     int countOfProcesses;
     int maxw;
     int forkprob;
-    static LinkedQueue<Process*> Killedprocesses;
+    LinkedQueue<Process*> Killedprocesses;
+    //static LinkedQueue<Process*> Killedprocesses;
     Process* KilledOne;
 };
 

@@ -30,42 +30,35 @@ public:
 		}
 
 	}
-	void enqueue(T item)
+	bool enqueue(const T& newEntry)
 	{
-		Node<T>* newnode = new Node<T>(item);
-		newnode->setItem(item);
-		if (IsEmpty())
-		{
-			Front = newnode;
-			Rear = newnode;
-
-		}
+		Node<T>* newNodePtr = new Node<T>(newEntry);
+		// Insert the new node
+		if (isEmpty())	//special case if this is the first node to insert
+			Front = newNodePtr; // The queue is empty
 		else
-		{
-			Rear->setNext(newnode);
-			Rear = newnode;
-		}
+			Rear->setNext(newNodePtr); // The queue was not empty
 
-	}
+		Rear = newNodePtr; // New node is the last node now
+		return true;
+	} // end enqueue
 
-	void Dequeue_In_Variable(T& variable) {
-		if (IsEmpty())
-		{
-			cout << "The Queue is Empty";
-		}
-		else if (Front == Rear)
-		{
-			variable = Front->getItem();
-			delete Front;
-			Front = Rear =nullptr;
-		}
-		else
-		{
-			Node<T>* delptr = Front;
-			Front = Front->getNext();
-			variable = delptr->getItem();
-			delete delptr;
-		}
+	bool Dequeue_In_Variable(T& frntEntry) {
+
+		if (isEmpty())
+			return false;
+
+		Node<T>* nodeToDeletePtr = Front;
+		frntEntry = Front->getItem();
+		Front = Front->getNext();
+		// Queue is not empty; remove front
+		if (nodeToDeletePtr == Rear)	 // Special case: last node in the queue
+			Rear = nullptr;
+
+		// Free memory reserved for the dequeued node
+		delete nodeToDeletePtr;
+
+		return true;
 	}
 	void Display()
 	{
@@ -81,6 +74,16 @@ public:
 	T Peek()
 	{
 		return Front->getItem();
+	}
+
+	bool Peek_In_Variable(T& frntEntry) const
+	{
+		if (isEmpty())
+			return false;
+
+		frntEntry = Front->getItem();
+		return true;
+
 	}
 
 	int Count()
@@ -129,5 +132,19 @@ public:
 		}
 
 
+	}
+	~LinkedQueue()
+	{
+		//Note that the cout statements here is just for learning purpose
+		//They should be normally removed from the destructor
+		//cout<<"\nStarting LinkedQueue destructor...";
+		//cout<<"\nFreeing all nodes in the queue...";
+
+		//Free all nodes in the queue
+		T temp;
+		while (dequeue(temp));
+
+		//cout<<"\n Is LinkedQueue Empty now?? ==> "<<boolalpha<<isEmpty();
+		//cout<<"\nEnding LinkedQueue destructor..."<<endl;
 	}
 };
