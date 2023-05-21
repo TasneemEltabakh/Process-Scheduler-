@@ -15,11 +15,14 @@ class Process
 
 {
 private:
-	int PID, TT, AT, CT, WT, RT, TRT, nIO;
+	int PID, TT, AT, CT, WT, RT, TRT, nIO , RemainingCT, childAT;
 	ProcessPairs IOpairs;
 	bool iskilled;
 	bool Isforking;  //R add
 	LinkedQueue<Process*> ForkedList;  //R add
+	LinkedQueue<Process*> getChildren();
+	Process* Parent;
+	LinkedQueue<Process*> Children;
 	Process* ParentQueue;  //R add
 	//bool finished;
 	int runningtime;
@@ -32,7 +35,8 @@ public:
 	Process();
 	Process(int x, int y, int z, int l);
 	Process(const Process& other);
-
+	//void addDatatoIOPairs(int x, int y);
+	//////////////////////////////////////////
 	void addDatatoIOPairs(int x, int y);  //T edit
 	int seeTimeForAskForIO();  //R add2
 
@@ -48,7 +52,7 @@ public:
 	void setCT(int newCT);  //R add
 	void addruntime(int x);
 	int getrunt() const;
-	void calcWT();
+	void calcWT(int w);
 	void calcTRT();
 	void SetFOrk(); //R add
 	bool IsKilled();
@@ -64,10 +68,18 @@ public:
 
 
 	//Phase Two
-	void setaskedforOI(bool state); //R add2
-	void setIsFinshed(bool state); //R add2
-	bool getaskedforOI(); //R add2
-	bool getIsFinshed(); //R add2
+	void setaskedforOI(bool state); //R add
+	void setIsFinshed(bool state); //R add
+	bool getaskedforOI(); //R add
+	bool getIsFinshed(); //R add
+	//n
+	int getRemainingCT();
+	void setRemainingCT(int remainingCT);
+	void setParent(Process* parent);
+	void addChild(Process* child);
+	LinkedQueue<Process*>& getchildren();
+	void set_AT_Cild(int newAT);
+	
 
 };
 

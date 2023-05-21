@@ -21,21 +21,66 @@ FirstComeProcessor::~FirstComeProcessor()
 
 void FirstComeProcessor::ScheduleAlgo()
 {
-	
 	if (ReadyQueue.IsEmpty()) {
+		cout << " empty" << endl;
+		ProcessorState = IDLE;
 		return;
 	}
+	cout << "algo " << endl;
 
+	ProcessorState = busy;
 	ReadyQueue.Dequeue_In_Variable(RunningProcess);
+	//Here the previuse must go to TERM
+	ReadyQueue.Dequeue_In_Variable(RunningProcess);
+	RunningProcess->calcWT(wt);
 
-	while (RunningProcess->getCT() != 0 ) {
+	for (int i = 1; i < RunningProcess->getCT(); i++) {
 
 		//runingTime++;
 		RunningProcess->setCT(RunningProcess->getCT() - 1);
+		//nada
+		if (RunningProcess->getCT() > 0 && RunningProcess->getRemainingCT() == RunningProcess->getCT() &&
+			rand() % 100 < forkprob) {
+			Process* child = new Process();
+			child->setCT(RunningProcess->getCT() - RunningProcess->getRemainingCT());
+			child->set_AT_Cild(RunningProcess->getAT());
+			countOfProcesses++; // ask is it like db or the file has the id ? or they did another thing 
+			child->setParent(RunningProcess);
+			RunningProcess->addChild(child);
+			ReadyQueue.InsertEnd(child);  // add process to the scheudlor ready queu  // ask for function to get the ready queue
+
+
+		}
 	}
-	//Here the previuse must go to TERM
-	ReadyQueue.Dequeue_In_Variable(RunningProcess);
-}
+	
+	MoveMeToTerminal();
+		wt++;
+
+		if (ChcekMigration(RunningProcess))
+		{
+			cout << "process should migrate ";
+		}
+
+		else
+		{
+			wt = +(RunningProcess->getCT());
+			cout << " process moved to terminal";
+		}
+
+	}
+
+
+
+	//ReadyQueue.Dequeue_In_Variable(RunningProcess);
+
+	//while (RunningProcess->getCT() != 0 ) {
+
+	//	//runingTime++;
+	//	RunningProcess->setCT(RunningProcess->getCT() - 1);
+	//}
+	////Here the previuse must go to TERM
+	//ReadyQueue.Dequeue_In_Variable(RunningProcess);
+
 
 void FirstComeProcessor::SetMAXW(int max)
 {
@@ -94,7 +139,7 @@ void  FirstComeProcessor::AddToMyReadyList(Process& NewProcess)
 {
 	Process* newprocess = new Process(NewProcess);
 	countOfProcesses++;
-
+	cout << "process aded";
     expectedtime = expectedtime + newprocess->getCT();
 
 	ReadyQueue.InsertEnd(newprocess);
@@ -136,4 +181,8 @@ Process* FirstComeProcessor::RemoveProcess()
 		ReadyQueue.Dequeue_In_Variable(StolenProcess);
 	}
 	return StolenProcess;
+}
+
+bool FirstComeProcessor::ChcekMigration(Process* running) {
+	return false;
 }

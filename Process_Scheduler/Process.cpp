@@ -72,13 +72,13 @@ void Process::addruntime(int x) {
 	runningtime += x;
 }
 
-void Process::calcWT() {
-	WT = TRT - CT;
+void Process::calcWT(int w) {
+	WT = +w;
 }
 
 
 void Process::calcTRT() {
-	TRT = TT - AT;
+	TRT = WT + CT;
 }
 
 
@@ -168,4 +168,21 @@ bool Process:: findProcess(int i)
 	return false;
 }
 
+// nada for fork 
+void Process::setParent(Process* parent) {
+	Parent = parent;
+}
 
+void Process::addChild(Process* child) {
+	Children.enqueue(child);
+}
+
+LinkedQueue<Process*>& Process::getchildren() {
+	return Children;
+}
+int Process::getRemainingCT() {
+	return RemainingCT;
+}
+void Process::set_AT_Cild(int newAT) { 
+	childAT = newAT;
+}

@@ -50,5 +50,6 @@ public:
 	void WorkStealing();
 	int ShortestQueueTime();
 	int LongestQueueTime();
+	//void KillOrohan();
+	
 };
-

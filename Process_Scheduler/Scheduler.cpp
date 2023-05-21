@@ -1,4 +1,4 @@
-#include "Scheduler.h"
+﻿#include "Scheduler.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -34,7 +34,6 @@ void Scheduler::Run()
 		for (int i = 1; i < ProcessorsList.Count(); i++)
 		{
 			ProcessorsList.returnkth(i)->CurrentTime(Timer);
-			
 		}
 		if (Timer == (STL * loop))
 		{
@@ -341,6 +340,12 @@ void Scheduler:: MoveProcessToReadyList()
 }
 
 
+
+void Scheduler::moveToTrm(Process* p) {
+	Terminal.enqueue(p);
+	cout << " process id " << p->getPID() << " moved to trm" << " ct & wt " << p->getCT() << " " << p->getWT() << endl;
+}
+
 //void Scheduler::FakeSimulator()
 //{
 //	bool flag = true;
@@ -459,3 +464,5 @@ void Scheduler:: MoveProcessToReadyList()
 //
 //
 //
+
+
