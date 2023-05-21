@@ -28,7 +28,8 @@ public:
 	void CurrentTime(int time);
 	
 protected:
-	Process* RunningProcess;
+	Process* RunningProcess;   //****************
+
 	State ProcessorState;
 	Process* TerminatProcess;
 	double load;
