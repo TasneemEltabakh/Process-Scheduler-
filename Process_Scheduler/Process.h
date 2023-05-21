@@ -20,12 +20,21 @@ private:
 	Process* ParentQueue;  //R add
 	//bool finished;
 	int runningtime;
+
+	//Phase Two
+	bool askedforOI; //R add
+	bool IsFinshed; //R add
 	
 public:
 	Process();
 	Process(int x, int y, int z, int l);
 	Process(const Process& other);
 	void addDatatoIOPairs(int x, int y);
+	//////////////////////////////////////////
+	void addDatatoIOPairs(int x, int y);  //T edit
+	int seeTimeForAskForIO();  //R add
+	////////////////////////////////////////
+
 	~Process();
 	int getPID() const;
 	int getAT()const;
@@ -50,5 +59,13 @@ public:
 	void setParentQueue(Process* parent); //R add
 	Process* getAllList();  //R add
 	int operator<< (const Process& c) const;  //R add
+
+
+	//Phase Two
+	void setaskedforOI(bool state); //R add
+	void setIsFinshed(bool state); //R add
+	bool getaskedforOI(); //R add
+	bool getIsFinshed(); //R add
+
 };
 

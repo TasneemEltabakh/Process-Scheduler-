@@ -29,7 +29,8 @@ public:
 	virtual int getExpectedTime() = 0;
 	
 protected:
-	Process* RunningProcess;
+	Process* RunningProcess;   //****************
+
 	State ProcessorState;
 	Process* TerminatProcess;
 	double load;
