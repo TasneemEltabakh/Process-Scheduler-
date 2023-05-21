@@ -30,23 +30,18 @@ public:
 		}
 
 	}
-	void enqueue(T item)
+	bool enqueue(const T& newEntry)
 	{
-		Node<T>* newnode = new Node<T>(item);
-		newnode->setItem(item);
-		if (IsEmpty())
-		{
-			Front = newnode;
-			Rear = newnode;
-
-		}
+		Node<T>* newNodePtr = new Node<T>(newEntry);
+		// Insert the new node
+		if (IsEmpty())	//special case if this is the first node to insert
+			Front = newNodePtr; // The queue is empty
 		else
-		{
-			Rear->setNext(newnode);
-			Rear = newnode;
-		}
+			Rear->setNext(newNodePtr); // The queue was not empty
 
-	}
+		Rear = newNodePtr; // New node is the last node now
+		return true;
+	} // end enqueue
 
 	bool Dequeue_In_Variable(T& variable) {
 		if (IsEmpty()) {
@@ -80,6 +75,16 @@ public:
 	T Peek()
 	{
 		return Front->getItem();
+	}
+
+	bool Peek_In_Variable(T& frntEntry) const
+	{
+		if (IsEmpty())
+			return false;
+
+		frntEntry = Front->getItem();
+		return true;
+
 	}
 
 	int Count()
@@ -128,6 +133,20 @@ public:
 		}
 
 
+	}
+	~LinkedQueue()
+	{
+		//Note that the cout statements here is just for learning purpose
+		//They should be normally removed from the destructor
+		//cout<<"\nStarting LinkedQueue destructor...";
+		//cout<<"\nFreeing all nodes in the queue...";
+
+		//Free all nodes in the queue
+		T temp;
+		while (Dequeue_In_Variable(temp));
+
+		//cout<<"\n Is LinkedQueue Empty now?? ==> "<<boolalpha<<isEmpty();
+		//cout<<"\nEnding LinkedQueue destructor..."<<endl;
 	}
 	LinkedQueue(const LinkedQueue<T>& other)
 	{

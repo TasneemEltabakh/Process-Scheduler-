@@ -24,10 +24,11 @@ void ShortestJobProcessor::ScheduleAlgo()
 	}*/
 	if (RunningProcess==nullptr && !ReadyQueue.IsEmpty()) {  //The first Process in RUN
 		ReadyQueue.Dequeue_In_Variable(RunningProcess);
+		cout << "enter first element "<<endl;
 	}
 	else if (RunningProcess->getCT() == 0) {  //The process in RUN finished --> So get the next
 		RunningProcess->setIsFinshed(true);  //flag for termnate
-
+		cout << "element finish" << endl;
 		if (ReadyQueue.IsEmpty()) {  //The Ready list Finished
 			cout << "The Ready List is Empty" << endl;
 			return;
@@ -40,6 +41,7 @@ void ShortestJobProcessor::ScheduleAlgo()
 			RunningProcess->setaskedforOI(true);  //flag for I/O Request
 		}
 		RunningProcess->setCT(RunningProcess->getCT() - 1);   //Step
+		cout << "step" << endl;
 	}
 }
 void ShortestJobProcessor::AddToMyReadyList(Process& NewProcess)

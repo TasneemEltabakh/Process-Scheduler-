@@ -191,6 +191,9 @@ void Scheduler::KillSignalSearcher(LinkedQueue<string>* KillData)
 			{
 				return;
 			}
+
+
+			
 		}
 	}
 }
@@ -225,8 +228,10 @@ void Scheduler:: MoveProcessToReadyList()
 	
 		if (NewList.Peek()->getAT() == Timer)
 		{
-			
+		
 			NewList.Dequeue_In_Variable(process);
+			cout << "insert id " << process->getPID() << endl;
+			cout << "to" << ShortestQueue() << endl;
 			ProcessorsList.returnkth(ShortestQueue())->AddToMyReadyList(*process);
 			cout <<endl;
 		}

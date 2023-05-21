@@ -284,9 +284,17 @@ public:
 	//[9] Reverse
 	//Reverses the linked list (without allocating any new Nodes)
 
-	void Reverse() 
-	{
-
+	void Reverse() {
+		Node<T>* prev = nullptr;
+		Node<T>* current = Head;
+		Node<T>* next = nullptr;
+		while (current) {
+			next = current->getNext();
+			current->setNext(prev);
+			prev = current;
+			current = next;
+		}
+		Head = prev;   //Note I put the Head to prev not the current as at the end of the while current=null
 	}
 
 	////////////////////////Question 3////////////////////////////
@@ -451,7 +459,8 @@ public:
 			
 			return false;
 		}
-		else if (Head == Tail) {
+		else if (Head == Tail)
+		{
 			variable = Head->getItem();
 			delete Head;
 			Head = Tail = nullptr;
