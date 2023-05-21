@@ -39,7 +39,6 @@ bool Processor::CheckIfRun() {  //R add
 }
 Process* Processor::RunningNow()
 {
-	RunningProcess->setCT(RunningProcess->getCT() - 1);
 	return RunningProcess;
 }
 void Processor:: RunningIsFree()

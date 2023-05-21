@@ -19,7 +19,7 @@ public:
     int getExpectedTime() override;
 
     int getsliceTime();
-    void setsliceTime(int newtime);  //It is constant for each processor
+    void setInternalsliceTime(int newtime);  //It is constant for each processor
     Process* RemoveProcess() override;
 private:
     int sliceTime;
