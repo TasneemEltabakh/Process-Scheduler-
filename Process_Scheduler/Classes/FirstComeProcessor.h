@@ -20,6 +20,7 @@ public:
     Process* getkth(int k) override;
     bool CheckIfemptyready() override;
     int getExpectedTime() override;
+    bool ChcekMigration(Process* running);
 
 private:
     //LinkedList <Process*> * ReadyQueue = new  LinkedList <Process*>;
@@ -29,6 +30,7 @@ private:
     //static  LinkedList <Process*>  TRMQueue;
     int countOfProcesses;
     int maxw;
+    int wt;
     int forkprob;
     LinkedQueue<Process*> Killedprocesses;
     //static LinkedQueue<Process*> Killedprocesses;

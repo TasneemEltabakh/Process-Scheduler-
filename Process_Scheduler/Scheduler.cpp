@@ -239,6 +239,12 @@ void Scheduler:: MoveProcessToReadyList()
 	}
 	
 }
+
+void Scheduler::moveToTrm(Process* p) {
+	Terminal.enqueue(p);
+	cout << " process id " << p->getPID() << " moved to trm" << " ct & wt " << p->getCT() << " " << p->getWT() << endl;
+}
+
 //void Scheduler::FakeSimulator()
 //{
 //	bool flag = true;

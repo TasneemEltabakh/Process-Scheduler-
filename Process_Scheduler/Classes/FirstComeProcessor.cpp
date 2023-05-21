@@ -21,20 +21,45 @@ FirstComeProcessor::~FirstComeProcessor()
 
 void FirstComeProcessor::ScheduleAlgo()
 {
-	
 	if (ReadyQueue.IsEmpty()) {
+		cout << " empty" << endl;
+		ProcessorState = IDLE;
 		return;
 	}
+	cout << "algo " << endl;
 
+	ProcessorState = busy;
 	ReadyQueue.Dequeue_In_Variable(RunningProcess);
+	RunningProcess->calcWT(wt);
 
-	while (RunningProcess->getCT() != 0 ) {
+	for (int i = 1; i < RunningProcess->getCT(); i++) {
 
-		//runingTime++;
-		RunningProcess->setCT(RunningProcess->getCT() - 1);
+		wt++;
+
+		if (ChcekMigration(RunningProcess))
+		{
+			cout << "process should migrate ";
+		}
+
+		else
+		{
+			wt = +(RunningProcess->getCT());
+			cout << " process moved to terminal";
+		}
+
 	}
-	//Here the previuse must go to TERM
-	ReadyQueue.Dequeue_In_Variable(RunningProcess);
+
+
+
+	//ReadyQueue.Dequeue_In_Variable(RunningProcess);
+
+	//while (RunningProcess->getCT() != 0 ) {
+
+	//	//runingTime++;
+	//	RunningProcess->setCT(RunningProcess->getCT() - 1);
+	//}
+	////Here the previuse must go to TERM
+	//ReadyQueue.Dequeue_In_Variable(RunningProcess);
 }
 
 void FirstComeProcessor::SetMAXW(int max)
@@ -94,7 +119,7 @@ void  FirstComeProcessor::AddToMyReadyList(Process& NewProcess)
 {
 	Process* newprocess = new Process(NewProcess);
 	countOfProcesses++;
-
+	cout << "process aded";
     expectedtime = expectedtime + newprocess->getCT();
 
 	ReadyQueue.InsertEnd(newprocess);
@@ -126,4 +151,13 @@ bool FirstComeProcessor::CheckIfemptyready()
 int FirstComeProcessor::getExpectedTime()
 {
 	return expectedtime;
+}
+
+
+bool FirstComeProcessor::ChcekMigration(Process* running) {
+
+	if (running->getWT() > maxw)
+		return true;
+	else
+		return false;
 }

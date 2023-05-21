@@ -72,13 +72,13 @@ void Process::addruntime(int x) {
 	runningtime += x;
 }
 
-void Process::calcWT() {
-	WT = TRT - CT;
+void Process::calcWT(int w) {
+	WT = +w;
 }
 
 
 void Process::calcTRT() {
-	TRT = TT - AT;
+	TRT = WT + CT;
 }
 
 

@@ -45,7 +45,7 @@ public:
 	void setCT(int newCT);  //R add
 	void addruntime(int x);
 	int getrunt() const;
-	void calcWT();
+	void calcWT(int w);
 	void calcTRT();
 	void SetFOrk(); //R add
 	bool IsKilled();
