@@ -28,10 +28,14 @@ public:
 	void CurrentTime(int time);
 	virtual int getExpectedTime() = 0;
 	virtual Process* RemoveProcess() = 0;
-
+	bool StoppedCheck();
+	void OutOfService(int n);
+	void BacktoService();
+	int CountDownBreak();
 	
 protected:
 	Process* RunningProcess; 
+	Process Running;
 	State ProcessorState;
 	Process* TerminatProcess;  ///****************
 	Process* IORequest;  ///****************
@@ -39,10 +43,13 @@ protected:
 	double utilization;
 	int TimerOfReadyList;
 	int runingTime;
+	int breaktime;
 	static int Count;
 	int downtimer;
 	int Id;
 	int currentTime;
 	int expectedtime;
+	int getRunningCt;
+	State processor;
 };
 

@@ -12,46 +12,48 @@ ShortestJobProcessor::~ShortestJobProcessor()
 
 void ShortestJobProcessor::ScheduleAlgo()
 {
-	TerminatProcess = nullptr;
-	IORequest = nullptr;
-	//New Start
-	if (RunningProcess != nullptr) {
-		if (RunningProcess->getCT() != 0) {
-			RunningProcess->setCT(RunningProcess->getCT() - 1);
-			expectedtime = expectedtime - 1;
-			if (RunningProcess->getnIO()!=0) {
-				if (currentTime == RunningProcess->seeTimeForAskForIO()) {
-					IORequest = new Process(*RunningProcess);  //Flag gor I/O
-				}
-			}
-			cout << "step" << endl;
-			return;
-		}
-		else {
-			TerminatProcess = new Process(*RunningProcess);  //Flag For Term
-			if (!ReadyQueue.IsEmpty()) {
-				ReadyQueue.Dequeue_In_Variable(RunningProcess);
-				cout << "enter new elemnt" << endl;
-				return;
-			}
-		}
-	}
-	if (ReadyQueue.IsEmpty()) {
-		cout << "SJP Ready Empty" << endl;
-		return;
-	}
-	if (RunningProcess==nullptr) {
-		if (ReadyQueue.IsEmpty()) {
-			cout << "SJP Ready Empty2" << endl;
-			return;
-		}
-		else {
-			ReadyQueue.Dequeue_In_Variable(RunningProcess);
-			cout << "enter new elemnt" << endl;
-			return;
-		}
-	}
+    TerminatProcess = nullptr;
+    IORequest = nullptr;
+
+   
+    if (RunningProcess != nullptr)
+    {
+        if (RunningProcess->getCT() > 0)
+        {
+            RunningProcess->setCT(RunningProcess->getCT() - 1);
+            expectedtime--;
+
+           
+            if (RunningProcess->getnIO() > 0 && currentTime == RunningProcess->seeTimeForAskForIO())
+            {
+                IORequest = new Process(*RunningProcess);  
+            }
+
+            cout << "Step" << endl;
+            return;
+        }
+        else
+        {
+            TerminatProcess = new Process(*RunningProcess);  
+            RunningProcess = nullptr;
+        }
+    }
+
+   
+    if (ReadyQueue.IsEmpty())
+    {
+        cout << "SJP Ready Empty" << endl;
+        return;
+    }
+
+    
+    Process* shortestJob = ReadyQueue.Peek();
+    ReadyQueue.Dequeue_In_Variable(shortestJob);
+
+    RunningProcess = shortestJob;
+    cout << "Enter new element" << endl;
 }
+
 void ShortestJobProcessor::AddToMyReadyList(Process& NewProcess)
 {
 	Process* newprocess = new Process(NewProcess);

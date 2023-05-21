@@ -3,6 +3,7 @@ enum State
 {
 	IDLE,
 	busy,
+	Stop,
 };
 
 enum stateP {

@@ -21,66 +21,55 @@ FirstComeProcessor::~FirstComeProcessor()
 
 void FirstComeProcessor::ScheduleAlgo()
 {
-	if (ReadyQueue.IsEmpty()) {
-		cout << " empty" << endl;
-		ProcessorState = IDLE;
-		return;
-	}
-	cout << "algo " << endl;
-
-	ProcessorState = busy;
-	ReadyQueue.Dequeue_In_Variable(RunningProcess);
-	//Here the previuse must go to TERM
-	ReadyQueue.Dequeue_In_Variable(RunningProcess);
-	RunningProcess->calcWT(wt);
-
-	for (int i = 1; i < RunningProcess->getCT(); i++) {
-
-		//runingTime++;
-		RunningProcess->setCT(RunningProcess->getCT() - 1);
-		//nada
-		if (RunningProcess->getCT() > 0 && RunningProcess->getRemainingCT() == RunningProcess->getCT() &&
-			rand() % 100 < forkprob) {
-			Process* child = new Process();
-			child->setCT(RunningProcess->getCT() - RunningProcess->getRemainingCT());
-			child->set_AT_Cild(RunningProcess->getAT());
-			countOfProcesses++; // ask is it like db or the file has the id ? or they did another thing 
-			child->setParent(RunningProcess);
-			RunningProcess->addChild(child);
-			ReadyQueue.InsertEnd(child);  // add process to the scheudlor ready queu  // ask for function to get the ready queue
-
-
-		}
-	}
-	
-	MoveMeToTerminal();
-		wt++;
-
-		if (ChcekMigration(RunningProcess))
-		{
-			cout << "process should migrate ";
-		}
-
-		else
-		{
-			wt = +(RunningProcess->getCT());
-			cout << " process moved to terminal";
-		}
-
-	}
-
+//	if (ReadyQueue.IsEmpty()) {
+//		ProcessorState = IDLE;
+//		return;
+//	}
+//	cout << "algo " << endl;
+//
+//	ProcessorState = busy;
+//	ReadyQueue.Dequeue_In_Variable(RunningProcess);
+//	//Here the previuse must go to TERM
+//	ReadyQueue.Dequeue_In_Variable(RunningProcess);
+//	RunningProcess->calcWT(wt);
+//
+//	for (int i = 1; i < RunningProcess->getCT(); i++) {
+//
+//		//runingTime++;
+//		RunningProcess->setCT(RunningProcess->getCT() - 1);
+//		//nada
+//		if (RunningProcess->getCT() > 0 && RunningProcess->getRemainingCT() == RunningProcess->getCT() &&
+//			rand() % 100 < forkprob) {
+//			Process* child = new Process();
+//			child->setCT(RunningProcess->getCT() - RunningProcess->getRemainingCT());
+//			child->set_AT_Cild(RunningProcess->getAT());
+//			countOfProcesses++; // ask is it like db or the file has the id ? or they did another thing 
+//			child->setParent(RunningProcess);
+//			RunningProcess->addChild(child);
+//			ReadyQueue.InsertEnd(child);  // add process to the scheudlor ready queu  // ask for function to get the ready queue
+//
+//
+//		}
+//	}
+//	
+//	MoveMeToTerminal();
+//		wt++;
+//
+//		if (ChcekMigration(RunningProcess))
+//		{
+//			cout << "process should migrate ";
+//		}
+//
+//		else
+//		{
+//			wt = +(RunningProcess->getCT());
+//			cout << " process moved to terminal";
+//		}
+//
+//}
 
 
-	//ReadyQueue.Dequeue_In_Variable(RunningProcess);
-
-	//while (RunningProcess->getCT() != 0 ) {
-
-	//	//runingTime++;
-	//	RunningProcess->setCT(RunningProcess->getCT() - 1);
-	//}
-	////Here the previuse must go to TERM
-	//ReadyQueue.Dequeue_In_Variable(RunningProcess);
-
+}
 
 void FirstComeProcessor::SetMAXW(int max)
 {
@@ -94,30 +83,28 @@ bool FirstComeProcessor::IsThereKilled(int idOfProcess)
 		{
 			if (ReadyQueue.returnkth(i)->getPID() == idOfProcess)
 			{
-				KilledOne = ReadyQueue.returnkth(i);
-				Killedprocesses.enqueue(KilledOne);
-				// here i have to send it to terminal queue  ask ? if will need the terminal updetaed somewhere 
-				TRMQueue.InsertEnd(KilledOne);
+				//KilledOne = ReadyQueue.returnkth(i);
+		
 				ReadyQueue.DeleteNode(ReadyQueue.returnkth(i)); 
 				return true;
 			}
 		}
 	}
 	//N
-	if (!RunQueue.IsEmpty()) {
-		
-		for (int i = 0; i < RunQueue.Count(); i++) {
-			if (RunQueue.returnkth(i)->getPID() == idOfProcess)
-			{
-				KilledOne = RunQueue.returnkth(i);
-				Killedprocesses.enqueue(KilledOne);
-				TRMQueue.InsertEnd(KilledOne);
-				RunQueue.DeleteNode(RunQueue.returnkth(i));
-				return true;
-			}
-		}
+	//if (!RunQueue.IsEmpty()) {
+	//	
+	//	for (int i = 0; i < RunQueue.Count(); i++) {
+	//		if (RunQueue.returnkth(i)->getPID() == idOfProcess)
+	//		{
+	//			KilledOne = RunQueue.returnkth(i);
+	//			Killedprocesses.enqueue(KilledOne);
+	//			TRMQueue.InsertEnd(KilledOne);
+	//			RunQueue.DeleteNode(RunQueue.returnkth(i));
+	//			return true;
+	//		}
+	//	}
 
-	}
+	//}
 
 	return false;
 }
@@ -129,8 +116,6 @@ Process* FirstComeProcessor::MoveMeToTerminal()
 {
 
 	TerminatProcess = RunningProcess;
-	RunningIsFree();
-	if (!ReadyQueue.IsEmpty()) AddToRun();
 	return TerminatProcess;
 
 }
@@ -138,12 +123,9 @@ Process* FirstComeProcessor::MoveMeToTerminal()
 void  FirstComeProcessor::AddToMyReadyList(Process& NewProcess)
 {
 	Process* newprocess = new Process(NewProcess);
-	countOfProcesses++;
-	cout << "process aded";
-    expectedtime = expectedtime + newprocess->getCT();
-
+	expectedtime = expectedtime + newprocess->getCT();
 	ReadyQueue.InsertEnd(newprocess);
-	
+
 }
 void FirstComeProcessor::AddToRun()
 {
@@ -179,8 +161,9 @@ Process* FirstComeProcessor::RemoveProcess()
 	{
 		expectedtime = expectedtime - ReadyQueue.returnkth(ReadyQueue.Count() - 1)->getCT();
 		ReadyQueue.Dequeue_In_Variable(StolenProcess);
+		return StolenProcess;
 	}
-	return StolenProcess;
+	
 }
 
 bool FirstComeProcessor::ChcekMigration(Process* running) {

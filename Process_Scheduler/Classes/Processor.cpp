@@ -9,6 +9,7 @@ Processor::Processor()
 	utilization = 0;
 	Id = Count;
 	expectedtime = 0;
+	getRunningCt = 0;
 	RunningProcess = new Process;
 	TerminatProcess = nullptr;
 	IORequest = nullptr;
@@ -52,5 +53,29 @@ int Processor::getId()
 {
 	return Id;
 }
+bool  Processor::StoppedCheck()
+{
+	if (this->ProcessorState == Stop)
+		return true;
+	else
+	return false;
+}
+void  Processor::OutOfService(int n)
+{
+	ProcessorState = Stop;
+	breaktime = n;
+}
+void Processor::BacktoService()
+{
+	ProcessorState = IDLE;
+	breaktime = 0;
+}
+int Processor::CountDownBreak()
+{
+	breaktime--;
+	return breaktime;
+}
+
+
 
 

@@ -52,8 +52,10 @@ public:
 	}
 
 	bool Dequeue_In_Variable(T& variable) {
+		
+
 		if (IsEmpty()) {
-			
+
 			return false;
 		}
 		else if (Front == Rear) {
@@ -61,6 +63,7 @@ public:
 			delete Front;
 			Front = Rear = nullptr;
 		}
+	
 		else {
 			Node<T>* delptr = Front;
 			Front = Front->getNext();
@@ -69,7 +72,38 @@ public:
 		}
 		return true;
 	}
+	
+	bool DeleteNodein(int index)
+	{
+		if (index < 0 || index >= Count())
+			return false;
 
+		if (index == 0)
+		{
+			Node<T>* temp = Front;
+			Front = Front->getNext();
+			delete temp;
+		}
+		else
+		{
+			Node<T>* prev = nullptr;
+			Node<T>* current = Front;
+			int count = 0;
+
+			while (count < index && current != nullptr)
+			{
+				prev = current;
+				current = current->getNext();
+				count++;
+			}
+
+			if (current != nullptr)
+			{
+				prev->setNext(current->getNext());
+				delete current;
+			}
+		}
+	}
 	void Display()
 	{
 		Node<T>* temp = Front;

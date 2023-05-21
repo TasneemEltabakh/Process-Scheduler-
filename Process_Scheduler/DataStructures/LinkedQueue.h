@@ -122,6 +122,7 @@ public:
 	{
 		Node<T>* p = Front;
 		int count = 0;
+		
 		while (p)
 		{
 			if (count == k)

@@ -63,7 +63,7 @@ void UI::OutPutScreen(LinkedQueue<Process*>& Terminal, LinkedQueue<Process*>& BL
 	
 	for (int k = 0; k < ProcessorsList.Count(); k++) {
 		if (ProcessorsList.returnkth(k)->CheckIfRun()) {
-			//cout << ProcessorsList.returnkth(k)->RunningNow()->getPID() << "(P" << ProcessorsList.returnkth(k)->getId() << ")" << ", ";
+			cout << ProcessorsList.returnkth(k)->RunningNow()->getPID() << "(P" << ProcessorsList.returnkth(k)->getId() << ")" << ", ";
 		}
 	}
 

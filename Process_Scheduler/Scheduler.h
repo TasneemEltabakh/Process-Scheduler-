@@ -25,6 +25,8 @@ private:
 	UI* output;
 	void updateTimer();
 	int STL;
+	int Heatingprop;
+	int timeOfRelaxing;
 	int loop;
 public:
 	
@@ -43,6 +45,7 @@ public:
 	void TimeStepsiterator();
 	void  FakeSimulator();
 	void getTime() const;
+	void Overheating();
 	void fork(Process* p);  
 	int ShortestQueue();
 	int LongestQueue();
