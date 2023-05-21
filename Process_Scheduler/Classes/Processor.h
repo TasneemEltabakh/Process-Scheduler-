@@ -25,6 +25,8 @@ public:
 	bool CheckIfRun(); 
 	virtual bool CheckIfemptyready() = 0;
 	int getnowctforrunning();
+	void CurrentTime(int time);
+	
 protected:
 	Process* RunningProcess;
 	State ProcessorState;
@@ -36,6 +38,7 @@ protected:
 	static int Count;
 	int downtimer;
 	int Id;
+	int currentTime;
 
 	
 

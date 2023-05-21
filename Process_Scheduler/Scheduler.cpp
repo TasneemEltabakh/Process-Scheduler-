@@ -21,7 +21,6 @@ Scheduler::Scheduler(string inputfilename)
 	Timer = 0;
 	stopflag = false;
 	load(inputfilename);
-	
 
 }
 void Scheduler::Run()

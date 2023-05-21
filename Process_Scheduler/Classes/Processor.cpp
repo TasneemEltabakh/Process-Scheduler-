@@ -16,7 +16,11 @@ Processor::~Processor(){
 	
 }
 
+void Processor::CurrentTime(int time)
+{
+	this->currentTime = time;
 
+}
 bool Processor::IsIDlE() const
 {
 	if (ProcessorState == IDLE)
