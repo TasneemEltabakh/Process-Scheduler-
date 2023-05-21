@@ -28,10 +28,12 @@ public:
 	void CurrentTime(int time);
 	virtual int getExpectedTime() = 0;
 	virtual Process* RemoveProcess() = 0;
-
+	bool StoppedCheck();
+	void OutOfService();
 	
 protected:
 	Process* RunningProcess; 
+	Process Running;
 	State ProcessorState;
 	Process* TerminatProcess;
 	double load;
@@ -43,5 +45,7 @@ protected:
 	int Id;
 	int currentTime;
 	int expectedtime;
+	int getRunningCt;
+	State processor;
 };
 

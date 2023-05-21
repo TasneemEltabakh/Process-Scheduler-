@@ -12,6 +12,7 @@ ShortestJobProcessor::~ShortestJobProcessor()
 
 void ShortestJobProcessor::ScheduleAlgo()
 {
+
 	////Before Understand The logic of Time
 	//*while (ReadyQueue.Count() != 0) {
 	//		ReadyQueue.Dequeue_In_Variable(RunningProcess);

@@ -9,6 +9,7 @@ Processor::Processor()
 	utilization = 0;
 	Id = Count;
 	expectedtime = 0;
+	getRunningCt = 0;
 	RunningProcess = new Process;
 	TerminatProcess = new Process;
 }
@@ -38,7 +39,6 @@ bool Processor::CheckIfRun() {  //R add
 }
 Process* Processor::RunningNow()
 {
-	RunningProcess->setCT(RunningProcess->getCT() - 1);
 	return RunningProcess;
 }
 void Processor:: RunningIsFree()
@@ -51,6 +51,16 @@ void Processor:: RunningIsFree()
 int Processor::getId()
 {
 	return Id;
+}
+bool  Processor::StoppedCheck()
+{
+	if (this->ProcessorState == Stop)
+		return true;
+	return false;
+}
+void  Processor::OutOfService()
+{
+	ProcessorState = Stop;
 }
 
 

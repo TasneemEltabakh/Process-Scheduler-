@@ -52,8 +52,10 @@ public:
 	}
 
 	bool Dequeue_In_Variable(T& variable) {
+		
+
 		if (IsEmpty()) {
-			
+
 			return false;
 		}
 		else if (Front == Rear) {
@@ -61,6 +63,7 @@ public:
 			delete Front;
 			Front = Rear = nullptr;
 		}
+	
 		else {
 			Node<T>* delptr = Front;
 			Front = Front->getNext();
