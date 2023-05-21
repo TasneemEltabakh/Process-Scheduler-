@@ -1,10 +1,10 @@
 #include "Process.h"
 
 Process::Process() {
-	PID = 0;
-	AT = 0;
-	CT = 0;
-	nIO = 0;
+	//PID = 0;
+	//AT = 0;
+	//CT = 0;
+	//nIO = 0;
 	iskilled = false;
 	
 }

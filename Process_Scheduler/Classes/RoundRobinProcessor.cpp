@@ -5,63 +5,69 @@ RoundRobinProcessor::RoundRobinProcessor(int sliceTime, int RTF) {
 
 	this->sliceTime = sliceTime;
 	this->RTF = RTF;
+	InternalsliceTime = sliceTime;  //R add2
 	countOfProcesses = 0;
 }
 
 RoundRobinProcessor::~RoundRobinProcessor(){}
 void RoundRobinProcessor::ScheduleAlgo()
 {	
-	//New Start
+	TerminatProcess = nullptr;
+	IORequest = nullptr;
 
 
+	if (RunningProcess != nullptr)
+	{
+		if (RunningProcess->getCT() > 0)
+		{
+			if (InternalsliceTime == 0) {
+				ReadyQueue.enqueue(RunningProcess);
+				ReadyQueue.Dequeue_In_Variable(RunningProcess);
+				setInternalsliceTime(sliceTime);  //Restart the sliceTime
+				cout << "RR sliceTime, enter new elemnt" << endl;
+				return;
+			}
 
-	/*if (ReadyQueue.IsEmpty()) {
-		cout << "RR Ready list is empty" << endl;
+			RunningProcess->setCT(RunningProcess->getCT() - 1);
+			expectedtime--;
+			InternalsliceTime = InternalsliceTime - 1;
 
-	}
-	else if (RunningProcess == nullptr && !ReadyQueue.IsEmpty()) {
-		ReadyQueue.Dequeue_In_Variable(RunningProcess);   //First elemnt to enter
-		InternalsliceTime = getsliceTime();       //start new count for 
-		cout << "RR enter first element " << endl;
-	}
-	else if (InternalsliceTime==0) {
-		ReadyQueue.enqueue(RunningProcess);
-		cout << " slecetime= " << RunningProcess->getCT() << endl;
-		cout << "RR time finish for this process" << endl;
-		ReadyQueue.Dequeue_In_Variable(RunningProcess);
-		cout << "RR enter new element" << endl;
-		InternalsliceTime = getsliceTime();       //start new count for
-	}
-	else if (RunningProcess != nullptr && RunningProcess->getCT() != 0 && InternalsliceTime != 0) {
-		if (currentTime == RunningProcess->seeTimeForAskForIO()) {  //Check every time if request I/O
-			RunningProcess->setaskedforOI(true);  //flag for I/O Request
-			cout << "RR flag ask for IO" << endl;
-		}
-		InternalsliceTime = InternalsliceTime - 1;
-		RunningProcess->setCT(RunningProcess->getCT() - 1);   //Step
-		cout << "RR step" << endl;
-		expectedtime = expectedtime - 1;  //for T
-	}
-	else if (RunningProcess != nullptr &&  RunningProcess->getCT() == 0) {  //The process in RUN finished --> So get the next
-		RunningProcess->setIsFinshed(true);  //flag for termnate
-		cout << "RR element finish, go to termnal" << endl;
-		if (ReadyQueue.IsEmpty()) {  //The Ready list Finished
-			cout << "RR Ready List is Empty" << endl;
+
+			if (RunningProcess->getnIO() > 0 && currentTime == RunningProcess->seeTimeForAskForIO())
+			{
+				IORequest = new Process(*RunningProcess);
+			}
+
+			cout << "Step" << endl;
 			return;
 		}
+		else
+		{
+			TerminatProcess = new Process(*RunningProcess);
+			RunningProcess = nullptr;
+		}
+	}
 
-		ReadyQueue.Dequeue_In_Variable(RunningProcess);
-		InternalsliceTime = getsliceTime();   //start new count for 
-	}	
-	else {
+
+	if (ReadyQueue.IsEmpty())
+	{
+		cout << "SJP Ready Empty" << endl;
 		return;
-	}*/
+	}
+
+
+	Process* shortestJob = ReadyQueue.Peek();
+	ReadyQueue.Dequeue_In_Variable(shortestJob);
+	setInternalsliceTime(sliceTime);  //Restart the sliceTime
+	RunningProcess = shortestJob;
+	cout << "Enter new element" << endl;
+
 }
 int RoundRobinProcessor::getsliceTime() {
 	return sliceTime;
 }
-void RoundRobinProcessor::setsliceTime(int newtime) {
-	sliceTime = newtime;
+void RoundRobinProcessor::setInternalsliceTime(int newtime) {
+	InternalsliceTime = newtime;
 }
 
 
