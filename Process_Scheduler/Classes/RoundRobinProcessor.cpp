@@ -173,12 +173,10 @@ int RoundRobinProcessor::getExpectedTime()
 Process* RoundRobinProcessor::RemoveProcess()
 {
 	Process* StolenProcess = nullptr;
-
 	if (!ReadyQueue.IsEmpty())
 	{
-		StolenProcess = new Process(*ReadyQueue.returnkth(ReadyQueue.Count() - 1));
 		expectedtime = expectedtime - ReadyQueue.returnkth(ReadyQueue.Count() - 1)->getCT();
-		ReadyQueue.DeleteNodePlace(ReadyQueue.Count() - 1);
+		ReadyQueue.Dequeue_In_Variable(StolenProcess);
 	}
 	return StolenProcess;
 }

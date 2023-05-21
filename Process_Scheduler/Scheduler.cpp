@@ -38,12 +38,13 @@ void Scheduler::Run()
 		}
 		if (Timer == (STL * loop))
 		{
-		//	WorkStealing();
-		//	loop++;
+			WorkStealing();
+			loop++;
 		}
 		output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
+		
 	    system("pause");
-		if (Timer == 13) break;
+		
 	}
 }
 Scheduler::~Scheduler()
@@ -89,7 +90,13 @@ void Scheduler::load(string inputfile)
 				InsertProcessToNew(Data);
 				counter++;
 			}
-			
+			while (!InputFile.eof())
+			{
+				getline(InputFile, *line);
+				TranslateData(*line, Data);
+				KillSignalSearcher(Data);
+
+			}
 	}
 	else {
 		cout << "Couldn't open file\n";
@@ -292,10 +299,13 @@ void Scheduler::WorkStealing()
 {
 	int index_S = ShortestQueue();
 	int index_L = LongestQueue();
-	int steal_limit = (LongestQueueTime() - ShortestQueueTime()) / LongestQueueTime();
+	double longest_T = LongestQueueTime();
+	int Shortest_T = ShortestQueueTime();
+
+	int steal_limit = ((longest_T - Shortest_T) / longest_T) * 100;
+	
 	while (steal_limit > 40)
-	{
-		
+	{ 
 		 ProcessorsList.returnkth(index_S)->AddToMyReadyList(*ProcessorsList.returnkth(index_L)->RemoveProcess());
 
 		 index_S = ShortestQueue();
