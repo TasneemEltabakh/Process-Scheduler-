@@ -25,7 +25,8 @@ private:
     //LinkedList <Process*> * ReadyQueue = new  LinkedList <Process*>;
     LinkedList <Process*>  ReadyQueue;
     LinkedList <Process*>  RunQueue;
-    static  LinkedList <Process*>  TRMQueue;
+    LinkedList <Process*>  TRMQueue;
+    //static  LinkedList <Process*>  TRMQueue;
     int countOfProcesses;
     int maxw;
     int forkprob;

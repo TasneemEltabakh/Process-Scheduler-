@@ -1,7 +1,7 @@
 #include "FirstComeProcessor.h"
 
 
-LinkedQueue<Process*> FirstComeProcessor::Killedprocesses;
+//LinkedQueue<Process*> FirstComeProcessor::Killedprocesses;
 FirstComeProcessor::FirstComeProcessor(int max, int fork)
 {
 	KilledOne = nullptr;

@@ -34,7 +34,7 @@ public:
 	{
 		Node<T>* newNodePtr = new Node<T>(newEntry);
 		// Insert the new node
-		if (isEmpty())	//special case if this is the first node to insert
+		if (IsEmpty())	//special case if this is the first node to insert
 			Front = newNodePtr; // The queue is empty
 		else
 			Rear->setNext(newNodePtr); // The queue was not empty
@@ -45,7 +45,7 @@ public:
 
 	bool Dequeue_In_Variable(T& frntEntry) {
 
-		if (isEmpty())
+		if (IsEmpty())
 			return false;
 
 		Node<T>* nodeToDeletePtr = Front;
@@ -78,7 +78,7 @@ public:
 
 	bool Peek_In_Variable(T& frntEntry) const
 	{
-		if (isEmpty())
+		if (IsEmpty())
 			return false;
 
 		frntEntry = Front->getItem();
@@ -142,7 +142,7 @@ public:
 
 		//Free all nodes in the queue
 		T temp;
-		while (dequeue(temp));
+		while (Dequeue_In_Variable(temp));
 
 		//cout<<"\n Is LinkedQueue Empty now?? ==> "<<boolalpha<<isEmpty();
 		//cout<<"\nEnding LinkedQueue destructor..."<<endl;
