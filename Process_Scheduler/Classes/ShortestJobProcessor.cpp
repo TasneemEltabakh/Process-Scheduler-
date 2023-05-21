@@ -27,11 +27,11 @@ void ShortestJobProcessor::ScheduleAlgo()
 
 	
 }
-void ShortestJobProcessor::AddToMyReadyList(Process* NewProcess)
+void ShortestJobProcessor::AddToMyReadyList(Process& NewProcess)
 {
+	Process* newprocess = new Process(NewProcess);
 	countOfProcesses++;
-	ReadyQueue.enqueue(NewProcess);
-	cout << "HI this is Algo for shortest " << endl;
+	ReadyQueue.enqueue(newprocess);
 
 }
 void ShortestJobProcessor::AddToRun()
@@ -64,4 +64,16 @@ bool ShortestJobProcessor::CheckIfemptyready()
 	if (ReadyQueue.IsEmpty())
 		return true;
 	return false;
+
+}
+int ShortestJobProcessor::getExpectedTime()
+{
+	PriorityQueue<Process*> copy(ReadyQueue);
+	Process* process;
+	while (!copy.IsEmpty())
+	{
+		copy.Dequeue_In_Variable(process);
+		expectedtime += process->getCT();
+	}
+	return expectedtime;
 }

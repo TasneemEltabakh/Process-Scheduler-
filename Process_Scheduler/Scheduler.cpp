@@ -25,9 +25,13 @@ Scheduler::Scheduler(string inputfilename)
 }
 void Scheduler::Run()
 {
+	
 	while (true)
 	{
+
 		updateTimer();
+		cout << Timer;
+		MoveProcessToReadyList();
 
 	}
 }
@@ -35,119 +39,6 @@ Scheduler::~Scheduler()
 {
 	stopflag = true;
 
-}
-void Scheduler::FakeSimulator()
-{
-	bool flag = true;
-	while (flag)
-	{
-		srand(time(0));
-		double numOfprocessesAdded = 0;
-		Process* added;
-		Process* process = new Process;
-		int totalnum = Numberof_SJF + Numberof_RR + Numberof_FCFS;
-		int timerun = 3;
-		int terminatedcount = 0;
-		int countflag = 0;
-		while (!NewList.IsEmpty())
-		{
-
-			if (NewList.Peek()->getAT() == Timer)
-			{
-				NewList.Dequeue_In_Variable(added);
-				if (numOfprocessesAdded >= totalnum) {
-					numOfprocessesAdded = floor((numOfprocessesAdded - 1) / (totalnum));
-				}
-				ProcessorsList.returnkth(numOfprocessesAdded)->AddToMyReadyList(added);
-				numOfprocessesAdded++;
-			}
-			Timer++;
-		}
-	
-		for (int i = 0; i < totalnum; i++)
-		{
-			
-			if (ProcessorsList.returnkth(i)->IsIDlE())
-			{
-				
-				if (!ProcessorsList.returnkth(i)->CheckIfemptyready()) {
-					ProcessorsList.returnkth(i)->AddToRun();
-					countflag++;
-				}
-				else
-				{
-					timerun--;
-				}
-			}
-			else
-			{
-				timerun--;
-			}
-			if (timerun <= 0) {
-
-				Terminal.enqueue(ProcessorsList.returnkth(i)->MoveMeToTerminal()); cout << "terminated from loop" << endl;
-
-			}
-		}
-		for (int i = 0; i < totalnum; i++)
-		{
-			while (!ProcessorsList.returnkth(i)->CheckIfemptyready())
-			{
-				int random = 1 + (rand() % 100);
-				process = ProcessorsList.returnkth(i)->RunningNow();
-				if (random >= 1 && random <= 15)
-				{
-					BLK.enqueue(process);
-					ProcessorsList.returnkth(i)->RunningIsFree();
-					if (!ProcessorsList.returnkth(i)->CheckIfemptyready()) ProcessorsList.returnkth(i)->AddToRun();
-					cout << "blocked" << endl;
-				}
-				else if (random >= 20 && random <= 30)
-				{
-					cout << "AddedToReadyQueueAgain" << endl;
-					ProcessorsList.returnkth(numOfprocessesAdded)->AddToMyReadyList(process);
-					ProcessorsList.returnkth(i)->RunningIsFree();
-					if (!ProcessorsList.returnkth(i)->CheckIfemptyready()) ProcessorsList.returnkth(i)->AddToRun();
-					numOfprocessesAdded++;
-
-				}
-				else if (random >= 50 && random <= 60)
-				{
-					Terminal.enqueue(process);
-					ProcessorsList.returnkth(i)->RunningIsFree();
-					if (!ProcessorsList.returnkth(i)->CheckIfemptyready()) ProcessorsList.returnkth(i)->AddToRun();
-					cout << "terminated" << endl;
-					terminatedcount++;
-				}
-			}
-
-			int random = 1 + (rand() % 100);
-			if (random < 10)
-			{
-				if (!BLK.IsEmpty()) {
-					BLK.Dequeue_In_Variable(process);
-					ProcessorsList.returnkth(numOfprocessesAdded)->AddToMyReadyList(process);
-					numOfprocessesAdded++;
-				}
-
-			}
-			for (int i = 0; i < Numberof_FCFS; i++)
-			{
-				random = 1 + (rand() % 10);
-				FirstComeProcessor* childPointer = dynamic_cast<FirstComeProcessor*>(ProcessorsList.returnkth(0));
-				if (!ProcessorsList.returnkth(i)->CheckIfemptyready())
-				{
-					if (childPointer->IsThereKilled(random))
-						Terminal.enqueue(childPointer->KillSignal());
-				}
-			}
-			output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
-			system("pause");
-		}
-		
-		if (Terminal.Count() == TotaLNumberOfProcesses) flag = false;
-		Timer++;
-	}
 }
 void Scheduler::updateTimer()
 {
@@ -194,7 +85,6 @@ void Scheduler::load(string inputfile)
 				KillSignalSearcher(Data);
 				
 			}
-
 	}
 	else {
 		cout << "Couldn't open file\n";
@@ -217,14 +107,13 @@ void Scheduler::TranslateData(string line, LinkedQueue<string>* Data)
 			
 			Data->enqueue(first);
 			Data->enqueue(second);
-			cout << first;
-			cout << second;
+			
 		
 		}
 		else {
 			
 			Data->enqueue(word);
-			cout << word;
+			
 		
 		}
 	
@@ -312,11 +201,157 @@ void Scheduler::KillSignalSearcher(LinkedQueue<string>* KillData)
 		}
 	}
 }
-void  Scheduler:: MoveProcessToReadyList()
+int Scheduler::ShortestQueue()
 {
+	LinkedList<Processor*>copy(ProcessorsList);
+	Processor* currentprocessor;
+	copy.Dequeue_In_Variable(currentprocessor);
+	int min= currentprocessor->getExpectedTime();
+	int i = 0;
+	///*while(copy.Dequeue_In_Variable(currentprocessor))*/
+	//{
+	//	if (currentprocessor->getExpectedTime() < min) {
+	//		min = currentprocessor->getExpectedTime();
+	//		i++;
+	//	}
+	//}
+	cout << i << endl;
+	return i;
+}
+void Scheduler:: MoveProcessToReadyList()
+{
+	Process* process;
+	
+	if (!NewList.IsEmpty())
+	{
+	
+		if (NewList.Peek()->getAT() == Timer)
+		{
+			NewList.Dequeue_In_Variable(process);
+			ProcessorsList.returnkth(ShortestQueue())->AddToMyReadyList(*process);
+			cout << "now we insert a process with id" << process->getPID();
+		
+			
+		}
+
+	}
 	
 }
-
-
-
-
+//void Scheduler::FakeSimulator()
+//{
+//	bool flag = true;
+//	while (flag)
+//	{
+//		srand(time(0));
+//		double numOfprocessesAdded = 0;
+//		Process* added;
+//		Process* process = new Process;
+//		int totalnum = Numberof_SJF + Numberof_RR + Numberof_FCFS;
+//		int timerun = 3;
+//		int terminatedcount = 0;
+//		int countflag = 0;
+//		while (!NewList.IsEmpty())
+//		{
+//
+//			if (NewList.Peek()->getAT() == Timer)
+//			{
+//				NewList.Dequeue_In_Variable(added);
+//				if (numOfprocessesAdded >= totalnum) {
+//					numOfprocessesAdded = floor((numOfprocessesAdded - 1) / (totalnum));
+//				}
+//				ProcessorsList.returnkth(numOfprocessesAdded)->AddToMyReadyList(added);
+//				numOfprocessesAdded++;
+//			}
+//			Timer++;
+//		}
+//
+//		for (int i = 0; i < totalnum; i++)
+//		{
+//
+//			if (ProcessorsList.returnkth(i)->IsIDlE())
+//			{
+//
+//				if (!ProcessorsList.returnkth(i)->CheckIfemptyready()) {
+//					ProcessorsList.returnkth(i)->AddToRun();
+//					countflag++;
+//				}
+//				else
+//				{
+//					timerun--;
+//				}
+//			}
+//			else
+//			{
+//				timerun--;
+//			}
+//			if (timerun <= 0) {
+//
+//				Terminal.enqueue(ProcessorsList.returnkth(i)->MoveMeToTerminal()); cout << "terminated from loop" << endl;
+//
+//			}
+//		}
+//		for (int i = 0; i < totalnum; i++)
+//		{
+//			while (!ProcessorsList.returnkth(i)->CheckIfemptyready())
+//			{
+//				int random = 1 + (rand() % 100);
+//				process = ProcessorsList.returnkth(i)->RunningNow();
+//				if (random >= 1 && random <= 15)
+//				{
+//					BLK.enqueue(process);
+//					ProcessorsList.returnkth(i)->RunningIsFree();
+//					if (!ProcessorsList.returnkth(i)->CheckIfemptyready()) ProcessorsList.returnkth(i)->AddToRun();
+//					cout << "blocked" << endl;
+//				}
+//				else if (random >= 20 && random <= 30)
+//				{
+//					cout << "AddedToReadyQueueAgain" << endl;
+//					ProcessorsList.returnkth(numOfprocessesAdded)->AddToMyReadyList(process);
+//					ProcessorsList.returnkth(i)->RunningIsFree();
+//					if (!ProcessorsList.returnkth(i)->CheckIfemptyready()) ProcessorsList.returnkth(i)->AddToRun();
+//					numOfprocessesAdded++;
+//
+//				}
+//				else if (random >= 50 && random <= 60)
+//				{
+//					Terminal.enqueue(process);
+//					ProcessorsList.returnkth(i)->RunningIsFree();
+//					if (!ProcessorsList.returnkth(i)->CheckIfemptyready()) ProcessorsList.returnkth(i)->AddToRun();
+//					cout << "terminated" << endl;
+//					terminatedcount++;
+//				}
+//			}
+//
+//			int random = 1 + (rand() % 100);
+//			if (random < 10)
+//			{
+//				if (!BLK.IsEmpty()) {
+//					BLK.Dequeue_In_Variable(process);
+//					ProcessorsList.returnkth(numOfprocessesAdded)->AddToMyReadyList(process);
+//					numOfprocessesAdded++;
+//				}
+//
+//			}
+//			for (int i = 0; i < Numberof_FCFS; i++)
+//			{
+//				random = 1 + (rand() % 10);
+//				FirstComeProcessor* childPointer = dynamic_cast<FirstComeProcessor*>(ProcessorsList.returnkth(0));
+//				if (!ProcessorsList.returnkth(i)->CheckIfemptyready())
+//				{
+//					if (childPointer->IsThereKilled(random))
+//						Terminal.enqueue(childPointer->KillSignal());
+//				}
+//			}
+//			output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
+//			system("pause");
+//		}
+//
+//		if (Terminal.Count() == TotaLNumberOfProcesses) flag = false;
+//		Timer++;
+//	}
+//}
+//
+//
+//
+//
+//
