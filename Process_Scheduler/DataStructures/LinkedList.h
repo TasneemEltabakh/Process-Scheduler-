@@ -463,18 +463,15 @@ public:
 			variable = Head->getItem();
 			delete Head;
 			Head = Tail = nullptr;
+			return true;
 		}
 		else {
-			if (Head->getNext()) {
-				Node<T>* delptr = Head;
-				Head = Head->getNext();
-				variable = delptr->getItem();
-				delete delptr;
-			}
-			else
-				return false;
+			Node<T>* delptr = Head;
+			Head = Head->getNext();
+			variable = delptr->getItem();
+			delete delptr;
+			return true;
 		}
-		return true;
 	}
 	bool peek(T& variable)
 	{
