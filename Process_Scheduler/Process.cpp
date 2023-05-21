@@ -110,7 +110,10 @@ void  Process::addDatatoIOPairs(int x, int y)  //edit fom T
 }
 //Phase Two
 int Process::seeTimeForAskForIO() {  //R add for algo SJP
-	return IOpairs.x;  
+	int xValue = IOpairs.x;
+	int yValue = IOpairs.y;
+	pair<int, int> pairsValue = IOpairs.pairs.Peek();
+	return pairsValue.first;
 }
 void Process::setaskedforOI(bool state) {  //R add
 	askedforOI = state;

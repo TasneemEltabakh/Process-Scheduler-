@@ -24,10 +24,11 @@ void ShortestJobProcessor::ScheduleAlgo()
 	}*/
 	if (RunningProcess==nullptr && !ReadyQueue.IsEmpty()) {  //The first Process in RUN
 		ReadyQueue.Dequeue_In_Variable(RunningProcess);
+		cout << "enter first element "<<endl;
 	}
 	else if (RunningProcess->getCT() == 0) {  //The process in RUN finished --> So get the next
 		RunningProcess->setIsFinshed(true);  //flag for termnate
-
+		cout << "element finish" << endl;
 		if (ReadyQueue.IsEmpty()) {  //The Ready list Finished
 			cout << "The Ready List is Empty" << endl;
 			return;
@@ -40,12 +41,16 @@ void ShortestJobProcessor::ScheduleAlgo()
 			RunningProcess->setaskedforOI(true);  //flag for I/O Request
 		}
 		RunningProcess->setCT(RunningProcess->getCT() - 1);   //Step
+		expectedtime = expectedtime - 1;  //for T
+		cout << "step" << endl;
 	}
 }
 void ShortestJobProcessor::AddToMyReadyList(Process& NewProcess)
 {
 	Process* newprocess = new Process(NewProcess);
 	countOfProcesses++;
+
+	expectedtime = expectedtime + newprocess->getCT();
 	ReadyQueue.enqueue(newprocess);
 
 }
@@ -59,10 +64,7 @@ void ShortestJobProcessor::AddToRun()
 	ReadyQueue.Dequeue_In_Variable(RunningProcess);
 	downtimer = RunningProcess->getCT();
 }
-int ShortestJobProcessor::getcount()
-{
-	return ReadyQueue.Count();
-}
+
 Process* ShortestJobProcessor::getkth(int k)
 {
 	return ReadyQueue.returnkth(k);
@@ -83,12 +85,19 @@ bool ShortestJobProcessor::CheckIfemptyready()
 }
 int ShortestJobProcessor::getExpectedTime()
 {
-	PriorityQueue<Process*> copy(ReadyQueue);
-	Process* process;
-	while (!copy.IsEmpty())
-	{
-		copy.Dequeue_In_Variable(process);
-		expectedtime += process->getCT();
-	}
 	return expectedtime;
+}
+int ShortestJobProcessor::getcount()
+{
+	return ReadyQueue.Count();
+}
+Process* ShortestJobProcessor::RemoveProcess()
+{
+	Process* StolenProcess = nullptr;
+	if (!ReadyQueue.IsEmpty())
+	{
+		expectedtime = expectedtime - ReadyQueue.returnkth(ReadyQueue.Count() - 1)->getCT();
+		ReadyQueue.Dequeue_In_Variable(StolenProcess);
+	}
+	return StolenProcess;
 }

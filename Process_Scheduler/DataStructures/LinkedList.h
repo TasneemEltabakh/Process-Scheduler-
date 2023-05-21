@@ -284,9 +284,17 @@ public:
 	//[9] Reverse
 	//Reverses the linked list (without allocating any new Nodes)
 
-	void Reverse() 
-	{
-
+	void Reverse() {
+		Node<T>* prev = nullptr;
+		Node<T>* current = Head;
+		Node<T>* next = nullptr;
+		while (current) {
+			next = current->getNext();
+			current->setNext(prev);
+			prev = current;
+			current = next;
+		}
+		Head = prev;   //Note I put the Head to prev not the current as at the end of the while current=null
 	}
 
 	////////////////////////Question 3////////////////////////////
@@ -329,10 +337,45 @@ public:
 			p = p->getNext();
 			count++;
 		}
-
-
 	}
 	
+
+	
+
+	bool DeleteNodePlace(int k)
+	{
+		if (k < 0 || k >= Count())
+			return false;
+
+		if (k == 0)
+		{
+			Node<T>* temp = Head;
+			Head = Head->getNext();
+			delete temp;
+			return true;
+		}
+
+		Node<T>* current = Head;
+		Node<T>* prev = nullptr;
+		int count = 0;
+
+		while (current != nullptr && count < k)
+		{
+			prev = current;
+			current = current->getNext();
+			count++;
+		}
+
+		if (current != nullptr)
+		{
+			prev->setNext(current->getNext());
+			delete current;
+			return true;
+		}
+
+		return false;
+	}
+
 	/*void InsertSorted(const T& data)
 	{
 		Node<T>* p = Head;
@@ -447,23 +490,36 @@ public:
 		}
 
 	}
-	void Dequeue_In_Variable(T& variable) {
-		if (IsEmpty())
-		{
-			cout << "The List is Empty";
+	bool Dequeue_In_Variable(T& variable) {
+		if (IsEmpty()) {
+			
+			return false;
 		}
 		else if (Head == Tail)
 		{
 			variable = Head->getItem();
 			delete Head;
-			Head = Tail = NULL;
+			Head = Tail = nullptr;
+			return true;
 		}
-		else
-		{
+		else {
 			Node<T>* delptr = Head;
 			Head = Head->getNext();
 			variable = delptr->getItem();
 			delete delptr;
+			return true;
+		}
+	}
+	bool peek(T& variable)
+	{
+		if (IsEmpty())
+		{
+			return false;
+		}
+		else
+		{
+			variable = Head->getItem();
+			return true;
 		}
 	}
 	LinkedList(const LinkedList<T>& other)

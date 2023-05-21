@@ -1,7 +1,7 @@
 #include "FirstComeProcessor.h"
 
 
-LinkedQueue<Process*> FirstComeProcessor::Killedprocesses;
+//LinkedQueue<Process*> FirstComeProcessor::Killedprocesses;
 FirstComeProcessor::FirstComeProcessor(int max, int fork)
 {
 	KilledOne = nullptr;
@@ -111,6 +111,9 @@ void  FirstComeProcessor::AddToMyReadyList(Process& NewProcess)
 {
 	Process* newprocess = new Process(NewProcess);
 	countOfProcesses++;
+
+    expectedtime = expectedtime + newprocess->getCT();
+
 	ReadyQueue.InsertEnd(newprocess);
 	
 }
@@ -139,17 +142,15 @@ bool FirstComeProcessor::CheckIfemptyready()
 }
 int FirstComeProcessor::getExpectedTime()
 {
-	LinkedList<Process*> copy(ReadyQueue);
-	Process* process;
-	while (!copy.IsEmpty())
-	{
-		copy.Dequeue_In_Variable(process);
-		expectedtime += process->getCT();
-	}
 	return expectedtime;
 }
-
-
-
-
-//no 
+Process* FirstComeProcessor::RemoveProcess()
+{
+	Process* StolenProcess = nullptr;
+	if (!ReadyQueue.IsEmpty())
+	{
+		expectedtime = expectedtime - ReadyQueue.returnkth(ReadyQueue.Count() - 1)->getCT();
+		ReadyQueue.Dequeue_In_Variable(StolenProcess);
+	}
+	return StolenProcess;
+}

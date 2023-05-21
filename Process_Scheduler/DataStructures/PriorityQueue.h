@@ -53,7 +53,7 @@ public:
 
 	bool Dequeue_In_Variable(T& variable) {
 		if (IsEmpty()) {
-			cout << "The Queue is Empty";
+			
 			return false;
 		}
 		else if (Front == Rear) {
@@ -155,6 +155,86 @@ public:
 			temp = temp->getNext();
 			prev = newnode;
 		}
+	}
+	bool DeleteNode(const T& item)
+	{
+		if (IsEmpty())
+			return false;
+
+		if (Front->getItem() == item)
+		{
+			Node<T>* temp = Front;
+			Front = Front->getNext();
+			delete temp;
+
+			if (Front == nullptr)
+				Rear = nullptr;
+
+			return true;
+		}
+
+		Node<T>* current = Front->getNext();
+		Node<T>* prev = Front;
+
+		while (current != nullptr)
+		{
+			if (current->getItem() == item)
+			{
+				prev->setNext(current->getNext());
+
+				if (current == Rear)
+					Rear = prev;
+
+				delete current;
+				return true;
+			}
+
+			prev = current;
+			current = current->getNext();
+		}
+
+		return false;
+	}
+	bool DeleteNodePlace(int k)
+	{
+		if (k < 0 || k >= Count())
+			return false;
+
+		if (k == 0)
+		{
+			Node<T>* temp = Front;
+			Front = Front->getNext();
+			delete temp;
+
+			if (Front == nullptr)
+				Rear = nullptr;
+
+			return true;
+		}
+
+		Node<T>* current = Front;
+		Node<T>* prev = nullptr;
+		int count = 0;
+
+		while (current != nullptr && count < k)
+		{
+			prev = current;
+			current = current->getNext();
+			count++;
+		}
+
+		if (current != nullptr)
+		{
+			prev->setNext(current->getNext());
+
+			if (current == Rear)
+				Rear = prev;
+
+			delete current;
+			return true;
+		}
+
+		return false;
 	}
 
 };

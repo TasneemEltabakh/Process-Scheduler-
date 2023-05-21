@@ -17,7 +17,7 @@ using namespace std;
 
 Scheduler::Scheduler(string inputfilename)
 {
-
+	loop = 1;
 	Timer = 0;
 	stopflag = false;
 	load(inputfilename);
@@ -30,24 +30,22 @@ void Scheduler::Run()
 	{
 
 		updateTimer();
-		cout << Timer;
 		MoveProcessToReadyList();
 		for (int i = 1; i < ProcessorsList.Count(); i++)
 		{
 			ProcessorsList.returnkth(i)->CurrentTime(Timer);
-
+			
 		}
-
-
+		if (Timer == (STL * loop))
+		{
+			WorkStealing();
+			loop++;
+		}
 		output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
-
-		system("pause");
-
 		
-
-
+	    system("pause");
+		
 	}
-
 }
 Scheduler::~Scheduler()
 {
@@ -96,8 +94,8 @@ void Scheduler::load(string inputfile)
 			{
 				getline(InputFile, *line);
 				TranslateData(*line, Data);
-				//KillSignalSearcher(Data);
-				
+				KillSignalSearcher(Data);
+
 			}
 	}
 	else {
@@ -137,7 +135,7 @@ void Scheduler::TranslateData(string line, LinkedQueue<string>* Data)
 
 void  Scheduler:: CreateProcessors(LinkedQueue<string>* dataProcessor) //this function Creates processors of each type by the required count and adds them to the processors list 
 {
-	string slicetime, rtf, fork, stl, maxw, Numberof_FC, Numberof_SJ, Numberof_R;
+	string slicetime, rtf, stl, fork, maxw, Numberof_FC, Numberof_SJ, Numberof_R;
 	dataProcessor->Dequeue_In_Variable(Numberof_FC);
 	dataProcessor->Dequeue_In_Variable(Numberof_SJ);
 	dataProcessor->Dequeue_In_Variable(Numberof_R);
@@ -149,6 +147,7 @@ void  Scheduler:: CreateProcessors(LinkedQueue<string>* dataProcessor) //this fu
 	Numberof_SJF = stoi(Numberof_SJ);
 	Numberof_RR = stoi(Numberof_R);
 	Numberof_FCFS = stoi(Numberof_FC);
+	STL = stoi(stl);
 
 	for (int i = 0; i < Numberof_FCFS; i++)
 	{
@@ -220,21 +219,102 @@ void Scheduler::KillSignalSearcher(LinkedQueue<string>* KillData)
 }
 int Scheduler::ShortestQueue()
 {
-	LinkedList<Processor*>copy(ProcessorsList);
-	Processor* currentprocessor;
-	copy.Dequeue_In_Variable(currentprocessor);
-	int min= currentprocessor->getExpectedTime();
-	int i = 0;
-	///*while(copy.Dequeue_In_Variable(currentprocessor))*/
-	//{
-	//	if (currentprocessor->getExpectedTime() < min) {
-	//		min = currentprocessor->getExpectedTime();
-	//		i++;
-	//	}
-	//}
-	cout << i << endl;
-	return i;
+	if (ProcessorsList.Count() == 0)
+	{
+		return -1; 
+	}
+
+	int min = ProcessorsList.returnkth(0)->getExpectedTime();
+	int shortestIndex = 0;
+
+	for (int i = 1; i < ProcessorsList.Count(); i++)
+	{
+		if (ProcessorsList.returnkth(i)->getExpectedTime() < min)
+		{
+			min = ProcessorsList.returnkth(i)->getExpectedTime();
+			shortestIndex = i;
+		}
+	}
+	
+	return shortestIndex;
 }
+int Scheduler::LongestQueue()
+{
+
+	int max = ProcessorsList.returnkth(0)->getExpectedTime();
+	int LongestIndex = 0;
+
+	for (int i = 1; i < ProcessorsList.Count(); i++)
+	{
+		if (ProcessorsList.returnkth(i)->getExpectedTime() > max)
+		{
+			max = ProcessorsList.returnkth(i)->getExpectedTime();
+			LongestIndex = i;
+		}
+	}
+
+	return LongestIndex;
+}
+int Scheduler::LongestQueueTime()
+{
+
+	int max = ProcessorsList.returnkth(0)->getExpectedTime();
+	
+
+	for (int i = 1; i < ProcessorsList.Count(); i++)
+	{
+		if (ProcessorsList.returnkth(i)->getExpectedTime() > max)
+		{
+			max = ProcessorsList.returnkth(i)->getExpectedTime();
+			
+		}
+	}
+
+	return max;
+}
+int Scheduler::ShortestQueueTime()
+{
+	if (ProcessorsList.Count() == 0)
+	{
+		return -1;
+	}
+
+	int min = ProcessorsList.returnkth(0)->getExpectedTime();
+
+
+	for (int i = 1; i < ProcessorsList.Count(); i++)
+	{
+		if (ProcessorsList.returnkth(i)->getExpectedTime() < min)
+		{
+			min = ProcessorsList.returnkth(i)->getExpectedTime();
+			
+		}
+	}
+
+	return min;
+}
+
+
+void Scheduler::WorkStealing()
+{
+	int index_S = ShortestQueue();
+	int index_L = LongestQueue();
+	double longest_T = LongestQueueTime();
+	int Shortest_T = ShortestQueueTime();
+
+	int steal_limit = ((longest_T - Shortest_T) / longest_T) * 100;
+	
+	while (steal_limit > 40)
+	{ 
+		 ProcessorsList.returnkth(index_S)->AddToMyReadyList(*ProcessorsList.returnkth(index_L)->RemoveProcess());
+
+		 index_S = ShortestQueue();
+		 index_L = LongestQueue();
+		 steal_limit = (LongestQueueTime() - ShortestQueueTime()) / LongestQueueTime();
+
+	}
+}
+
 void Scheduler:: MoveProcessToReadyList()
 {
 	Process* process;
@@ -244,108 +324,17 @@ void Scheduler:: MoveProcessToReadyList()
 	
 		if (NewList.Peek()->getAT() == Timer)
 		{
-			NewList.Dequeue_In_Variable(process);
-			ProcessorsList.returnkth(ShortestQueue())->AddToMyReadyList(*process);
-			cout << "now we insert a process with id" << process->getPID();
 		
-			
+			NewList.Dequeue_In_Variable(process);
+			cout << "insert id " << process->getPID() << endl;
+			cout << "to" << ShortestQueue() << endl;
+			ProcessorsList.returnkth(ShortestQueue())->AddToMyReadyList(*process);
+			cout <<endl;
 		}
 
 	}
 	
 }
-
-//// nada killed the orphan 🚩
-//void Scheduler::KillOrohan() {
-//	for (int i = 0; i < Numberof_FCFS; i++) {
-//		//FirstComeProcessor* FCFSProcessor = <FirstComeProcessor*>(processor[i]);
-//	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 //void Scheduler::FakeSimulator()

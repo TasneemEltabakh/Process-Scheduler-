@@ -8,6 +8,9 @@ struct ProcessPairs {
 	int y;
 	LinkedQueue<pair<int, int>> pairs;
 };
+
+
+
 class Process
 
 {
@@ -25,8 +28,8 @@ private:
 	int runningtime;
 
 	//Phase Two
-	bool askedforOI; //R add
-	bool IsFinshed; //R add
+	bool askedforOI; //R add2
+	bool IsFinshed; //R add2
 	
 public:
 	Process();
@@ -35,8 +38,8 @@ public:
 	//void addDatatoIOPairs(int x, int y);
 	//////////////////////////////////////////
 	void addDatatoIOPairs(int x, int y);  //T edit
-	int seeTimeForAskForIO();  //R add
-	////////////////////////////////////////
+	int seeTimeForAskForIO();  //R add2
+
 
 	~Process();
 	int getPID() const;
