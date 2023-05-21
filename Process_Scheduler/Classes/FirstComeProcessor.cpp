@@ -161,8 +161,9 @@ Process* FirstComeProcessor::RemoveProcess()
 	{
 		expectedtime = expectedtime - ReadyQueue.returnkth(ReadyQueue.Count() - 1)->getCT();
 		ReadyQueue.Dequeue_In_Variable(StolenProcess);
+		return StolenProcess;
 	}
-	return StolenProcess;
+	
 }
 
 bool FirstComeProcessor::ChcekMigration(Process* running) {

@@ -39,7 +39,7 @@ void Scheduler::Run()
 		
 		for (int i = 0; i < ProcessorsList.Count(); i++)
 		{
-			
+			ProcessorsList.returnkth(i)->ScheduleAlgo();
 
 		}
 		if (Timer == (STL * loop))
@@ -47,7 +47,7 @@ void Scheduler::Run()
 			WorkStealing();
 			loop++;
 		}
-		
+		Overheating();
 		KillSignalSearcher();
 		output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
 	    system("pause");
@@ -233,24 +233,25 @@ void Scheduler::KillSignal(LinkedQueue<string>* KillData)
 }
 int Scheduler::ShortestQueue()
 {
+	int min = INT_MAX; 
+	int shortestIndex = -1;
 
-	int min = ProcessorsList.returnkth(0)->getExpectedTime();
-	int shortestIndex = 0;
-
-	for (int i = 1; i < ProcessorsList.Count(); i++)
+	for (int i = 0; i < ProcessorsList.Count(); i++)
 	{
-		if (ProcessorsList.returnkth(i)->getExpectedTime() < min)
+		if (!ProcessorsList.returnkth(i)->StoppedCheck()) 
 		{
-			if (ProcessorsList.returnkth(i)->StoppedCheck() == false)
+			int expectedTime = ProcessorsList.returnkth(i)->getExpectedTime();
+			if (expectedTime < min)
 			{
-				min = ProcessorsList.returnkth(i)->getExpectedTime();
+				min = expectedTime;
 				shortestIndex = i;
 			}
 		}
 	}
-	
+
 	return shortestIndex;
 }
+
 int Scheduler::LongestQueue()
 {
 
@@ -259,10 +260,14 @@ int Scheduler::LongestQueue()
 
 	for (int i = 1; i < ProcessorsList.Count(); i++)
 	{
-		if (ProcessorsList.returnkth(i)->getExpectedTime() > max)
+		if (ProcessorsList.returnkth(i)->StoppedCheck() == false)
 		{
-			max = ProcessorsList.returnkth(i)->getExpectedTime();
-			LongestIndex = i;
+
+			if (ProcessorsList.returnkth(i)->getExpectedTime() > max)
+			{
+				max = ProcessorsList.returnkth(i)->getExpectedTime();
+				LongestIndex = i;
+			}
 		}
 	}
 
@@ -276,10 +281,14 @@ int Scheduler::LongestQueueTime()
 
 	for (int i = 1; i < ProcessorsList.Count(); i++)
 	{
-		if (ProcessorsList.returnkth(i)->getExpectedTime() > max)
+		if (ProcessorsList.returnkth(i)->StoppedCheck() == false)
 		{
-			max = ProcessorsList.returnkth(i)->getExpectedTime();
-			
+
+			if (ProcessorsList.returnkth(i)->getExpectedTime() > max)
+			{
+				max = ProcessorsList.returnkth(i)->getExpectedTime();
+
+			}
 		}
 	}
 
@@ -297,10 +306,13 @@ int Scheduler::ShortestQueueTime()
 
 	for (int i = 1; i < ProcessorsList.Count(); i++)
 	{
-		if (ProcessorsList.returnkth(i)->getExpectedTime() < min)
+		if (ProcessorsList.returnkth(i)->StoppedCheck()==false)
 		{
-			min = ProcessorsList.returnkth(i)->getExpectedTime();
-			
+			if (ProcessorsList.returnkth(i)->getExpectedTime() < min)
+			{
+				min = ProcessorsList.returnkth(i)->getExpectedTime();
+
+			}
 		}
 	}
 
@@ -320,7 +332,6 @@ void Scheduler::WorkStealing()
 	while (steal_limit > 40)
 	{ 
 		 ProcessorsList.returnkth(index_S)->AddToMyReadyList(*ProcessorsList.returnkth(index_L)->RemoveProcess());
-
 		 index_S = ShortestQueue();
 		 index_L = LongestQueue();
 		 steal_limit = (LongestQueueTime() - ShortestQueueTime()) / LongestQueueTime();
@@ -329,20 +340,39 @@ void Scheduler::WorkStealing()
 }
 void Scheduler::Overheating()
 {
-	int index_S = ShortestQueue();
+	srand(time(0));
 
 	for (int i = 0; i < ProcessorsList.Count(); i++)
 	{
-		srand(time(0));
-		int random = 1 + (rand() % 100);
-		if (random == Heatingprop)
+		Processor* currentProcessor = ProcessorsList.returnkth(i);
+		if (!currentProcessor->StoppedCheck())
 		{
+			int random = 1 + (rand() % 700);
+			
+			if (random == Heatingprop)
+			{
+				currentProcessor->OutOfService(timeOfRelaxing);
 
+				int shortestIndex = ShortestQueue();
+				Processor* shortestProcessor = ProcessorsList.returnkth(shortestIndex);
+
+				while (currentProcessor->getcount() > 0)
+				{
+					Process* movedProcess = currentProcessor->RemoveProcess();
+					shortestProcessor->AddToMyReadyList(*movedProcess);
+				}
+			}
 		}
-
-
+		else
+		{
+			int remainingBreakTime = currentProcessor->CountDownBreak();
+			if (remainingBreakTime == 0)
+			{
+				currentProcessor->BacktoService();
+				
+			}
+		}
 	}
-	
 }
 
 void Scheduler:: MoveProcessToReadyList()
@@ -356,8 +386,6 @@ void Scheduler:: MoveProcessToReadyList()
 		{
 
 			NewList.Dequeue_In_Variable(process);
-			cout << "insert id " << process->getPID() << endl;
-			cout << "to" << ShortestQueue() << endl;
 			ProcessorsList.returnkth(ShortestQueue())->AddToMyReadyList(*process);
 			cout << endl;
 		}

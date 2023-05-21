@@ -12,40 +12,48 @@ ShortestJobProcessor::~ShortestJobProcessor()
 
 void ShortestJobProcessor::ScheduleAlgo()
 {
+    TerminatProcess = nullptr;
+    IORequest = nullptr;
 
-	////Before Understand The logic of Time
-	//*while (ReadyQueue.Count() != 0) {
-	//		ReadyQueue.Dequeue_In_Variable(RunningProcess);
-	//		while (RunningProcess->getCT()!=0) {
-	//			RunningProcess->setCT(RunningProcess->getCT() - 1);
-	//		}
-	//}
-	//if (ReadyQueue.IsEmpty()) {
-	//	cout << "The Ready List is Empty" << endl;
-	//}*/
-	//if (RunningProcess==nullptr && !ReadyQueue.IsEmpty()) {  //The first Process in RUN
-	//	ReadyQueue.Dequeue_In_Variable(RunningProcess);
-	//	cout << "enter first element "<<endl;
-	//}
-	//else if (RunningProcess->getCT() == 0) {  //The process in RUN finished --> So get the next
-	//	RunningProcess->setIsFinshed(true);  //flag for termnate
-	//	cout << "element finish" << endl;
-	//	if (ReadyQueue.IsEmpty()) {  //The Ready list Finished
-	//		cout << "The Ready List is Empty" << endl;
-	//		return;
-	//	}
+   
+    if (RunningProcess != nullptr)
+    {
+        if (RunningProcess->getCT() > 0)
+        {
+            RunningProcess->setCT(RunningProcess->getCT() - 1);
+            expectedtime--;
 
-	//	ReadyQueue.Dequeue_In_Variable(RunningProcess);   
-	//}
-	//else if (RunningProcess!=nullptr && RunningProcess->getCT() != 0) {  //Once it has process in RUN and not finished yet
-	//	if (currentTime == RunningProcess->seeTimeForAskForIO()) {  //Check every time if request I/O
-	//		RunningProcess->setaskedforOI(true);  //flag for I/O Request
-	//	}
-	//	RunningProcess->setCT(RunningProcess->getCT() - 1);   //Step
-	//	expectedtime = expectedtime - 1;  //for T
-	//	cout << "step" << endl;
-	//}
+           
+            if (RunningProcess->getnIO() > 0 && currentTime == RunningProcess->seeTimeForAskForIO())
+            {
+                IORequest = new Process(*RunningProcess);  
+            }
+
+            cout << "Step" << endl;
+            return;
+        }
+        else
+        {
+            TerminatProcess = new Process(*RunningProcess);  
+            RunningProcess = nullptr;
+        }
+    }
+
+   
+    if (ReadyQueue.IsEmpty())
+    {
+        cout << "SJP Ready Empty" << endl;
+        return;
+    }
+
+    
+    Process* shortestJob = ReadyQueue.Peek();
+    ReadyQueue.Dequeue_In_Variable(shortestJob);
+
+    RunningProcess = shortestJob;
+    cout << "Enter new element" << endl;
 }
+
 void ShortestJobProcessor::AddToMyReadyList(Process& NewProcess)
 {
 	Process* newprocess = new Process(NewProcess);
@@ -97,8 +105,9 @@ Process* ShortestJobProcessor::RemoveProcess()
 	Process* StolenProcess = nullptr;
 	if (!ReadyQueue.IsEmpty())
 	{
+		StolenProcess = new Process(*ReadyQueue.returnkth(ReadyQueue.Count() - 1));
 		expectedtime = expectedtime - ReadyQueue.returnkth(ReadyQueue.Count() - 1)->getCT();
-		ReadyQueue.Dequeue_In_Variable(StolenProcess);
+		ReadyQueue.DeleteNodePlace(ReadyQueue.Count() - 1);
 	}
 	return StolenProcess;
 }

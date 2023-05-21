@@ -29,17 +29,21 @@ public:
 	virtual int getExpectedTime() = 0;
 	virtual Process* RemoveProcess() = 0;
 	bool StoppedCheck();
-	void OutOfService();
+	void OutOfService(int n);
+	void BacktoService();
+	int CountDownBreak();
 	
 protected:
 	Process* RunningProcess; 
 	Process Running;
 	State ProcessorState;
-	Process* TerminatProcess;
+	Process* TerminatProcess;  ///****************
+	Process* IORequest;  ///****************
 	double load;
 	double utilization;
 	int TimerOfReadyList;
 	int runingTime;
+	int breaktime;
 	static int Count;
 	int downtimer;
 	int Id;

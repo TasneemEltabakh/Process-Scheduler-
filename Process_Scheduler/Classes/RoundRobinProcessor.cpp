@@ -11,103 +11,51 @@ RoundRobinProcessor::RoundRobinProcessor(int sliceTime, int RTF) {
 RoundRobinProcessor::~RoundRobinProcessor(){}
 void RoundRobinProcessor::ScheduleAlgo()
 {	
-	
-	//if (RunningProcess == nullptr && !ReadyQueue.IsEmpty()) {
-	//	ReadyQueue.Dequeue_In_Variable(RunningProcess);   //First elemnt to enter
-	//	InternalsliceTime = getsliceTime();       //start new count for 
+	//New Start
 
-	//}
-	//else if (InternalsliceTime==0) {
-	//	ReadyQueue.enqueue(RunningProcess);
-	//	ReadyQueue.Dequeue_In_Variable(RunningProcess);
-	//	InternalsliceTime = getsliceTime();       //start new count for
-	//}
-	//else if (RunningProcess->getCT() == 0) {  //The process in RUN finished --> So get the next
-	//	RunningProcess->setIsFinshed(true);  //flag for termnate
-	//	cout << "element finish" << endl;
-	//	if (ReadyQueue.IsEmpty()) {  //The Ready list Finished
-	//		cout << "The Ready List is Empty" << endl;
-	//		return;
-	//	}
 
-	//	ReadyQueue.Dequeue_In_Variable(RunningProcess);
-	//	InternalsliceTime = getsliceTime();   //start new count for 
-	//}
-	//else if (RunningProcess != nullptr && RunningProcess->getCT()!=0 && InternalsliceTime !=0) {
-	//	if (currentTime == RunningProcess->seeTimeForAskForIO()) {  //Check every time if request I/O
-	//		RunningProcess->setaskedforOI(true);  //flag for I/O Request
-	//	}
-	//	InternalsliceTime = InternalsliceTime - 1;
-	//	RunningProcess->setCT(RunningProcess->getCT() - 1);   //Step
-	//	expectedtime = expectedtime - 1;  //for T
-	//}
-	//R work on phase one
-	/*for (int i = 0; i < (sliceTime * countOfProcesses); i + sliceTime) {
-		if (ReadyQueue.IsEmpty()) {
-			cout << "The Ready List is Empty" << endl;
-			return;
-		}
-		else if (!ReadyQueue.IsEmpty() && RunningProcess == nullptr) {
-			ReadyQueue.Dequeue_In_Variable(RunningProcess);
-		}
-		else {
-			//Process* newProcess = new Process;
-			//newProcess = RunningProcess;
-			ReadyQueue.enqueue(RunningProcess);
-			ReadyQueue.Dequeue_In_Variable(RunningProcess);
-		}
 
-		//for (int j = 0; j < sliceTime; j++) {
-		//	if (RunningProcess->getCT() == 0) {
-		//		                              //Here the previuse must go to TERM
-		//	}
-		//}
-
-		if (RunningProcess->getCT() <= sliceTime) {
-			for (int j = 0; j < sliceTime; j++) {
-				if (RunningProcess->getCT() == 0) {
-					//Here the previuse must go to TERM
-				}
-				else {
-					RunningProcess->setCT(RunningProcess->getCT() - 1);
-				}
-			}
-		}
-		else {
-			RunningProcess->setCT(RunningProcess->getCT() - sliceTime);
-		}
+	/*if (ReadyQueue.IsEmpty()) {
+		cout << "RR Ready list is empty" << endl;
 
 	}
-	//cout << "HI this is Algo for round " << endl;*/
+	else if (RunningProcess == nullptr && !ReadyQueue.IsEmpty()) {
+		ReadyQueue.Dequeue_In_Variable(RunningProcess);   //First elemnt to enter
+		InternalsliceTime = getsliceTime();       //start new count for 
+		cout << "RR enter first element " << endl;
+	}
+	else if (InternalsliceTime==0) {
+		ReadyQueue.enqueue(RunningProcess);
+		cout << " slecetime= " << RunningProcess->getCT() << endl;
+		cout << "RR time finish for this process" << endl;
+		ReadyQueue.Dequeue_In_Variable(RunningProcess);
+		cout << "RR enter new element" << endl;
+		InternalsliceTime = getsliceTime();       //start new count for
+	}
+	else if (RunningProcess != nullptr && RunningProcess->getCT() != 0 && InternalsliceTime != 0) {
+		if (currentTime == RunningProcess->seeTimeForAskForIO()) {  //Check every time if request I/O
+			RunningProcess->setaskedforOI(true);  //flag for I/O Request
+			cout << "RR flag ask for IO" << endl;
+		}
+		InternalsliceTime = InternalsliceTime - 1;
+		RunningProcess->setCT(RunningProcess->getCT() - 1);   //Step
+		cout << "RR step" << endl;
+		expectedtime = expectedtime - 1;  //for T
+	}
+	else if (RunningProcess != nullptr &&  RunningProcess->getCT() == 0) {  //The process in RUN finished --> So get the next
+		RunningProcess->setIsFinshed(true);  //flag for termnate
+		cout << "RR element finish, go to termnal" << endl;
+		if (ReadyQueue.IsEmpty()) {  //The Ready list Finished
+			cout << "RR Ready List is Empty" << endl;
+			return;
+		}
 
-
-	/*Process* current, c2;   //Ariam Work
-
-	for (int i = 0; i < (sliceTime * countOfProcesses); i + sliceTime) {
-		if(RunningProcess != nullptr)
-			ReadyQueue->enqueue(RunningProcess);
-
-		ReadyQueue->Dequeue_In_Variable(current);
-		RunningProcess = current;
-
+		ReadyQueue.Dequeue_In_Variable(RunningProcess);
+		InternalsliceTime = getsliceTime();   //start new count for 
+	}	
+	else {
+		return;
 	}*/
-
-	//if (ReadyQueue.IsEmpty()) {
-
-	//}
-	//else if (!ReadyQueue.IsEmpty() && RunningProcess == nullptr) {
-	//	ReadyQueue.Dequeue_In_Variable(RunningProcess);
-	//}
-	//else {
-	//	for (int i = 0; i < (sliceTime * countOfProcesses); i + sliceTime) {
-	//			ReadyQueue.enqueue(RunningProcess);
-	//			ReadyQueue.Dequeue_In_Variable(RunningProcess);
-
-	//	}
-	//}
-	//
-	////Process* current, c2;
-	//
 }
 int RoundRobinProcessor::getsliceTime() {
 	return sliceTime;
@@ -174,10 +122,12 @@ int RoundRobinProcessor::getExpectedTime()
 Process* RoundRobinProcessor::RemoveProcess()
 {
 	Process* StolenProcess = nullptr;
+
 	if (!ReadyQueue.IsEmpty())
 	{
+		StolenProcess = new Process(*ReadyQueue.returnkth(ReadyQueue.Count() - 1));
 		expectedtime = expectedtime - ReadyQueue.returnkth(ReadyQueue.Count() - 1)->getCT();
-		ReadyQueue.Dequeue_In_Variable(StolenProcess);
+		ReadyQueue.DeleteNodePlace(ReadyQueue.Count() - 1);
 	}
 	return StolenProcess;
 }
