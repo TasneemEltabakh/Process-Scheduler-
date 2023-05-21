@@ -19,6 +19,8 @@ private:
 	Process* ParentQueue;  //R add
 	//bool finished;
 	int runningtime;
+	State state; //N
+	
 	
 public:
 	Process();
@@ -51,5 +53,7 @@ public:
 	void setParentQueue(Process* parent); //R add
 	Process* getAllList();  //R add
 	int operator<< (const Process& c) const;  //R add
+	//enum State; // N
+	//string GetState() const;
 };
 

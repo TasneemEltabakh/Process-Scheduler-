@@ -309,6 +309,9 @@ void Scheduler::KillSignalSearcher(LinkedQueue<string>* KillData)
 			{
 				return;
 			}
+
+
+			
 		}
 	}
 }
