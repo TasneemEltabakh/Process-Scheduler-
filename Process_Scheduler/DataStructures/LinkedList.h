@@ -337,8 +337,6 @@ public:
 			p = p->getNext();
 			count++;
 		}
-
-
 	}
 	
 	/*void InsertSorted(const T& data)

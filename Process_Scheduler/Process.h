@@ -22,8 +22,8 @@ private:
 	int runningtime;
 
 	//Phase Two
-	bool askedforOI; //R add
-	bool IsFinshed; //R add
+	bool askedforOI; //R add2
+	bool IsFinshed; //R add2
 	
 public:
 	Process();
@@ -31,7 +31,7 @@ public:
 	Process(const Process& other);
 
 	void addDatatoIOPairs(int x, int y);  //T edit
-	int seeTimeForAskForIO();  //R add
+	int seeTimeForAskForIO();  //R add2
 
 	~Process();
 	int getPID() const;
@@ -60,10 +60,10 @@ public:
 
 
 	//Phase Two
-	void setaskedforOI(bool state); //R add
-	void setIsFinshed(bool state); //R add
-	bool getaskedforOI(); //R add
-	bool getIsFinshed(); //R add
+	void setaskedforOI(bool state); //R add2
+	void setIsFinshed(bool state); //R add2
+	bool getaskedforOI(); //R add2
+	bool getIsFinshed(); //R add2
 
 };
 
