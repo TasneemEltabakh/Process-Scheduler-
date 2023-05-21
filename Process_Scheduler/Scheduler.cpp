@@ -41,6 +41,7 @@ void Scheduler::Run()
 			WorkStealing();
 			loop++;
 		}
+		KillSignalSearcher();
 		output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
 		
 	    system("pause");
@@ -94,7 +95,7 @@ void Scheduler::load(string inputfile)
 			{
 				getline(InputFile, *line);
 				TranslateData(*line, Data);
-				KillSignalSearcher(Data);
+				KillSignal(Data);
 
 			}
 	}
@@ -125,6 +126,7 @@ void Scheduler::TranslateData(string line, LinkedQueue<string>* Data)
 		else {
 			
 			Data->enqueue(word);
+			
 			
 		
 		}
@@ -190,32 +192,34 @@ void Scheduler::InsertProcessToNew(LinkedQueue<string>* dataProcess)
 	NewList.enqueue(newprocess);
 
 }
-
-void Scheduler::KillSignalSearcher(LinkedQueue<string>* KillData)
+void Scheduler::KillSignalSearcher()
 {
-	if (KillData->IsEmpty()) {
-		
-		return;
+	int x;
+	x = KilledProcesses.Peek();
+	if (x == Timer)
+	{
+		KilledProcesses.Dequeue_In_Variable(x);
+		KilledProcesses.Dequeue_In_Variable(x);
+		for (int i = 0; i < Numberof_FCFS; i++)
+		{
+			
+			FirstComeProcessor * child = dynamic_cast<FirstComeProcessor*>(ProcessorsList.returnkth(i));
+			child->IsThereKilled(x);
+
+		}
 	}
+
+}
+void Scheduler::KillSignal(LinkedQueue<string>* KillData)
+{
+
 	string time, id;
 	KillData->Dequeue_In_Variable(time);
 	KillData->Dequeue_In_Variable(id);
+
+	KilledProcesses.enqueue(stoi(time));
+	KilledProcesses.enqueue(stoi(id));
 	
-	if (Timer == stoi(time))
-	{
-		for (int i = 0; i < Numberof_FCFS; i++)
-		{
-
-			FirstComeProcessor* childPointer = dynamic_cast<FirstComeProcessor*>(ProcessorsList.returnkth(i));
-			if (childPointer->IsThereKilled(stoi(id)))
-			{
-				return;
-			}
-
-
-			
-		}
-	}
 }
 int Scheduler::ShortestQueue()
 {
