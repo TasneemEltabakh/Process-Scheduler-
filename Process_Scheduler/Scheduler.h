@@ -20,10 +20,10 @@ private:
 	LinkedQueue<Process*> Terminal;
 	LinkedQueue<Process*> BLK;
 	LinkedQueue<Process*> KilledProcesses;
-	
 	bool stopflag;
 	int Timer;
-	UI* output;  //r add
+	UI* output;
+	void updateTimer();
 
 
 public:
@@ -31,6 +31,7 @@ public:
 	Scheduler(string inputfilename);
 	Scheduler();
 	~Scheduler();
+	void Run();
 	void load(string inputfilename);
 	void TranslateData( string linedata, LinkedQueue<string>* dataP);
 	void RemoveParenthesis(string linedata, LinkedQueue<int>* dataProcessor);
@@ -41,7 +42,7 @@ public:
 	void TimeStepsiterator();
 	void  FakeSimulator();
 	void KillSignalSearcher();
-	
+	void getTime() const;
 	void fork(Process* p);    // added ariam
 	void moveToTrm(Process* p);
 };

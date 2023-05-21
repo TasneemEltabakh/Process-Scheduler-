@@ -24,6 +24,14 @@ Scheduler::Scheduler(string inputfilename)
 	
 
 }
+void Scheduler::Run()
+{
+	while (true)
+	{
+		updateTimer();
+
+	}
+}
 Scheduler::~Scheduler()
 {
 	stopflag = true;
@@ -142,12 +150,9 @@ void Scheduler::FakeSimulator()
 		Timer++;
 	}
 }
-void Scheduler::TimeStepsiterator()
+void Scheduler::updateTimer()
 {
-	while (!stopflag) {
-
-		++Timer;
-	}
+	Timer++;
 }
 void Scheduler::load(string inputfile)
 {
@@ -213,12 +218,14 @@ void Scheduler::TranslateData(string line, LinkedQueue<string>* Data)
 			
 			Data->enqueue(first);
 			Data->enqueue(second);
-			
+			cout << first;
+			cout << second;
 		
 		}
 		else {
 			
 			Data->enqueue(word);
+			cout << word;
 		
 		}
 	
