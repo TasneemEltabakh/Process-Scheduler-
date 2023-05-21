@@ -43,21 +43,22 @@ public:
 		return true;
 	} // end enqueue
 
-	bool Dequeue_In_Variable(T& frntEntry) {
-
-		if (IsEmpty())
+	bool Dequeue_In_Variable(T& variable) {
+		if (IsEmpty()) {
+		
 			return false;
-
-		Node<T>* nodeToDeletePtr = Front;
-		frntEntry = Front->getItem();
-		Front = Front->getNext();
-		// Queue is not empty; remove front
-		if (nodeToDeletePtr == Rear)	 // Special case: last node in the queue
-			Rear = nullptr;
-
-		// Free memory reserved for the dequeued node
-		delete nodeToDeletePtr;
-
+		}
+		else if (Front == Rear) {
+			variable = Front->getItem();
+			delete Front;
+			Front = Rear = nullptr;
+		}
+		else {
+			Node<T>* delptr = Front;
+			Front = Front->getNext();
+			variable = delptr->getItem();
+			delete delptr;
+		}
 		return true;
 	}
 	void Display()

@@ -30,9 +30,8 @@ void Scheduler::Run()
 	{
 
 		updateTimer();
-		cout << Timer;
 		MoveProcessToReadyList();
-
+		if (Timer == 9) break;
 	}
 }
 Scheduler::~Scheduler()
@@ -78,13 +77,7 @@ void Scheduler::load(string inputfile)
 				InsertProcessToNew(Data);
 				counter++;
 			}
-			while (!InputFile.eof())
-			{
-				getline(InputFile, *line);
-				TranslateData(*line, Data);
-				KillSignalSearcher(Data);
-				
-			}
+			
 	}
 	else {
 		cout << "Couldn't open file\n";
@@ -206,21 +199,26 @@ void Scheduler::KillSignalSearcher(LinkedQueue<string>* KillData)
 }
 int Scheduler::ShortestQueue()
 {
-	LinkedList<Processor*>copy(ProcessorsList);
-	Processor* currentprocessor;
-	copy.Dequeue_In_Variable(currentprocessor);
-	int min= currentprocessor->getExpectedTime();
-	int i = 0;
-	///*while(copy.Dequeue_In_Variable(currentprocessor))*/
-	//{
-	//	if (currentprocessor->getExpectedTime() < min) {
-	//		min = currentprocessor->getExpectedTime();
-	//		i++;
-	//	}
-	//}
-	cout << i << endl;
-	return i;
+	if (ProcessorsList.Count() == 0)
+	{
+		return -1; 
+	}
+
+	int min = ProcessorsList.returnkth(0)->getExpectedTime();
+	int shortestIndex = 0;
+
+	for (int i = 1; i < ProcessorsList.Count(); i++)
+	{
+		if (ProcessorsList.returnkth(i)->getExpectedTime() < min)
+		{
+			min = ProcessorsList.returnkth(i)->getExpectedTime();
+			shortestIndex = i;
+		}
+	}
+	
+	return shortestIndex;
 }
+
 void Scheduler:: MoveProcessToReadyList()
 {
 	Process* process;
@@ -230,11 +228,12 @@ void Scheduler:: MoveProcessToReadyList()
 	
 		if (NewList.Peek()->getAT() == Timer)
 		{
-			NewList.Dequeue_In_Variable(process);
-			ProcessorsList.returnkth(ShortestQueue())->AddToMyReadyList(*process);
-			cout << "now we insert a process with id" << process->getPID();
 		
-			
+			NewList.Dequeue_In_Variable(process);
+			cout << "insert id " << process->getPID() << endl;
+			cout << "to" << ShortestQueue() << endl;
+			ProcessorsList.returnkth(ShortestQueue())->AddToMyReadyList(*process);
+			cout <<endl;
 		}
 
 	}

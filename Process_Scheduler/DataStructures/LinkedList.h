@@ -454,24 +454,37 @@ public:
 
 	}
 	bool Dequeue_In_Variable(T& variable) {
-		if (IsEmpty())
-		{
-			cout << "The List is Empty";
+		if (IsEmpty()) {
+			
 			return false;
 		}
 		else if (Head == Tail)
 		{
 			variable = Head->getItem();
 			delete Head;
-			Head = Tail = NULL;
-			return true;
+			Head = Tail = nullptr;
+		}
+		else {
+			if (Head->getNext()) {
+				Node<T>* delptr = Head;
+				Head = Head->getNext();
+				variable = delptr->getItem();
+				delete delptr;
+			}
+			else
+				return false;
+		}
+		return true;
+	}
+	bool peek(T& variable)
+	{
+		if (IsEmpty())
+		{
+			return false;
 		}
 		else
 		{
-			Node<T>* delptr = Head;
-			Head = Head->getNext();
-			variable = delptr->getItem();
-			delete delptr;
+			variable = Head->getItem();
 			return true;
 		}
 	}
