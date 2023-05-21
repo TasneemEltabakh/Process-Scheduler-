@@ -12,52 +12,56 @@ RoundRobinProcessor::RoundRobinProcessor(int sliceTime, int RTF) {
 RoundRobinProcessor::~RoundRobinProcessor(){}
 void RoundRobinProcessor::ScheduleAlgo()
 {	
-	//New Start
 	TerminatProcess = nullptr;
 	IORequest = nullptr;
-	//New Start
-	if (RunningProcess != nullptr) {
-		if (InternalsliceTime==0) {
-			ReadyQueue.enqueue(RunningProcess);
-			ReadyQueue.Dequeue_In_Variable(RunningProcess);
-			setInternalsliceTime(sliceTime);  //Restart the sliceTime
-			cout << "RR sliceTime, enter new elemnt" << endl;
-			return;
-		}
-		if (RunningProcess->getCT() != 0) {
-			RunningProcess->setCT(RunningProcess->getCT() - 1);
-			expectedtime = expectedtime - 1;
-			InternalsliceTime = InternalsliceTime - 1;
-			if (RunningProcess->getnIO() != 0) {
-				if (currentTime == RunningProcess->seeTimeForAskForIO()) {
-					IORequest = new Process(*RunningProcess);  //Flag gor I/O
-					cout << "RR requist I/O" << endl;
-				}
-			}
-			cout << "RR step" << endl;
-			return;
-		}
-		else {
-			TerminatProcess = new Process(*RunningProcess);  //Flag For Term
-			cout << "RR Termnal" << endl;
-			if (!ReadyQueue.IsEmpty()) {
+
+
+	if (RunningProcess != nullptr)
+	{
+		if (RunningProcess->getCT() > 0)
+		{
+			if (InternalsliceTime == 0) {
+				ReadyQueue.enqueue(RunningProcess);
 				ReadyQueue.Dequeue_In_Variable(RunningProcess);
 				setInternalsliceTime(sliceTime);  //Restart the sliceTime
-				cout << "RR enter new elemnt" << endl;
+				cout << "RR sliceTime, enter new elemnt" << endl;
 				return;
 			}
+
+			RunningProcess->setCT(RunningProcess->getCT() - 1);
+			expectedtime--;
+			InternalsliceTime = InternalsliceTime - 1;
+
+
+			if (RunningProcess->getnIO() > 0 && currentTime == RunningProcess->seeTimeForAskForIO())
+			{
+				IORequest = new Process(*RunningProcess);
+			}
+
+			cout << "Step" << endl;
+			return;
+		}
+		else
+		{
+			TerminatProcess = new Process(*RunningProcess);
+			RunningProcess = nullptr;
 		}
 	}
-	if (ReadyQueue.IsEmpty()) {
-		cout << "RR Ready Empty" << endl;
+
+
+	if (ReadyQueue.IsEmpty())
+	{
+		cout << "SJP Ready Empty" << endl;
 		return;
 	}
-	else {
-		ReadyQueue.Dequeue_In_Variable(RunningProcess);
-		setInternalsliceTime(sliceTime);  //Restart the sliceTime
-		cout << "RR enter new elemnt" << endl;
-		return;
-	}
+
+
+	Process* shortestJob = ReadyQueue.Peek();
+	ReadyQueue.Dequeue_In_Variable(shortestJob);
+	setInternalsliceTime(sliceTime);  //Restart the sliceTime
+	RunningProcess = shortestJob;
+	cout << "Enter new element" << endl;
+
 }
 int RoundRobinProcessor::getsliceTime() {
 	return sliceTime;
