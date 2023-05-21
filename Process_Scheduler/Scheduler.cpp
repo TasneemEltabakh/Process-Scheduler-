@@ -1,4 +1,4 @@
-#include "Scheduler.h"
+﻿#include "Scheduler.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -34,7 +34,6 @@ void Scheduler::Run()
 		for (int i = 0; i < ProcessorsList.Count(); i++)
 		{
 			ProcessorsList.returnkth(i)->CurrentTime(Timer);
-			
 		}
 		for (int i = 0; i < ProcessorsList.Count(); i++)
 		{
@@ -44,12 +43,14 @@ void Scheduler::Run()
 
 		if (Timer == (STL * loop))
 		{
-		//	WorkStealing();
-		//	loop++;
+			WorkStealing();
+			loop++;
 		}
+		KillSignalSearcher();
 		output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
+		
 	    system("pause");
-		//if (Timer == 13) break;
+		
 	}
 }
 Scheduler::~Scheduler()
@@ -95,7 +96,13 @@ void Scheduler::load(string inputfile)
 				InsertProcessToNew(Data);
 				counter++;
 			}
-			
+			while (!InputFile.eof())
+			{
+				getline(InputFile, *line);
+				TranslateData(*line, Data);
+				KillSignal(Data);
+
+			}
 	}
 	else {
 		cout << "Couldn't open file\n";
@@ -124,6 +131,7 @@ void Scheduler::TranslateData(string line, LinkedQueue<string>* Data)
 		else {
 			
 			Data->enqueue(word);
+			
 			
 		
 		}
@@ -189,32 +197,34 @@ void Scheduler::InsertProcessToNew(LinkedQueue<string>* dataProcess)
 	NewList.enqueue(newprocess);
 
 }
-
-void Scheduler::KillSignalSearcher(LinkedQueue<string>* KillData)
+void Scheduler::KillSignalSearcher()
 {
-	if (KillData->IsEmpty()) {
-		
-		return;
+	int x;
+	x = KilledProcesses.Peek();
+	if (x == Timer)
+	{
+		KilledProcesses.Dequeue_In_Variable(x);
+		KilledProcesses.Dequeue_In_Variable(x);
+		for (int i = 0; i < Numberof_FCFS; i++)
+		{
+			
+			FirstComeProcessor * child = dynamic_cast<FirstComeProcessor*>(ProcessorsList.returnkth(i));
+			child->IsThereKilled(x);
+
+		}
 	}
+
+}
+void Scheduler::KillSignal(LinkedQueue<string>* KillData)
+{
+
 	string time, id;
 	KillData->Dequeue_In_Variable(time);
 	KillData->Dequeue_In_Variable(id);
+
+	KilledProcesses.enqueue(stoi(time));
+	KilledProcesses.enqueue(stoi(id));
 	
-	if (Timer == stoi(time))
-	{
-		for (int i = 0; i < Numberof_FCFS; i++)
-		{
-
-			FirstComeProcessor* childPointer = dynamic_cast<FirstComeProcessor*>(ProcessorsList.returnkth(i));
-			if (childPointer->IsThereKilled(stoi(id)))
-			{
-				return;
-			}
-
-
-			
-		}
-	}
 }
 int Scheduler::ShortestQueue()
 {
@@ -298,10 +308,13 @@ void Scheduler::WorkStealing()
 {
 	int index_S = ShortestQueue();
 	int index_L = LongestQueue();
-	int steal_limit = (LongestQueueTime() - ShortestQueueTime()) / LongestQueueTime();
+	double longest_T = LongestQueueTime();
+	int Shortest_T = ShortestQueueTime();
+
+	int steal_limit = ((longest_T - Shortest_T) / longest_T) * 100;
+	
 	while (steal_limit > 40)
-	{
-		
+	{ 
 		 ProcessorsList.returnkth(index_S)->AddToMyReadyList(*ProcessorsList.returnkth(index_L)->RemoveProcess());
 
 		 index_S = ShortestQueue();
@@ -332,6 +345,12 @@ void Scheduler:: MoveProcessToReadyList()
 	
 }
 
+
+
+void Scheduler::moveToTrm(Process* p) {
+	Terminal.enqueue(p);
+	cout << " process id " << p->getPID() << " moved to trm" << " ct & wt " << p->getCT() << " " << p->getWT() << endl;
+}
 
 //void Scheduler::FakeSimulator()
 //{
@@ -451,3 +470,5 @@ void Scheduler:: MoveProcessToReadyList()
 //
 //
 //
+
+

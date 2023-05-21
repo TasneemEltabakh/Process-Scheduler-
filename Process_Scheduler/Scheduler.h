@@ -19,7 +19,7 @@ private:
 	LinkedQueue<Process*> NewList;
 	LinkedQueue<Process*> Terminal;
 	LinkedQueue<Process*> BLK;
-	LinkedQueue<Process*> KilledProcesses;
+	LinkedQueue<int> KilledProcesses;
 	bool stopflag;
 	int Timer;
 	UI* output;
@@ -38,10 +38,10 @@ public:
 	void  CreateProcessors(LinkedQueue<string>* dataProcessor);
 	void  InsertProcessToNew(LinkedQueue<string>* dataProcess);
 	void  MoveProcessToReadyList();
-	void KillSignalSearcher(LinkedQueue<string>* KillData);
+	void KillSignal(LinkedQueue<string>* KillData);
+	void KillSignalSearcher();
 	void TimeStepsiterator();
 	void  FakeSimulator();
-	void KillSignalSearcher();
 	void getTime() const;
 	void fork(Process* p);  
 	int ShortestQueue();
@@ -50,5 +50,6 @@ public:
 	void WorkStealing();
 	int ShortestQueueTime();
 	int LongestQueueTime();
+	//void KillOrohan();
+	
 };
-
