@@ -22,7 +22,7 @@ public:
     void setsliceTime(int newtime);  //It is constant for each processor
 private:
     int sliceTime;
-    static int InternalsliceTime;  //R add for RP Algo Fun Important that static
+    int InternalsliceTime;  //R add for RP Algo Fun Important that static
     int RTF;
     int countOfProcesses;
     LinkedQueue <Process*>  ReadyQueue; // we choosed queue to be easily dequeued and enqueued during operation
