@@ -47,8 +47,11 @@ void Scheduler::Run()
 			WorkStealing();
 			loop++;
 		}
+		IORequestNeeded();
+		countDownBLK();
 		Overheating();
 		KillSignalSearcher();
+
 		output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
 	    system("pause");
 		
@@ -319,23 +322,38 @@ int Scheduler::ShortestQueueTime()
 	return min;
 }
 
+bool Scheduler::isAllEmpty()
+{
 
+	for (int i = 1; i < ProcessorsList.Count(); i++)
+	{
+		if (!ProcessorsList.returnkth(i)->isthisProcessrEmpty())
+		{
+			return false;
+		}
+	}
+	return true;
+}
 void Scheduler::WorkStealing()
 {
-	int index_S = ShortestQueue();
-	int index_L = LongestQueue();
-	double longest_T = LongestQueueTime();
-	int Shortest_T = ShortestQueueTime();
+	if (isAllEmpty()) return;
+	else
+	{
+		int index_S = ShortestQueue();
+		int index_L = LongestQueue();
+		double longest_T = LongestQueueTime();
+		int Shortest_T = ShortestQueueTime();
 
-	int steal_limit = ((longest_T - Shortest_T) / longest_T) * 100;
-	
-	while (steal_limit > 40)
-	{ 
-		 ProcessorsList.returnkth(index_S)->AddToMyReadyList(*ProcessorsList.returnkth(index_L)->RemoveProcess());
-		 index_S = ShortestQueue();
-		 index_L = LongestQueue();
-		 steal_limit = (LongestQueueTime() - ShortestQueueTime()) / LongestQueueTime();
+		int steal_limit = ((longest_T - Shortest_T) / longest_T) * 100;
 
+		while (steal_limit > 40)
+		{
+			ProcessorsList.returnkth(index_S)->AddToMyReadyList(*ProcessorsList.returnkth(index_L)->RemoveProcess());
+			index_S = ShortestQueue();
+			index_L = LongestQueue();
+			steal_limit = (LongestQueueTime() - ShortestQueueTime()) / LongestQueueTime();
+
+		}
 	}
 }
 void Scheduler::Overheating()
@@ -374,6 +392,40 @@ void Scheduler::Overheating()
 		}
 	}
 }
+void Scheduler::IORequestNeeded()
+{
+	for (int i = 1; i < ProcessorsList.Count(); i++)
+	{
+		if (ProcessorsList.returnkth(i)->getIO() != nullptr)
+		{
+			BLK.enqueue(ProcessorsList.returnkth(i)->getIO());
+			ProcessorsList.returnkth(i)->getIO()->seeDurationForAskForIO();
+		}
+	}
+}
+void Scheduler::countDownBLK()
+{
+	for (int i = 1; i < BLK.Count(); i++)
+	{
+		Process* process;
+		BLK.Dequeue_In_Variable(process);
+	
+
+		if (process->get_duration() > 0)
+		{
+			process->downDuration();
+		}
+		else if(process->get_duration()==0)
+		{
+			MoveProcessToReadyListAgain(process);
+		
+		}
+	}
+
+}
+
+
+
 
 void Scheduler:: MoveProcessToReadyList()
 {
@@ -393,7 +445,11 @@ void Scheduler:: MoveProcessToReadyList()
 	}
 	
 }
-
+void Scheduler::MoveProcessToReadyListAgain(Process* p)
+{
+	int shortestQueueIndex = ShortestQueue();
+	ProcessorsList.returnkth(shortestQueueIndex)->AddToMyReadyList(*p);
+}
 
 
 void Scheduler::moveToTrm(Process* p) {

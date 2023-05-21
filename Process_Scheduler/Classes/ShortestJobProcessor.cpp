@@ -12,46 +12,44 @@ ShortestJobProcessor::~ShortestJobProcessor()
 
 void ShortestJobProcessor::ScheduleAlgo()
 {
-    TerminatProcess = nullptr;
-    IORequest = nullptr;
+	TerminatProcess = nullptr;
+	IORequest = nullptr;
+	
+	if (RunningProcess != nullptr)
+	{
+		if (RunningProcess->getCT() > 0)
+		{
+			RunningProcess->setCT(RunningProcess->getCT() - 1);
+			expectedtime--;
 
-   
-    if (RunningProcess != nullptr)
-    {
-        if (RunningProcess->getCT() > 0)
-        {
-            RunningProcess->setCT(RunningProcess->getCT() - 1);
-            expectedtime--;
+			if (RunningProcess->getnIO() > 0 && currentTime == RunningProcess->seeTimeForAskForIO())
+			{
 
-           
-            if (RunningProcess->getnIO() > 0 && currentTime == RunningProcess->seeTimeForAskForIO())
-            {
-                IORequest = new Process(*RunningProcess);  
-            }
+				cout << "time for request" << currentTime << endl;
+				IORequest = new Process(*RunningProcess);
+				RunningProcess = nullptr;
+			}
 
-            cout << "Step" << endl;
-            return;
-        }
-        else
-        {
-            TerminatProcess = new Process(*RunningProcess);  
-            RunningProcess = nullptr;
-        }
-    }
+			cout << "Step" << endl;
+		}
+		else
+		{
+			TerminatProcess = new Process(*RunningProcess);
+			RunningProcess = nullptr;
+		}
+	}
 
-   
-    if (ReadyQueue.IsEmpty())
-    {
-        cout << "SJP Ready Empty" << endl;
-        return;
-    }
+	if (ReadyQueue.IsEmpty())
+	{
+		cout << "SJP Ready Empty" << endl;
+		return;
+	}
 
-    
-    Process* shortestJob = ReadyQueue.Peek();
-    ReadyQueue.Dequeue_In_Variable(shortestJob);
+	Process* shortestJob = ReadyQueue.Peek();
+	ReadyQueue.Dequeue_In_Variable(shortestJob);
 
-    RunningProcess = shortestJob;
-    cout << "Enter new element" << endl;
+	RunningProcess = shortestJob;
+	cout << "Enter new element" << endl;
 }
 
 void ShortestJobProcessor::AddToMyReadyList(Process& NewProcess)
@@ -73,7 +71,11 @@ void ShortestJobProcessor::AddToRun()
 	ReadyQueue.Dequeue_In_Variable(RunningProcess);
 	downtimer = RunningProcess->getCT();
 }
-
+bool ShortestJobProcessor::isthisProcessrEmpty()
+{
+	if (this->ReadyQueue.IsEmpty())
+		return true;
+}
 Process* ShortestJobProcessor::getkth(int k)
 {
 	return ReadyQueue.returnkth(k);

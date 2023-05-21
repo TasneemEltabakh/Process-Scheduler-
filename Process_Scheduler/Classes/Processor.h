@@ -32,6 +32,9 @@ public:
 	void OutOfService(int n);
 	void BacktoService();
 	int CountDownBreak();
+	Process* getIO();
+	Process* getTerminal();
+	virtual bool isthisProcessrEmpty()=0;
 	
 protected:
 	Process* RunningProcess; 
@@ -51,5 +54,6 @@ protected:
 	int expectedtime;
 	int getRunningCt;
 	State processor;
+	int timeforrequest;
 };
 

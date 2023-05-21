@@ -22,7 +22,7 @@ public:
     int getExpectedTime() override;
     Process* RemoveProcess() override;
     bool ChcekMigration(Process* running);
-
+    bool isthisProcessrEmpty();
 private:
     //LinkedList <Process*> * ReadyQueue = new  LinkedList <Process*>;
     LinkedList <Process*>  ReadyQueue;
