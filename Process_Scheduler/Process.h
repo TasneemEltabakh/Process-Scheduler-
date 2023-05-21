@@ -30,10 +30,9 @@ public:
 	Process(int x, int y, int z, int l);
 	Process(const Process& other);
 	void addDatatoIOPairs(int x, int y);
-	//////////////////////////////////////////
-	void addDatatoIOPairs(int x, int y);  //T edit
+
 	int seeTimeForAskForIO();  //R add
-	////////////////////////////////////////
+
 
 	~Process();
 	int getPID() const;

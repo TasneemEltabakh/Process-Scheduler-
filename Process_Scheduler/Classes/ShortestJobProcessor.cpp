@@ -46,6 +46,8 @@ void ShortestJobProcessor::AddToMyReadyList(Process& NewProcess)
 {
 	Process* newprocess = new Process(NewProcess);
 	countOfProcesses++;
+
+	expectedtime = expectedtime + newprocess->getCT();
 	ReadyQueue.enqueue(newprocess);
 
 }
@@ -83,12 +85,5 @@ bool ShortestJobProcessor::CheckIfemptyready()
 }
 int ShortestJobProcessor::getExpectedTime()
 {
-	PriorityQueue<Process*> copy(ReadyQueue);
-	Process* process;
-	while (!copy.IsEmpty())
-	{
-		copy.Dequeue_In_Variable(process);
-		expectedtime += process->getCT();
-	}
 	return expectedtime;
 }

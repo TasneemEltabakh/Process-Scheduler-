@@ -53,7 +53,7 @@ public:
 
 	bool Dequeue_In_Variable(T& variable) {
 		if (IsEmpty()) {
-			cout << "The Queue is Empty";
+			
 			return false;
 		}
 		else if (Front == Rear) {

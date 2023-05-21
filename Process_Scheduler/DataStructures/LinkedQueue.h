@@ -48,24 +48,23 @@ public:
 
 	}
 
-	void Dequeue_In_Variable(T& variable) {
-		if (IsEmpty())
-		{
-			cout << "The Queue is Empty";
+	bool Dequeue_In_Variable(T& variable) {
+		if (IsEmpty()) {
+		
+			return false;
 		}
-		else if (Front == Rear)
-		{
+		else if (Front == Rear) {
 			variable = Front->getItem();
 			delete Front;
-			Front = Rear =nullptr;
+			Front = Rear = nullptr;
 		}
-		else
-		{
+		else {
 			Node<T>* delptr = Front;
 			Front = Front->getNext();
 			variable = delptr->getItem();
 			delete delptr;
 		}
+		return true;
 	}
 	void Display()
 	{
