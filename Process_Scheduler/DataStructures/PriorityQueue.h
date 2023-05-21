@@ -51,25 +51,25 @@ public:
 
 	}
 
-	void Dequeue_In_Variable(T& variable) {
-		if (IsEmpty())
-		{
+	bool Dequeue_In_Variable(T& variable) {
+		if (IsEmpty()) {
 			cout << "The Queue is Empty";
+			return false;
 		}
-		else if (Front == Rear)
-		{
+		else if (Front == Rear) {
 			variable = Front->getItem();
 			delete Front;
 			Front = Rear = nullptr;
 		}
-		else
-		{
+		else {
 			Node<T>* delptr = Front;
 			Front = Front->getNext();
 			variable = delptr->getItem();
 			delete delptr;
 		}
+		return true;
 	}
+
 	void Display()
 	{
 		Node<T>* temp = Front;
@@ -127,4 +127,34 @@ public:
 
 
 	}
+	// Copy constructor
+	PriorityQueue(const PriorityQueue& other)
+	{
+		Front = nullptr;
+		Rear = nullptr;
+
+		Node<T>* temp = other.Front;
+		Node<T>* prev = nullptr;
+
+		while (temp != nullptr)
+		{
+			Node<T>* newnode = new Node<T>(temp->getItem());
+			newnode->setItem(temp->getItem());
+
+			if (prev == nullptr)
+			{
+				Front = newnode;
+				Rear = newnode;
+			}
+			else
+			{
+				Rear->setNext(newnode);
+				Rear = newnode;
+			}
+
+			temp = temp->getNext();
+			prev = newnode;
+		}
+	}
+
 };

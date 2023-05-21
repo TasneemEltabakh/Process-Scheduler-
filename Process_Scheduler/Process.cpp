@@ -20,7 +20,19 @@ Process::Process(int x, int y, int z, int l) {
 	
 
 }
+Process::Process(const Process& other)
+{
+	
+	PID = other.PID;
+	AT = other.AT;
+	CT = other.CT;
+	nIO = other.nIO;
+	iskilled = other.iskilled;
 
+	IOpairs = other.IOpairs; 
+
+	
+}
 Process::~Process() {
 
 }
@@ -84,12 +96,36 @@ void  Process::KillThisProcess()
 	iskilled = true;
 }
 
-void  Process::addDatatoIOPairs(int x, int y)
+
+  ////////////////////////////////////////////////////////
+ //                      I/O                    /////////
+////////////////////////////////////////////////////////
+void  Process::addDatatoIOPairs(int x, int y)  //edit fom T
 {
-	
+	IOpairs.x = x;
+	IOpairs.y = y;
+
 	IOpairs.pairs.enqueue(make_pair(x, y));
-	
+
 }
+//Phase Two
+int Process::seeTimeForAskForIO() {  //R add for algo SJP
+	return IOpairs.x;  
+}
+void Process::setaskedforOI(bool state) {  //R add
+	askedforOI = state;
+}
+void Process::setIsFinshed(bool state) {  //R add
+	IsFinshed = state;
+}
+bool Process::getaskedforOI() {  //R add
+	return askedforOI;
+}
+bool Process::getIsFinshed() {  //R add
+	return IsFinshed;
+}
+////////////////////////////////////////////////////////////////
+
 
 void Process::setCT(int newCT) { //R add
 	CT = newCT;
@@ -128,3 +164,5 @@ bool Process:: findProcess(int i)
 		return true;
 	return false;
 }
+
+

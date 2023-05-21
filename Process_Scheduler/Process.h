@@ -4,7 +4,8 @@
 #include "DataStructures/LinkedQueue.h"
 
 struct ProcessPairs {
-	
+	int x;
+	int y;
 	LinkedQueue<pair<int, int>> pairs;
 };
 class Process
@@ -19,13 +20,21 @@ private:
 	Process* ParentQueue;  //R add
 	//bool finished;
 	int runningtime;
-	State state; //N
-	
+
+	//Phase Two
+	bool askedforOI; //R add
+	bool IsFinshed; //R add
 	
 public:
 	Process();
 	Process(int x, int y, int z, int l);
+	Process(const Process& other);
 	void addDatatoIOPairs(int x, int y);
+	//////////////////////////////////////////
+	void addDatatoIOPairs(int x, int y);  //T edit
+	int seeTimeForAskForIO();  //R add
+	////////////////////////////////////////
+
 	~Process();
 	int getPID() const;
 	int getAT()const;
@@ -39,21 +48,24 @@ public:
 	int getrunt() const;
 	void calcWT();
 	void calcTRT();
-
 	void SetFOrk(); //R add
 	bool IsKilled();
 	void KillThisProcess();
 	bool findProcess(int i);
-
 	void InsertToIOlist(int x, int y);
-
 	bool checkforklist();  //R add
 	bool IsForked();  //R add
 	Process* getParentQueue(); //R add
 	void setParentQueue(Process* parent); //R add
 	Process* getAllList();  //R add
 	int operator<< (const Process& c) const;  //R add
-	//enum State; // N
-	//string GetState() const;
+
+
+	//Phase Two
+	void setaskedforOI(bool state); //R add
+	void setIsFinshed(bool state); //R add
+	bool getaskedforOI(); //R add
+	bool getIsFinshed(); //R add
+
 };
 
