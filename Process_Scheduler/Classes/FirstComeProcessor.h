@@ -20,6 +20,7 @@ public:
     Process* getkth(int k) override;
     bool CheckIfemptyready() override;
     int getExpectedTime() override;
+    Process* RemoveProcess() override;
 
 private:
     //LinkedList <Process*> * ReadyQueue = new  LinkedList <Process*>;

@@ -17,6 +17,7 @@ public:
     Process* getkth(int k) override;
     bool CheckIfemptyready();
     int getExpectedTime() override;
+    Process* RemoveProcess() override;
 private:
     int sliceTime;
     int RTF;

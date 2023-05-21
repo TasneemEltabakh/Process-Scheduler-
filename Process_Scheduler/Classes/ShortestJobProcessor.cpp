@@ -63,10 +63,7 @@ void ShortestJobProcessor::AddToRun()
 	ReadyQueue.Dequeue_In_Variable(RunningProcess);
 	downtimer = RunningProcess->getCT();
 }
-int ShortestJobProcessor::getcount()
-{
-	return ReadyQueue.Count();
-}
+
 Process* ShortestJobProcessor::getkth(int k)
 {
 	return ReadyQueue.returnkth(k);
@@ -88,4 +85,19 @@ bool ShortestJobProcessor::CheckIfemptyready()
 int ShortestJobProcessor::getExpectedTime()
 {
 	return expectedtime;
+}
+int ShortestJobProcessor::getcount()
+{
+	return ReadyQueue.Count();
+}
+Process* ShortestJobProcessor::RemoveProcess()
+{
+	Process* StolenProcess = nullptr;
+	if (!ReadyQueue.IsEmpty())
+	{
+		StolenProcess = new Process(*ReadyQueue.returnkth(ReadyQueue.Count() - 1));
+		expectedtime = expectedtime - ReadyQueue.returnkth(ReadyQueue.Count() - 1)->getCT();
+		ReadyQueue.DeleteNodePlace(ReadyQueue.Count() - 1);
+	}
+	return StolenProcess;
 }

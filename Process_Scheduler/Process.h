@@ -8,6 +8,9 @@ struct ProcessPairs {
 	int y;
 	LinkedQueue<pair<int, int>> pairs;
 };
+
+
+
 class Process
 
 {
