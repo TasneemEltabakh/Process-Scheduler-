@@ -27,15 +27,32 @@ void FirstComeProcessor::ScheduleAlgo()
 	}
 
 	ReadyQueue.Dequeue_In_Variable(RunningProcess);
+	//Here the previuse must go to TERM
+	ReadyQueue.Dequeue_In_Variable(RunningProcess);
 
 	while (RunningProcess->getCT() != 0 ) {
 
 		//runingTime++;
 		RunningProcess->setCT(RunningProcess->getCT() - 1);
+		//nada
+		if (RunningProcess->getCT() > 0 && RunningProcess->getRemainingCT() == RunningProcess->getCT() &&
+			rand() % 100 < forkprob) {
+			Process* child = new Process();
+			child->setCT(RunningProcess->getCT() - RunningProcess->getRemainingCT());
+			child->set_AT_Cild(RunningProcess->getAT());
+			countOfProcesses++; // ask is it like db or the file has the id ? or they did another thing 
+			child->setParent(RunningProcess);
+			RunningProcess->addChild(child);
+			ReadyQueue.InsertEnd(child);  // add process to the scheudlor ready queu  // ask for function to get the ready queue
+
+
+		}
 	}
-	//Here the previuse must go to TERM
-	ReadyQueue.Dequeue_In_Variable(RunningProcess);
+	
+	MoveMeToTerminal();
 }
+
+
 
 void FirstComeProcessor::SetMAXW(int max)
 {
@@ -131,3 +148,8 @@ int FirstComeProcessor::getExpectedTime()
 	}
 	return expectedtime;
 }
+
+
+
+
+//no 

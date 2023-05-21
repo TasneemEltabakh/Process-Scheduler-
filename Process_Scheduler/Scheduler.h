@@ -46,6 +46,6 @@ public:
 	void fork(Process* p);  
 	int ShortestQueue();
 	void moveToTrm(Process* p);
-
+	//void KillOrohan();
+	
 };
-

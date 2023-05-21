@@ -1,4 +1,4 @@
-#include "Scheduler.h"
+﻿#include "Scheduler.h"
 #include <iostream>
 #include <fstream>
 #include <string>
@@ -32,8 +32,22 @@ void Scheduler::Run()
 		updateTimer();
 		cout << Timer;
 		MoveProcessToReadyList();
+		for (int i = 1; i < ProcessorsList.Count(); i++)
+		{
+			ProcessorsList.returnkth(i)->CurrentTime(Timer);
+
+		}
+
+
+		output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
+
+		system("pause");
+
+		
+
 
 	}
+
 }
 Scheduler::~Scheduler()
 {
@@ -82,7 +96,7 @@ void Scheduler::load(string inputfile)
 			{
 				getline(InputFile, *line);
 				TranslateData(*line, Data);
-				KillSignalSearcher(Data);
+				//KillSignalSearcher(Data);
 				
 			}
 	}
@@ -240,6 +254,100 @@ void Scheduler:: MoveProcessToReadyList()
 	}
 	
 }
+
+//// nada killed the orphan 🚩
+//void Scheduler::KillOrohan() {
+//	for (int i = 0; i < Numberof_FCFS; i++) {
+//		//FirstComeProcessor* FCFSProcessor = <FirstComeProcessor*>(processor[i]);
+//	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 //void Scheduler::FakeSimulator()
 //{
 //	bool flag = true;
@@ -358,3 +466,5 @@ void Scheduler:: MoveProcessToReadyList()
 //
 //
 //
+
+
