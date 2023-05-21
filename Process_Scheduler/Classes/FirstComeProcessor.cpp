@@ -30,10 +30,30 @@ void FirstComeProcessor::ScheduleAlgo()
 
 	ProcessorState = busy;
 	ReadyQueue.Dequeue_In_Variable(RunningProcess);
+	//Here the previuse must go to TERM
+	ReadyQueue.Dequeue_In_Variable(RunningProcess);
 	RunningProcess->calcWT(wt);
 
 	for (int i = 1; i < RunningProcess->getCT(); i++) {
 
+		//runingTime++;
+		RunningProcess->setCT(RunningProcess->getCT() - 1);
+		//nada
+		if (RunningProcess->getCT() > 0 && RunningProcess->getRemainingCT() == RunningProcess->getCT() &&
+			rand() % 100 < forkprob) {
+			Process* child = new Process();
+			child->setCT(RunningProcess->getCT() - RunningProcess->getRemainingCT());
+			child->set_AT_Cild(RunningProcess->getAT());
+			countOfProcesses++; // ask is it like db or the file has the id ? or they did another thing 
+			child->setParent(RunningProcess);
+			RunningProcess->addChild(child);
+			ReadyQueue.InsertEnd(child);  // add process to the scheudlor ready queu  // ask for function to get the ready queue
+
+
+		}
+	}
+	
+	MoveMeToTerminal();
 		wt++;
 
 		if (ChcekMigration(RunningProcess))
@@ -61,6 +81,8 @@ void FirstComeProcessor::ScheduleAlgo()
 	////Here the previuse must go to TERM
 	//ReadyQueue.Dequeue_In_Variable(RunningProcess);
 }
+
+
 
 void FirstComeProcessor::SetMAXW(int max)
 {
@@ -152,12 +174,13 @@ int FirstComeProcessor::getExpectedTime()
 {
 	return expectedtime;
 }
-
-
-bool FirstComeProcessor::ChcekMigration(Process* running) {
-
-	if (running->getWT() > maxw)
-		return true;
-	else
-		return false;
+Process* FirstComeProcessor::RemoveProcess()
+{
+	Process* StolenProcess = nullptr;
+	if (!ReadyQueue.IsEmpty())
+	{
+		expectedtime = expectedtime - ReadyQueue.returnkth(ReadyQueue.Count() - 1)->getCT();
+		ReadyQueue.Dequeue_In_Variable(StolenProcess);
+	}
+	return StolenProcess;
 }

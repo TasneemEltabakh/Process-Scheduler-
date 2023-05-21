@@ -8,30 +8,37 @@ struct ProcessPairs {
 	int y;
 	LinkedQueue<pair<int, int>> pairs;
 };
+
+
+
 class Process
 
 {
 private:
-	int PID, TT, AT, CT, WT, RT, TRT, nIO;
+	int PID, TT, AT, CT, WT, RT, TRT, nIO , RemainingCT, childAT;
 	ProcessPairs IOpairs;
 	bool iskilled;
 	bool Isforking;  //R add
 	LinkedQueue<Process*> ForkedList;  //R add
+	LinkedQueue<Process*> getChildren();
+	Process* Parent;
+	LinkedQueue<Process*> Children;
 	Process* ParentQueue;  //R add
 	//bool finished;
 	int runningtime;
 
 	//Phase Two
-	bool askedforOI; //R add
-	bool IsFinshed; //R add
+	bool askedforOI; //R add2
+	bool IsFinshed; //R add2
 	
 public:
 	Process();
 	Process(int x, int y, int z, int l);
 	Process(const Process& other);
-	void addDatatoIOPairs(int x, int y);
-
-	int seeTimeForAskForIO();  //R add
+	//void addDatatoIOPairs(int x, int y);
+	//////////////////////////////////////////
+	void addDatatoIOPairs(int x, int y);  //T edit
+	int seeTimeForAskForIO();  //R add2
 
 
 	~Process();
@@ -65,6 +72,14 @@ public:
 	void setIsFinshed(bool state); //R add
 	bool getaskedforOI(); //R add
 	bool getIsFinshed(); //R add
+	//n
+	int getRemainingCT();
+	void setRemainingCT(int remainingCT);
+	void setParent(Process* parent);
+	void addChild(Process* child);
+	LinkedQueue<Process*>& getchildren();
+	void set_AT_Cild(int newAT);
+	
 
 };
 

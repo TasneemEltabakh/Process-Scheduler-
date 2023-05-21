@@ -24,8 +24,8 @@ private:
 	int Timer;
 	UI* output;
 	void updateTimer();
-
-
+	int STL;
+	int loop;
 public:
 	
 	Scheduler(string inputfilename);
@@ -45,7 +45,11 @@ public:
 	void getTime() const;
 	void fork(Process* p);  
 	int ShortestQueue();
+	int LongestQueue();
 	void moveToTrm(Process* p);
-
+	void WorkStealing();
+	int ShortestQueueTime();
+	int LongestQueueTime();
+	//void KillOrohan();
+	
 };
-

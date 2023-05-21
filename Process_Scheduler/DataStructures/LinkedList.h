@@ -337,9 +337,45 @@ public:
 			p = p->getNext();
 			count++;
 		}
-
 	}
 	
+
+	
+
+	bool DeleteNodePlace(int k)
+	{
+		if (k < 0 || k >= Count())
+			return false;
+
+		if (k == 0)
+		{
+			Node<T>* temp = Head;
+			Head = Head->getNext();
+			delete temp;
+			return true;
+		}
+
+		Node<T>* current = Head;
+		Node<T>* prev = nullptr;
+		int count = 0;
+
+		while (current != nullptr && count < k)
+		{
+			prev = current;
+			current = current->getNext();
+			count++;
+		}
+
+		if (current != nullptr)
+		{
+			prev->setNext(current->getNext());
+			delete current;
+			return true;
+		}
+
+		return false;
+	}
+
 	/*void InsertSorted(const T& data)
 	{
 		Node<T>* p = Head;
@@ -464,18 +500,15 @@ public:
 			variable = Head->getItem();
 			delete Head;
 			Head = Tail = nullptr;
+			return true;
 		}
 		else {
-			if (Head->getNext()) {
-				Node<T>* delptr = Head;
-				Head = Head->getNext();
-				variable = delptr->getItem();
-				delete delptr;
-			}
-			else
-				return false;
+			Node<T>* delptr = Head;
+			Head = Head->getNext();
+			variable = delptr->getItem();
+			delete delptr;
+			return true;
 		}
-		return true;
 	}
 	bool peek(T& variable)
 	{

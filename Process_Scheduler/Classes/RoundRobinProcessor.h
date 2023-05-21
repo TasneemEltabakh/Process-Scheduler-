@@ -17,8 +17,13 @@ public:
     Process* getkth(int k) override;
     bool CheckIfemptyready();
     int getExpectedTime() override;
+
+    int getsliceTime();
+    void setsliceTime(int newtime);  //It is constant for each processor
+    Process* RemoveProcess() override;
 private:
     int sliceTime;
+    int InternalsliceTime;  //R add for RP Algo Fun Important that static
     int RTF;
     int countOfProcesses;
     LinkedQueue <Process*>  ReadyQueue; // we choosed queue to be easily dequeued and enqueued during operation

@@ -20,6 +20,7 @@ public:
     Process* getkth(int k) override;
     bool CheckIfemptyready() override;
     int getExpectedTime() override;
+    Process* RemoveProcess() override;
     bool ChcekMigration(Process* running);
 
 private:
@@ -35,6 +36,7 @@ private:
     LinkedQueue<Process*> Killedprocesses;
     //static LinkedQueue<Process*> Killedprocesses;
     Process* KilledOne;
+   
 };
 
 

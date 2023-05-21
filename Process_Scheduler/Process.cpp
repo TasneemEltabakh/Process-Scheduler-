@@ -110,7 +110,10 @@ void  Process::addDatatoIOPairs(int x, int y)  //edit fom T
 }
 //Phase Two
 int Process::seeTimeForAskForIO() {  //R add for algo SJP
-	return IOpairs.x;  
+	int xValue = IOpairs.x;
+	int yValue = IOpairs.y;
+	pair<int, int> pairsValue = IOpairs.pairs.Peek();
+	return pairsValue.first;
 }
 void Process::setaskedforOI(bool state) {  //R add
 	askedforOI = state;
@@ -165,4 +168,21 @@ bool Process:: findProcess(int i)
 	return false;
 }
 
+// nada for fork 
+void Process::setParent(Process* parent) {
+	Parent = parent;
+}
 
+void Process::addChild(Process* child) {
+	Children.enqueue(child);
+}
+
+LinkedQueue<Process*>& Process::getchildren() {
+	return Children;
+}
+int Process::getRemainingCT() {
+	return RemainingCT;
+}
+void Process::set_AT_Cild(int newAT) { 
+	childAT = newAT;
+}

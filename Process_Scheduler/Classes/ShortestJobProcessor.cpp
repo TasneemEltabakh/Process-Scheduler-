@@ -41,6 +41,7 @@ void ShortestJobProcessor::ScheduleAlgo()
 			RunningProcess->setaskedforOI(true);  //flag for I/O Request
 		}
 		RunningProcess->setCT(RunningProcess->getCT() - 1);   //Step
+		expectedtime = expectedtime - 1;  //for T
 		cout << "step" << endl;
 	}
 }
@@ -63,10 +64,7 @@ void ShortestJobProcessor::AddToRun()
 	ReadyQueue.Dequeue_In_Variable(RunningProcess);
 	downtimer = RunningProcess->getCT();
 }
-int ShortestJobProcessor::getcount()
-{
-	return ReadyQueue.Count();
-}
+
 Process* ShortestJobProcessor::getkth(int k)
 {
 	return ReadyQueue.returnkth(k);
@@ -88,4 +86,18 @@ bool ShortestJobProcessor::CheckIfemptyready()
 int ShortestJobProcessor::getExpectedTime()
 {
 	return expectedtime;
+}
+int ShortestJobProcessor::getcount()
+{
+	return ReadyQueue.Count();
+}
+Process* ShortestJobProcessor::RemoveProcess()
+{
+	Process* StolenProcess = nullptr;
+	if (!ReadyQueue.IsEmpty())
+	{
+		expectedtime = expectedtime - ReadyQueue.returnkth(ReadyQueue.Count() - 1)->getCT();
+		ReadyQueue.Dequeue_In_Variable(StolenProcess);
+	}
+	return StolenProcess;
 }

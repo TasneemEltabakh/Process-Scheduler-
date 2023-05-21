@@ -27,10 +27,11 @@ public:
 	int getnowctforrunning();
 	void CurrentTime(int time);
 	virtual int getExpectedTime() = 0;
+	virtual Process* RemoveProcess() = 0;
+
 	
 protected:
-	Process* RunningProcess;   //****************
-
+	Process* RunningProcess; 
 	State ProcessorState;
 	Process* TerminatProcess;
 	double load;
