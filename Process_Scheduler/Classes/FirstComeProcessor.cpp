@@ -80,8 +80,6 @@ void FirstComeProcessor::ScheduleAlgo()
 	//}
 	////Here the previuse must go to TERM
 	//ReadyQueue.Dequeue_In_Variable(RunningProcess);
-}
-
 
 
 void FirstComeProcessor::SetMAXW(int max)
@@ -183,4 +181,8 @@ Process* FirstComeProcessor::RemoveProcess()
 		ReadyQueue.Dequeue_In_Variable(StolenProcess);
 	}
 	return StolenProcess;
+}
+
+bool FirstComeProcessor::ChcekMigration(Process* running) {
+	return false;
 }

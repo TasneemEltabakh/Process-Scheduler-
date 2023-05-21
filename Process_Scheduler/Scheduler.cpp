@@ -34,7 +34,6 @@ void Scheduler::Run()
 		for (int i = 1; i < ProcessorsList.Count(); i++)
 		{
 			ProcessorsList.returnkth(i)->CurrentTime(Timer);
-			
 		}
 		if (Timer == (STL * loop))
 		{
