@@ -41,6 +41,7 @@ void ShortestJobProcessor::ScheduleAlgo()
 			RunningProcess->setaskedforOI(true);  //flag for I/O Request
 		}
 		RunningProcess->setCT(RunningProcess->getCT() - 1);   //Step
+		expectedtime = expectedtime - 1;  //for T
 		cout << "step" << endl;
 	}
 }
