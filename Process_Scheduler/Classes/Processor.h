@@ -51,7 +51,7 @@ protected:
 	static int Count;
 	int downtimer;
 	int Id;
-	int currentTime;
+	int currentTime;  //************
 	int expectedtime;
 	int getRunningCt;
 	State processor;

@@ -5,7 +5,7 @@
 #include "Process.h"
 #include "Classes/Processor.h"
 #include<fstream>
-
+#include <iomanip>
 
 UI::UI() {
 
@@ -70,8 +70,12 @@ void UI::OutPutScreen(LinkedQueue<Process*>& Terminal, LinkedQueue<Process*>& BL
 	}
 
 	cout << endl<< "-------------TRM Processes------------" << endl;
-	cout << Terminal.Count() << " " << "TRM: ";
-	for (int k = 0; k < Terminal.Count(); k++) {
+	int c1 = 0;
+	for (int k = ProcessorsList.Count(); k < Terminal.Count(); k++) {
+			c1 = c1 + 1;
+	}
+	cout << c1 << " " << "TRM: ";
+	for (int k = ProcessorsList.Count(); k < Terminal.Count(); k++) {
 		if (Terminal.returnkth(k) != nullptr) {
 			cout << Terminal.returnkth(k)->getPID() << ", ";
 		}
@@ -80,11 +84,33 @@ void UI::OutPutScreen(LinkedQueue<Process*>& Terminal, LinkedQueue<Process*>& BL
 
 void UI::OUT_BUT_FILE(LinkedQueue<Process*>& Terminal, LinkedList<Processor*>& ProcessorsList, int TotaLNumberOfProcesses, int Numberof_SJF, int Numberof_FCFS, int Numberof_RR)
 {
+	int SUMWT = 0;
+	int count = 0;
+	for (int k = ProcessorsList.Count(); k < Terminal.Count(); k++) {
+		SUMWT = SUMWT + Terminal.returnkth(k)->getWT();
+	}
+	int AVGWT = SUMWT / count;
+
+
+	int SUMRT = 0;
+	for (int k = ProcessorsList.Count(); k < Terminal.Count(); k++) {
+		SUMRT = SUMRT + Terminal.returnkth(k)->getRTAfterSum();
+	}
+	int AVRT = SUMRT / count;
+
+
+	int SUMTRT = 0;
+	for (int k = ProcessorsList.Count(); k < Terminal.Count(); k++) {
+		SUMTRT = SUMTRT + Terminal.returnkth(k)->getTRT();
+	}
+	int AVGTRT = SUMTRT / count;
+
+
 	ofstream outfile;  //for UI
 	outfile.open("output.txt");
-	outfile << "TT PID AT CT IO_D WT RT TRT \n";
-	for (int k = 0; k < Terminal.Count(); k++) {
-		outfile << Terminal.returnkth(k)->getTT()<<"  " << Terminal.returnkth(k)->getPID() << "  " << Terminal.returnkth(k)->getAT()<<"  "<< Terminal.returnkth(k)->getCT()<<"    "<< 10<<"  "<< Terminal.returnkth(k)->getWT()<<"  "<< Terminal.returnkth(k)->getRT()<<"  "<< Terminal.returnkth(k)->getTRT() << "\n";
+	outfile <<left << setw(5) << "TT"<<left << setw(5) << "PID" << left << setw(5) << "AT" << left << setw(5) << "CT" << left << setw(5) << "IO_D" << left << setw(5) << "WT" << left << setw(5) << "RT" << left << setw(5) << "TRT" "\n";
+	for (int k = ProcessorsList.Count(); k < Terminal.Count(); k++) {
+		outfile << left << setw(5)<< Terminal.returnkth(k)->getTT() << left << setw(5) << Terminal.returnkth(k)->getPID()<< left << setw(5) << Terminal.returnkth(k)->getAT()<< left << setw(5) << Terminal.returnkth(k)->getCT()<< left << setw(5) << Terminal.returnkth(k)->getIO_D() << left << setw(5) << Terminal.returnkth(k)->getWT()<< left << setw(5) << Terminal.returnkth(k)->getRTAfterSum()<< left << setw(5) << Terminal.returnkth(k)->getTRT() << "\n";
 	}
 	outfile << "\n\n";
 	
@@ -96,7 +122,9 @@ void UI::OUT_BUT_FILE(LinkedQueue<Process*>& Terminal, LinkedList<Processor*>& P
 		outfile << pointer->getItem()->getTT() << " " << pointer->getItem()->getPID() << " " << pointer->getItem()->getAT() << " " << pointer->getItem()->getCT() << " " << 10 << " " << pointer->getItem()->getWT() << " " << pointer->getItem()->getRT() << " " << pointer->getItem()->getTRT() << "\n";
 		pointer = pointer->getNext();
 	}*/
-	outfile << "Processes: " << Terminal.Count() << "\n" << "Avg WT= " << 10 << ",   Avg RT = " << 10 << ",   Avg TRT = " << 10 << "\n";
+	
+	
+	outfile << "Processes: " << TotaLNumberOfProcesses << "\n" << "Avg WT= " << AVGWT << ",   Avg RT = " << AVRT << ",   Avg TRT = " << AVGTRT << "\n";
 	outfile << "Migration %: " <<  "RTF= " << 10 << "%, MaxW = " << 10 << "%"<< "\n";
 	outfile << "Work Steal%: " << 10 << "%" << "\n";
 	outfile << "Forked Process: " << 10 << "%" << "\n";

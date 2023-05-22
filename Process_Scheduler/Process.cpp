@@ -9,6 +9,7 @@ Process::Process() {
 	duration = 0;
 	TakeItsChild = 0;
 	HasAChild = nullptr;
+	CTstepn = CT;  //for UI
 	
 }
 
@@ -40,8 +41,11 @@ Process::Process(const Process& other)
 	nIO = other.nIO;
 	iskilled = other.iskilled;
 	IOpairs = other.IOpairs; 
-
-	
+	TT = other.TT;  //for UI
+	IO_D = other.IO_D;  //for UI
+	TRT = other.TT - other.AT;  //for UI
+	WT = TRT - other.CT;  //for UI
+	RTAfterSum = other.AT - other.RT;  //for UI
 }
 Process::~Process() {
 
@@ -217,4 +221,26 @@ int Process::getRemainingCT() {
 }
 void Process::set_AT_Cild(int newAT) { 
 	childAT = newAT;
+}
+
+void Process::setTT(int newTT) {  //for UI
+	TT = newTT;
+}
+void Process::stCTstepn(int newTT) {  //for UI
+	CTstepn = newTT;
+}
+int Process::getCTstepn() {  //for UI
+	return CTstepn;
+}
+void Process::setIO_D(int newIO_D) {  //for UI
+	IO_D = IO_D + newIO_D;
+}
+int Process::getIO_D() {  //for UI
+	return IO_D;
+}
+void Process::setRT(int newRT) {  //for UI
+	RT = newRT;
+}
+int Process::getRTAfterSum() {  //for UI
+	return RTAfterSum;
 }

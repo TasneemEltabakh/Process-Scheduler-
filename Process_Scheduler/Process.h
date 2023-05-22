@@ -22,6 +22,12 @@ private:
 	int duration;
 	int TakeItsChild;
 	
+
+	int CTstepn; //for UI
+	int IO_D; //for UI
+	int RTAfterSum;
+	
+	
 public:
 	Process();
 	Process(int x, int y, int z, int l);
@@ -76,5 +82,13 @@ public:
 	void set_AT_Cild(int newAT);
 	
 	void setdurationtozero();
+
+	void setTT(int newTT); //for UI
+	void stCTstepn(int newCTstepn);  //for UI
+	int getCTstepn();  //for UI
+	void setIO_D(int newIO_D);  //for UI in schedual
+	int getIO_D();  //for UI
+	void setRT(int newIO_D);  //for UI in schedual
+	int getRTAfterSum();  //for UI
 };
 

@@ -28,6 +28,7 @@ private:
 	int Heatingprop;
 	int timeOfRelaxing;
 	int loop;
+	int c; //I needed it in countDownBLK for UI
 	int Forked;
 	int Stolen;
 	int killed;
@@ -65,6 +66,6 @@ public:
 	void IORequestNeeded();
 	void countDownBLK();
 	//void KillOrohan();
-	void chechstop();
+	bool ISstop();  //for UI
 	
 };
