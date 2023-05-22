@@ -25,6 +25,53 @@ bool FirstComeProcessor::isthisProcessrEmpty()
 }
 void FirstComeProcessor::ScheduleAlgo()
 {
+	if (RunningProcess != nullptr)
+	{
+		if (RunningProcess->getCT() > 0)
+		{
+			RunningProcess->setCT(RunningProcess->getCT() - 1);
+			expectedtime--;
+
+
+			if (RunningProcess->getnIO() > 0 && currentTime == RunningProcess->seeTimeForAskForIO())
+			{
+				IORequest = new Process(*RunningProcess);
+				TerminatProcess = nullptr;
+				return;
+			}
+
+			std::cout << "Step" << endl;
+			TerminatProcess = nullptr;
+			IORequest = nullptr;
+			return;
+		}
+		else
+		{
+			TerminatProcess = new Process(*RunningProcess);
+			RunningProcess = nullptr; //**
+			IORequest = nullptr;
+			return;
+		}
+	}
+
+
+	if (ReadyQueue.IsEmpty())
+	{
+		std::cout << "FCF Ready Empty" << endl;
+		TerminatProcess = nullptr;
+		IORequest = nullptr;
+		return;
+	}
+
+
+	Process* shortestJob;
+	ReadyQueue.Dequeue_In_Variable(shortestJob);
+
+	RunningProcess = shortestJob;
+	std::cout << "Enter new element" << endl;//**
+	TerminatProcess = nullptr;
+	IORequest = nullptr;
+	return;
 
 //	if (ReadyQueue.IsEmpty()) {
 //		ProcessorState = IDLE;

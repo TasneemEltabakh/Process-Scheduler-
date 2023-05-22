@@ -51,7 +51,7 @@ void RoundRobinProcessor::ScheduleAlgo()
 
 	if (ReadyQueue.IsEmpty())
 	{
-		cout << "SJP Ready Empty" << endl;
+		cout << "RR Ready Empty" << endl;
 		return;
 	}
 

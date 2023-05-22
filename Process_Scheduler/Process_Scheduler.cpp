@@ -12,6 +12,5 @@ int main()
     cin >> name;
     Scheduler Schedule(name);
     Schedule.Run();
-  
 }
 

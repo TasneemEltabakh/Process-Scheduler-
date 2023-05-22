@@ -22,6 +22,7 @@ Scheduler::Scheduler(string inputfilename)
 	Timer = 0;
 	stopflag = false;
 	load(inputfilename);
+	counterWorkSteal = 0;
 
 }
 void Scheduler::Run()
@@ -328,7 +329,16 @@ int Scheduler::ShortestQueueTime()
 
 	return min;
 }
-
+void Scheduler::ForOutPutFile()
+{
+	for (int i = 0; i < ProcessorsList.Count(); i++)
+	{
+		if (ProcessorsList.returnkth(i)->getTerminal() != nullptr)
+		{
+			Terminal.enqueue(ProcessorsList.returnkth(i)->getTerminal());
+		}
+	}
+}
 bool Scheduler::isAllEmpty()
 {
 
@@ -359,7 +369,7 @@ void Scheduler::WorkStealing()
 			index_S = ShortestQueue();
 			index_L = LongestQueue();
 			steal_limit = (LongestQueueTime() - ShortestQueueTime()) / LongestQueueTime();
-
+			counterWorkSteal = counterWorkSteal + 1;
 		}
 	}
 }
