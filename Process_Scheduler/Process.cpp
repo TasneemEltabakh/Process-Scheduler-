@@ -7,6 +7,7 @@ Process::Process() {
 	//nIO = 0;
 	iskilled = false;
 	duration = 0;
+	AlreadyStealBefore = 0;
 	TakeItsChild = 0;
 	HasAChild = nullptr;
 	CTstepn = CT;  //for UI
@@ -23,6 +24,7 @@ Process::Process(int x, int y, int z, int l) {
 	duration = 0;
 	TakeItsChild = 0;
 	HasAChild = nullptr;
+	AlreadyStealBefore = 0;
 }
 int Process::getNumberChildren()
 {
@@ -94,8 +96,14 @@ void Process::calcWT(int w) {
 void Process::calcTRT() {
 	TRT = WT + CT;
 }
-
-
+void Process::setStolen()
+{
+	AlreadyStealBefore = 1;
+}
+int Process::getstolen()
+{
+	return AlreadyStealBefore;
+}
 bool  Process::IsKilled()
 {
 	return iskilled;

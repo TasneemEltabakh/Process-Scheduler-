@@ -29,9 +29,9 @@ private:
 	int timeOfRelaxing;
 	int loop;
 	int c; //I needed it in countDownBLK for UI
-	int Forked;
-	int Stolen;
-	int killed;
+	double Forked;
+	double Stolen;
+	double killed;
 
 public:
 	
@@ -67,5 +67,6 @@ public:
 	void countDownBLK();
 	//void KillOrohan();
 	bool ISstop();  //for UI
+	int CalculateForkPercentage();
 	
 };

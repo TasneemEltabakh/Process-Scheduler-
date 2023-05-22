@@ -21,6 +21,7 @@ private:
 	int runningtime;
 	int duration;
 	int TakeItsChild;
+	int AlreadyStealBefore;
 	
 
 	int CTstepn; //for UI
@@ -51,6 +52,8 @@ public:
 	void setNumberChildren();  
 	void addruntime(int x);
 	int getrunt() const;
+	void setStolen();
+	int getstolen();
 	void calcWT(int w);
 	void calcTRT();
 	void SetFOrk(); //R add

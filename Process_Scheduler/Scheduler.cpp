@@ -55,6 +55,7 @@ void Scheduler::Run()
 			if (ForkingProcess->ISforked(x))
 			{
 				Forked++;
+				TotaLNumberOfProcesses++;
 				int AT = Timer;
 				int pid = TotaLNumberOfProcesses + 1;
 				TotaLNumberOfProcesses = TotaLNumberOfProcesses + 1;;
@@ -416,15 +417,17 @@ void Scheduler::WorkStealing()
 		int Shortest_T = ShortestQueueTime();
 
 		int steal_limit = ((longest_T - Shortest_T) / longest_T) * 100;
-
 		while (steal_limit > 40)
 		{
-			ProcessorsList.returnkth(index_S)->AddToMyReadyList(*ProcessorsList.returnkth(index_L)->RemoveProcess());
+			Process* stolen = new Process(*ProcessorsList.returnkth(index_L)->RemoveProcess());
+			ProcessorsList.returnkth(index_S)->AddToMyReadyList(*stolen);
+			if (stolen->getstolen() == 0) Stolen++;
 			index_S = ShortestQueue();
 			index_L = LongestQueue();
 			steal_limit = (LongestQueueTime() - ShortestQueueTime()) / LongestQueueTime();
 
 		}
+		
 	}
 }
 void Scheduler::Overheating()
@@ -523,7 +526,7 @@ void Scheduler:: MoveProcessToReadyList()
 
 			NewList.Dequeue_In_Variable(process);
 			ProcessorsList.returnkth(ShortestQueue())->AddToMyReadyList(*process);
-			cout << endl;
+		
 		}
 		
 
@@ -540,7 +543,11 @@ void Scheduler::MoveProcessToReadyFirstOnly(Process* p)
 	int shortestQueueIndex = ShortestFCFSQueue();
 	ProcessorsList.returnkth(shortestQueueIndex)->AddToMyReadyList(*p);
 }
-
+int Scheduler::CalculateForkPercentage()
+{
+	double forkedpercentage = (Forked / TotaLNumberOfProcesses) * 100;
+	return forkedpercentage;
+}
 
 //void Scheduler::FakeSimulator()
 //{
