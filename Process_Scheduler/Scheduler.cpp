@@ -423,13 +423,14 @@ void Scheduler::countDownBLK()
 		process =BLK.Peek();
 	
 
-		if (process->get_duration() > 0)
+		if (process->get_duration() != 0)
 		{
 			process->downDuration();
 		}
-		else if(process->get_duration()<=0)
+		else if(process->get_duration() == 0)
 		{
 			BLK.Dequeue_In_Variable(process);
+
 			MoveProcessToReadyListAgain(process);
 		
 		}
