@@ -20,7 +20,7 @@ private:
 	LinkedQueue<Process*> Terminal;
 	LinkedQueue<Process*> BLK;
 	LinkedQueue<int> KilledProcesses;
-	bool stopflag;
+	bool stopflag;  //************
 	int Timer;
 	UI* output;
 	void updateTimer();
@@ -46,6 +46,7 @@ public:
 	void TimeStepsiterator();
 	void  FakeSimulator();
 	void getTime() const;
+	void ForOutPutFile();
 	bool isAllEmpty();
 	void Overheating();
 	void fork(Process* p);  
@@ -58,5 +59,6 @@ public:
 	void IORequestNeeded();
 	void countDownBLK();
 	//void KillOrohan();
+	void chechstop();
 	
 };

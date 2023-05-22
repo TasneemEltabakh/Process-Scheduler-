@@ -14,6 +14,7 @@
 #include <chrono>
 
 
+
 using namespace std;
 
 Scheduler::Scheduler(string inputfilename)
@@ -26,7 +27,7 @@ Scheduler::Scheduler(string inputfilename)
 }
 void Scheduler::Run()
 {
-	
+
 	while (true)
 	{
 
@@ -35,32 +36,35 @@ void Scheduler::Run()
 		for (int i = 0; i < ProcessorsList.Count(); i++)
 		{
 			ProcessorsList.returnkth(i)->CurrentTime(Timer);
-			
+
 		}
-		
+
 		for (int i = 0; i < ProcessorsList.Count(); i++)
 		{
 			ProcessorsList.returnkth(i)->ScheduleAlgo();
 
 		}
 
-	/*if (Timer == (STL * loop))
+		/*if (Timer == (STL * loop))
 		{
 			WorkStealing();
 			loop++;
 		}*/
 
-
+		ForOutPutFile();
 		IORequestNeeded();
 		countDownBLK();
-
 		//Overheating();
 		//KillSignalSearcher();
-	
+
 		output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
-	    system("pause");
-		
+		system("pause");
 	}
+	output->OUT_BUT_FILE(Terminal, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR);
+}
+
+void Scheduler::chechstop() {
+	
 }
 Scheduler::~Scheduler()
 {
@@ -329,7 +333,16 @@ int Scheduler::ShortestQueueTime()
 
 	return min;
 }
-
+void Scheduler::ForOutPutFile()
+{
+	for (int i = 0; i < ProcessorsList.Count(); i++)
+	{
+		if (ProcessorsList.returnkth(i)->getTerminal() != nullptr)
+		{
+			Terminal.enqueue(ProcessorsList.returnkth(i)->getTerminal());
+		}
+	}
+}
 bool Scheduler::isAllEmpty()
 {
 
@@ -407,7 +420,7 @@ void Scheduler::IORequestNeeded()
 	{
 		if (ProcessorsList.returnkth(i)->getIO() != nullptr)
 		{
-		
+			//Process* newprocess = new Process(*ProcessorsList.returnkth(i)->getIO());
 			ProcessorsList.returnkth(i)->getIO()->seeDurationForAskForIO();
 			BLK.enqueue(ProcessorsList.returnkth(i)->getIO());
 		}
@@ -431,7 +444,7 @@ void Scheduler::countDownBLK()
 			else if (process->get_duration() == 0)
 			{
 				BLK.Dequeue_In_Variable(process);
-
+				process->setdurationtozero();
 				MoveProcessToReadyListAgain(process);
 
 			}
@@ -468,7 +481,6 @@ void Scheduler::MoveProcessToReadyListAgain(Process* p)
 	int shortestQueueIndex = ShortestQueue();
 	ProcessorsList.returnkth(shortestQueueIndex)->AddToMyReadyList(*p);
 }
-
 
 void Scheduler::moveToTrm(Process* p) {
 	Terminal.enqueue(p);

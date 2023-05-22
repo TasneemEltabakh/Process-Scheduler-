@@ -72,18 +72,21 @@ void UI::OutPutScreen(LinkedQueue<Process*>& Terminal, LinkedQueue<Process*>& BL
 	cout << endl<< "-------------TRM Processes------------" << endl;
 	cout << Terminal.Count() << " " << "TRM: ";
 	for (int k = 0; k < Terminal.Count(); k++) {
-		cout << Terminal.returnkth(k)->getPID() << ", ";
+		if (Terminal.returnkth(k) != nullptr) {
+			cout << Terminal.returnkth(k)->getPID() << ", ";
+		}
 	}
 }
 
-bool OUT_BUT_FILE(LinkedQueue<Process*>& Terminal, LinkedList<Processor*>& ProcessorsList, int TotaLNumberOfProcesses, int Numberof_SJF, int Numberof_FCFS, int Numberof_RR, ofstream outfile)
+void UI::OUT_BUT_FILE(LinkedQueue<Process*>& Terminal, LinkedList<Processor*>& ProcessorsList, int TotaLNumberOfProcesses, int Numberof_SJF, int Numberof_FCFS, int Numberof_RR)
 {
-	outfile.open("output");
+	ofstream outfile;  //for UI
+	outfile.open("output.txt");
 	outfile << "TT PID AT CT IO_D WT RT TRT \n";
 	for (int k = 0; k < Terminal.Count(); k++) {
-		outfile << Terminal.returnkth(k)->getTT()<<" " << Terminal.returnkth(k)->getPID() << " " << Terminal.returnkth(k)->getAT()<<" "<< Terminal.returnkth(k)->getCT()<<" "<< 10<<" "<< Terminal.returnkth(k)->getWT()<<" "<< Terminal.returnkth(k)->getRT()<<" "<< Terminal.returnkth(k)->getTRT() << "\n";
+		outfile << Terminal.returnkth(k)->getTT()<<"  " << Terminal.returnkth(k)->getPID() << "  " << Terminal.returnkth(k)->getAT()<<"  "<< Terminal.returnkth(k)->getCT()<<"    "<< 10<<"  "<< Terminal.returnkth(k)->getWT()<<"  "<< Terminal.returnkth(k)->getRT()<<"  "<< Terminal.returnkth(k)->getTRT() << "\n";
 	}
-	cout << "\n\n";
+	outfile << "\n\n";
 	
 	/*Node<Process*>* pointer = Terminal.gethead();
 	for (int k = 0; k < Terminal.Count(); k++) {
@@ -105,15 +108,14 @@ bool OUT_BUT_FILE(LinkedQueue<Process*>& Terminal, LinkedList<Processor*>& Proce
 	for (int i = 0; i < ProcessorsList.Count();i++) {
 		outfile << "p" << i + 1 << "=" << 10 << "%,   ";
 	}
-	cout << "\n";
+	outfile << "\n";
 	outfile << "Processors Utiliz " << "\n";
 	for (int i = 0; i < ProcessorsList.Count(); i++) {
 		outfile << "p" << i + 1 << "=" << 10 << "%,   ";
 	}
-	cout << "\n";
+	outfile << "\n";
 	outfile << "Avg Utilization =  "<<10<<"% " << "\n";
 
 
 	outfile.close();
-	return true;
 }

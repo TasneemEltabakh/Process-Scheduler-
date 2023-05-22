@@ -12,8 +12,7 @@ ShortestJobProcessor::~ShortestJobProcessor()
 
 void ShortestJobProcessor::ScheduleAlgo()
 {
-    TerminatProcess = nullptr;
-    IORequest = nullptr;
+
 
     if (RunningProcess != nullptr)
     {
@@ -29,7 +28,8 @@ void ShortestJobProcessor::ScheduleAlgo()
                 IORequest = new Process(*RunningProcess);
 				timeforrequest = 0;
 				RunningProcess = nullptr;
-
+				TerminatProcess = nullptr;
+				return;
             }
 
             cout << "Step" << endl;
@@ -39,6 +39,8 @@ void ShortestJobProcessor::ScheduleAlgo()
         {
             TerminatProcess = new Process(*RunningProcess);
             RunningProcess = nullptr;
+			IORequest = nullptr;
+			return;
         }
     }
 
@@ -46,6 +48,8 @@ void ShortestJobProcessor::ScheduleAlgo()
     if (ReadyQueue.IsEmpty())
     {
         cout << "SJP Ready Empty" << endl;
+		TerminatProcess = nullptr;
+		IORequest = nullptr;
         return;
     }
 
@@ -55,6 +59,9 @@ void ShortestJobProcessor::ScheduleAlgo()
 
     RunningProcess = shortestJob;
     cout << "Enter new element" << endl;
+	TerminatProcess = nullptr;
+	IORequest = nullptr;
+	return;
 }
 
 void ShortestJobProcessor::AddToMyReadyList(Process& NewProcess)

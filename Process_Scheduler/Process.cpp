@@ -126,7 +126,9 @@ void Process::seeDurationForAskForIO()
 	else
 		return;
 }
-
+void Process::setdurationtozero() {
+	duration = 0;
+}
 
 void  Process::downDuration()
 {
@@ -183,7 +185,12 @@ int Process::getnIO() {  //R add2
 void Process:: dequeueIO()
 {
 	pair<int, int> pairsValue;
+
 	IOpairs.pairs.Dequeue_In_Variable(pairsValue);
+	IOpairs.x = 2;
+	IOpairs.y = 4;
+	IOpairs.pairCount = 2;
+	nIO--;
 }
 // nada for fork 
 void Process::setParent(Process* parent) {
