@@ -6,6 +6,7 @@ Process::Process() {
 	//CT = 0;
 	//nIO = 0;
 	iskilled = false;
+	duration = 0;
 	
 }
 
@@ -112,20 +113,20 @@ int Process::seeTimeForAskForIO() {  //R add for algo SJP
 	pair<int, int> pairsValue = IOpairs.pairs.Peek();
 	return pairsValue.first;
 }
- void Process::seeDurationForAskForIO() { //R add for algo SJP
+void Process::seeDurationForAskForIO() { 
 
-	int xValue = IOpairs.x;
-	int yValue = IOpairs.y;
-	pair<int, int> pairsValue = IOpairs.pairs.Peek();
-	duration = pairsValue.second;
-	
-	
+	if (duration == 0) {
+		cout << "duration is in the first" << duration << endl;
+		duration = IOpairs.pairs.Peek().second;
+		cout << "duration is " << duration << endl;
+	}
+	else
+		return;
 }
-
 
 void  Process::downDuration()
 {
-	duration--;
+	duration = duration - 1;
 }
 int Process::get_duration()
 {

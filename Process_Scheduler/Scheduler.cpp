@@ -42,15 +42,15 @@ void Scheduler::Run()
 			ProcessorsList.returnkth(i)->ScheduleAlgo();
 
 		}
-		if (Timer == (STL * loop))
+	/*	if (Timer == (STL * loop))
 		{
 			WorkStealing();
 			loop++;
-		}
+		}*/
 		IORequestNeeded();
 		countDownBLK();
-		Overheating();
-		KillSignalSearcher();
+		//Overheating();
+		//KillSignalSearcher();
 
 		output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
 	    system("pause");
@@ -411,13 +411,14 @@ void Scheduler::countDownBLK()
 		process =BLK.Peek();
 	
 
-		if (process->get_duration() > 0)
+		if (process->get_duration() != 0)
 		{
 			process->downDuration();
 		}
-		else if(process->get_duration()<=0)
+		else if(process->get_duration() == 0)
 		{
 			BLK.Dequeue_In_Variable(process);
+
 			MoveProcessToReadyListAgain(process);
 		
 		}
