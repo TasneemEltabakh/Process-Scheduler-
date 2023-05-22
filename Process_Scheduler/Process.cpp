@@ -7,18 +7,30 @@ Process::Process() {
 	//nIO = 0;
 	iskilled = false;
 	duration = 0;
+	TakeItsChild = 0;
+	HasAChild = nullptr;
 	CTstepn = CT;  //for UI
 	
 }
 
 Process::Process(int x, int y, int z, int l) {
-
+	
 	PID = y; 
 	AT = x;
 	CT = z;
 	nIO = l;
 	iskilled = false;
 	duration = 0;
+	TakeItsChild = 0;
+	HasAChild = nullptr;
+}
+int Process::getNumberChildren()
+{
+	return TakeItsChild;
+}
+void Process::setNumberChildren()
+{
+	TakeItsChild = 1;
 }
 Process::Process(const Process& other)
 {
@@ -92,11 +104,19 @@ bool  Process::IsKilled()
 void Process::SetFOrk() {  //R add
 	Isforking = true;
 }
-
+void Process::PointToMyChild(Process* child)
+{
+	HasAChild = child;
+}
+Process* Process::MyChild()
+{
+	return HasAChild;
+}
 void  Process::KillThisProcess()
 {
 	iskilled = true;
 }
+
 
 
   ////////////////////////////////////////////////////////
@@ -187,10 +207,6 @@ int Process::getnIO() {  //R add2
 void Process:: dequeueIO()
 {
 
-}
-// nada for fork 
-void Process::setParent(Process* parent) {
-	Parent = parent;
 }
 
 void Process::addChild(Process* child) {

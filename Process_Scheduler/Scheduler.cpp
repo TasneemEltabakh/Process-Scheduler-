@@ -44,13 +44,35 @@ void Scheduler::Run()
 			Processor* processor = ProcessorsList.returnkth(i);
 			processor->ScheduleAlgo();
 		}
+		srand(time(0));
+		for (int i = 0; i < Numberof_FCFS; i++)
+		{
 
+			FirstComeProcessor* ForkingProcess = dynamic_cast<FirstComeProcessor*>(ProcessorsList.returnkth(i));
+			
+			int x = rand() % 100;
+			if (ForkingProcess->ISforked(x))
+			{
 
-		//if (Timer == (STL * loop))
-		//{
-		//	WorkStealing();
-		//	loop++;
-		//}
+				int AT = Timer;
+				int pid = TotaLNumberOfProcesses + 1;
+				TotaLNumberOfProcesses = TotaLNumberOfProcesses + 1;;
+				int nio = 0;
+				int ct = ForkingProcess->returnMyRunningCT();
+				cout <<"DATA OF FORKED PRECESS" << AT <<" "<< pid << " " << ct << " " << nio << " " << endl;
+				Process* forkedProcess = new Process(AT, pid, ct, nio);
+				MoveProcessToReadyFirstOnly(forkedProcess);
+				ForkingProcess->SetToRunningChild(forkedProcess);
+
+			}
+
+		}
+
+		if (Timer == (STL * loop))
+		{
+			WorkStealing();
+			loop++;
+		}
 
 		ForOutPutFile();
 		IORequestNeeded();
@@ -61,7 +83,7 @@ void Scheduler::Run()
 		output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
 		system("pause");
 	}
-	output->OUT_BUT_FILE(Terminal, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR);
+	
 }
 
 bool Scheduler::ISstop() {  //for UI
@@ -251,13 +273,15 @@ void Scheduler::KillSignal(LinkedQueue<string>* KillData)
 }
 int Scheduler::ShortestQueue()
 {
-	int min = INT_MAX; 
+	int min = INT_MAX;
 	int shortestIndex = -1;
-
+	cout << "shortest queue time" << min << endl;
 	for (int i = 0; i < ProcessorsList.Count(); i++)
 	{
-		if (!ProcessorsList.returnkth(i)->StoppedCheck()) 
+		cout << "shortest queue time" << min << endl;
+		if (!ProcessorsList.returnkth(i)->StoppedCheck())
 		{
+
 			int expectedTime = ProcessorsList.returnkth(i)->getExpectedTime();
 			if (expectedTime < min)
 			{
@@ -266,7 +290,29 @@ int Scheduler::ShortestQueue()
 			}
 		}
 	}
+	cout << "shortest queue index" << shortestIndex << endl;
+	return shortestIndex;
+}
+int Scheduler::ShortestFCFSQueue()
+{
+	int min = INT_MAX;
+	int shortestIndex = -1;
+	
+	for (int i = 0; i < Numberof_FCFS; i++)
+	{
+		
+		if (!ProcessorsList.returnkth(i)->StoppedCheck())
+		{
 
+			int expectedTime = ProcessorsList.returnkth(i)->getExpectedTime();
+			if (expectedTime < min)
+			{
+				min = expectedTime;
+				shortestIndex = i;
+			}
+		}
+	}
+	
 	return shortestIndex;
 }
 
@@ -487,11 +533,12 @@ void Scheduler::MoveProcessToReadyListAgain(Process* p)
 	int shortestQueueIndex = ShortestQueue();
 	ProcessorsList.returnkth(shortestQueueIndex)->AddToMyReadyList(*p);
 }
-
-void Scheduler::moveToTrm(Process* p) {
-	Terminal.enqueue(p);
-	cout << " process id " << p->getPID() << " moved to trm" << " ct & wt " << p->getCT() << " " << p->getWT() << endl;
+void Scheduler::MoveProcessToReadyFirstOnly(Process* p)
+{
+	int shortestQueueIndex = ShortestFCFSQueue();
+	ProcessorsList.returnkth(shortestQueueIndex)->AddToMyReadyList(*p);
 }
+
 
 //void Scheduler::FakeSimulator()
 //{

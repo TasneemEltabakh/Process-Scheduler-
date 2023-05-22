@@ -35,6 +35,8 @@ public:
 	Scheduler();
 	~Scheduler();
 	void Run();
+	void MoveProcessToReadyFirstOnly(Process* p);
+	int ShortestFCFSQueue();
 	void load(string inputfilename);
 	void TranslateData( string linedata, LinkedQueue<string>* dataP);
 	void RemoveParenthesis(string linedata, LinkedQueue<int>* dataProcessor);

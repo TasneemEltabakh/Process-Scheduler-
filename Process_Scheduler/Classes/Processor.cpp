@@ -14,6 +14,7 @@ Processor::Processor()
 	TerminatProcess = nullptr;
 	IORequest = nullptr;
 	timeforrequest = 0;
+	
 }
 
 Processor::~Processor(){

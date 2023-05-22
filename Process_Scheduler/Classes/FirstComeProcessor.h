@@ -13,7 +13,7 @@ public:
     void ScheduleAlgo() override;
     Process* MoveMeToTerminal();
     void  AddToMyReadyList(Process& process) override;
-    bool IsThereKilled(int c);
+    void IsThereKilled(int c);
     Process* KillSignal();
     void  AddToRun();
     int getcount() override;
@@ -23,6 +23,11 @@ public:
     Process* RemoveProcess() override;
     bool ChcekMigration(Process* running);
     bool isthisProcessrEmpty();
+    bool ISforked(int x);
+    int returnMyRunningCT();
+    void SetToRunningChild(Process* child);
+    void KillProcessAndChildren(Process* process);
+    
 private:
     //LinkedList <Process*> * ReadyQueue = new  LinkedList <Process*>;
     LinkedList <Process*>  ReadyQueue;
@@ -36,6 +41,7 @@ private:
     LinkedQueue<Process*> Killedprocesses;
     //static LinkedQueue<Process*> Killedprocesses;
     Process* KilledOne;
+  
    
 };
 

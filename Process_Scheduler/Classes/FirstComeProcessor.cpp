@@ -8,6 +8,7 @@ FirstComeProcessor::FirstComeProcessor(int max, int fork)
 	forkprob = fork;
 	maxw = max;
 	countOfProcesses = 0;
+	
 }
 FirstComeProcessor::FirstComeProcessor()
 {
@@ -23,6 +24,7 @@ bool FirstComeProcessor::isthisProcessrEmpty()
 	if (this->ReadyQueue.IsEmpty())
 		return true;
 }
+
 void FirstComeProcessor::ScheduleAlgo()
 {
 	if (RunningProcess != nullptr)
@@ -37,6 +39,7 @@ void FirstComeProcessor::ScheduleAlgo()
 			{
 				IORequest = new Process(*RunningProcess);
 				timeforrequest = 0;
+				expectedtime = expectedtime - RunningProcess->getCT();
 				RunningProcess = nullptr;
 				TerminatProcess = nullptr;
 				return;
@@ -62,6 +65,7 @@ void FirstComeProcessor::ScheduleAlgo()
 		TerminatProcess = nullptr;
 		IORequest = nullptr;
 		timeforrequest = 0;
+		expectedtime = 0;
 		return;
 	}
 
@@ -75,8 +79,8 @@ void FirstComeProcessor::ScheduleAlgo()
 	TerminatProcess = nullptr;
 	IORequest = nullptr;
 	return;
-}
 
+}
 //	if (ReadyQueue.IsEmpty()) {
 //		ProcessorState = IDLE;
 //		return;
@@ -128,7 +132,7 @@ void FirstComeProcessor::SetMAXW(int max)
 {
 	maxw = max;
 }
-bool FirstComeProcessor::IsThereKilled(int idOfProcess)
+void FirstComeProcessor::IsThereKilled(int idOfProcess)
 {
 	if (!ReadyQueue.IsEmpty())
 	{
@@ -136,31 +140,58 @@ bool FirstComeProcessor::IsThereKilled(int idOfProcess)
 		{
 			if (ReadyQueue.returnkth(i)->getPID() == idOfProcess)
 			{
-				//KilledOne = ReadyQueue.returnkth(i);
-		
-				ReadyQueue.DeleteNode(ReadyQueue.returnkth(i)); 
-				return true;
+				if (ReadyQueue.returnkth(i)->MyChild() != nullptr)
+				{
+					IsThereKilled(ReadyQueue.returnkth(i)->MyChild()->getPID());
+				}
+				
+				Process* process = new Process(*RunningProcess);
+				Killedprocesses.enqueue(process);
+				ReadyQueue.DeleteNodeindex(i);
+				
+			  
 			}
 		}
 	}
-	//N
-	//if (!RunQueue.IsEmpty()) {
-	//	
-	//	for (int i = 0; i < RunQueue.Count(); i++) {
-	//		if (RunQueue.returnkth(i)->getPID() == idOfProcess)
-	//		{
-	//			KilledOne = RunQueue.returnkth(i);
-	//			Killedprocesses.enqueue(KilledOne);
-	//			TRMQueue.InsertEnd(KilledOne);
-	//			RunQueue.DeleteNode(RunQueue.returnkth(i));
-	//			return true;
-	//		}
-	//	}
+	if (RunningProcess != nullptr) {
 
-	//}
+		if (RunningProcess->getPID() == idOfProcess)
+		{
 
-	return false;
+
+			if (RunningProcess->MyChild() != nullptr)
+			{
+				IsThereKilled(RunningProcess->MyChild()->getPID());
+			}
+	
+			Process* process = new Process(*RunningProcess);
+			Killedprocesses.enqueue(process);
+			RunningProcess = nullptr;
+			IORequest = nullptr;
+			timeforrequest = 0;
+			
+		}
+
+	}
+
+	
 }
+
+void FirstComeProcessor::KillProcessAndChildren(Process* process)
+{
+
+
+	Process* child = process->MyChild();
+	while (child != nullptr)
+	{
+		Process* nextChild = child->MyChild();
+		KillProcessAndChildren(child);
+		ReadyQueue.DeleteNode(child);
+		delete child;
+		child = nextChild;
+	}
+}
+
 Process* FirstComeProcessor:: KillSignal()
 {
 	return KilledOne;
@@ -221,4 +252,27 @@ Process* FirstComeProcessor::RemoveProcess()
 
 bool FirstComeProcessor::ChcekMigration(Process* running) {
 	return false;
+}
+bool FirstComeProcessor::ISforked(int x)
+{
+	if (RunningProcess != nullptr && RunningProcess->getNumberChildren() == 0)
+	{
+		
+		cout << "THE RANDOM FORKING PROP IS: " << x << endl;
+		if (x < forkprob)
+		{
+			cout << "i AM NOW FORKING "<<endl;
+			RunningProcess->setNumberChildren();
+			return true;
+		}
+	}
+	return false;
+}
+int FirstComeProcessor:: returnMyRunningCT()
+{
+	return RunningProcess->getCT();
+}
+void  FirstComeProcessor::SetToRunningChild(Process* child)
+{
+	RunningProcess->PointToMyChild(child);
 }
