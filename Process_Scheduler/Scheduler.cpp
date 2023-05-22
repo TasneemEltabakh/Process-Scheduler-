@@ -53,6 +53,7 @@ void Scheduler::Run()
 
 		IORequestNeeded();
 		countDownBLK();
+
 		//Overheating();
 		//KillSignalSearcher();
 	
@@ -406,9 +407,9 @@ void Scheduler::IORequestNeeded()
 	{
 		if (ProcessorsList.returnkth(i)->getIO() != nullptr)
 		{
-			Process* newprocess = new Process(*ProcessorsList.returnkth(i)->getIO());
-			newprocess->seeDurationForAskForIO();
-			BLK.enqueue(newprocess);
+		
+			ProcessorsList.returnkth(i)->getIO()->seeDurationForAskForIO();
+			BLK.enqueue(ProcessorsList.returnkth(i)->getIO());
 		}
 	}
 }
