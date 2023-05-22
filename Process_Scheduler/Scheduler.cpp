@@ -43,16 +43,19 @@ void Scheduler::Run()
 			ProcessorsList.returnkth(i)->ScheduleAlgo();
 
 		}
-	/*	if (Timer == (STL * loop))
+
+	/*if (Timer == (STL * loop))
 		{
 			WorkStealing();
 			loop++;
 		}*/
+
+
 		IORequestNeeded();
 		countDownBLK();
 		//Overheating();
 		//KillSignalSearcher();
-
+	
 		output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
 	    system("pause");
 		
@@ -130,6 +133,8 @@ void Scheduler::TranslateData(string line, LinkedQueue<string>* Data)
 			
 			Data->enqueue(first);
 			Data->enqueue(second);
+			cout << first << endl;
+			cout << first << endl;
 			
 		
 		}
@@ -196,7 +201,8 @@ void Scheduler::InsertProcessToNew(LinkedQueue<string>* dataProcess)
 		{
 			dataProcess->Dequeue_In_Variable(IoR);
 			dataProcess->Dequeue_In_Variable(IoD);
-			newprocess->addDatatoIOPairs(stoi(IoR), stoi(IoD));
+			newprocess->addDatatoIOPairs(stoi(IoR), stoi(IoD), stoi(nio));
+			cout << "the process id" << id << "is created with request at " << IoR << "for" << IoD << endl;
 		}
 	
 	}
@@ -326,7 +332,7 @@ int Scheduler::ShortestQueueTime()
 bool Scheduler::isAllEmpty()
 {
 
-	for (int i = 1; i < ProcessorsList.Count(); i++)
+	for (int i = 0; i < ProcessorsList.Count(); i++)
 	{
 		if (!ProcessorsList.returnkth(i)->isthisProcessrEmpty())
 		{
@@ -393,37 +399,45 @@ void Scheduler::Overheating()
 		}
 	}
 }
+
 void Scheduler::IORequestNeeded()
 {
-	for (int i = 1; i < ProcessorsList.Count(); i++)
+	for (int i = 0; i < ProcessorsList.Count(); i++)
 	{
 		if (ProcessorsList.returnkth(i)->getIO() != nullptr)
 		{
-			BLK.enqueue(ProcessorsList.returnkth(i)->getIO());
-			ProcessorsList.returnkth(i)->getIO()->seeDurationForAskForIO();
+			Process* newprocess = new Process(*ProcessorsList.returnkth(i)->getIO());
+			newprocess->seeDurationForAskForIO();
+			BLK.enqueue(newprocess);
 		}
 	}
 }
+
 void Scheduler::countDownBLK()
 {
-	for (int i = 1; i < BLK.Count(); i++)
-	{
-		Process* process;
-		process =BLK.Peek();
-	
-
-		if (process->get_duration() != 0)
+	if (!BLK.IsEmpty()) {
+		for (int i = 0; i < BLK.Count(); i++)
 		{
-			process->downDuration();
-		}
-		else if(process->get_duration() == 0)
-		{
-			BLK.Dequeue_In_Variable(process);
+			Process* process;
 
-			MoveProcessToReadyListAgain(process);
-		
+			process = BLK.Peek();
+
+
+			if (process->get_duration() != 0)
+			{
+				process->downDuration();
+			}
+			else if (process->get_duration() == 0)
+			{
+				BLK.Dequeue_In_Variable(process);
+
+				MoveProcessToReadyListAgain(process);
+
+			}
 		}
 	}
+	else
+		return;
 
 }
 

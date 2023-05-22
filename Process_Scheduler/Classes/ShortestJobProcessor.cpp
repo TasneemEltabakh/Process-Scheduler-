@@ -15,7 +15,6 @@ void ShortestJobProcessor::ScheduleAlgo()
     TerminatProcess = nullptr;
     IORequest = nullptr;
 
-
     if (RunningProcess != nullptr)
     {
         if (RunningProcess->getCT() > 0)
@@ -30,6 +29,7 @@ void ShortestJobProcessor::ScheduleAlgo()
                 IORequest = new Process(*RunningProcess);
 				timeforrequest = 0;
 				RunningProcess = nullptr;
+
             }
 
             cout << "Step" << endl;

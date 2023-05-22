@@ -98,14 +98,15 @@ void  Process::KillThisProcess()
   ////////////////////////////////////////////////////////
  //                      I/O                    /////////
 ////////////////////////////////////////////////////////
-void  Process::addDatatoIOPairs(int x, int y)  //edit fom T
+void Process::addDatatoIOPairs(int x, int y, int pairCount)
 {
 	IOpairs.x = x;
 	IOpairs.y = y;
+	IOpairs.pairCount = pairCount;
 
 	IOpairs.pairs.enqueue(make_pair(x, y));
-
 }
+
 //Phase Two
 int Process::seeTimeForAskForIO() {  //R add for algo SJP
 	int xValue = IOpairs.x;
@@ -113,23 +114,29 @@ int Process::seeTimeForAskForIO() {  //R add for algo SJP
 	pair<int, int> pairsValue = IOpairs.pairs.Peek();
 	return pairsValue.first;
 }
-void Process::seeDurationForAskForIO() { 
-
-	if (duration == 0) {
-		cout << "duration is in the first" << duration << endl;
-		duration = IOpairs.pairs.Peek().second;
+void Process::seeDurationForAskForIO()
+{
+	if (duration == 0 && !IOpairs.pairs.IsEmpty())
+	{
+		pair<int, int> pairsValue = IOpairs.pairs.Peek();
+		duration = pairsValue.second;
 		cout << "duration is " << duration << endl;
+		dequeueIO();
 	}
 	else
 		return;
 }
 
+
 void  Process::downDuration()
 {
 	duration = duration - 1;
+	cout << "duration is " << duration << endl;
 }
 int Process::get_duration()
 {
+	cout << "duration is in the getting" << duration << endl;
+
 	return duration;
 }
 void Process::setCT(int newCT) { //R add
@@ -172,6 +179,11 @@ bool Process:: findProcess(int i)
 
 int Process::getnIO() {  //R add2
 	return nIO;
+}
+void Process:: dequeueIO()
+{
+	pair<int, int> pairsValue;
+	IOpairs.pairs.Dequeue_In_Variable(pairsValue);
 }
 // nada for fork 
 void Process::setParent(Process* parent) {
