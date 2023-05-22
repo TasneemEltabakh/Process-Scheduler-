@@ -12,7 +12,7 @@ ShortestJobProcessor::~ShortestJobProcessor()
 
 void ShortestJobProcessor::ScheduleAlgo()
 {
-
+	
 
     if (RunningProcess != nullptr)
     {
@@ -40,6 +40,7 @@ void ShortestJobProcessor::ScheduleAlgo()
             TerminatProcess = new Process(*RunningProcess);
             RunningProcess = nullptr;
 			IORequest = nullptr;
+			timeforrequest = 0;
 			return;
         }
     }
@@ -50,6 +51,7 @@ void ShortestJobProcessor::ScheduleAlgo()
         cout << "SJP Ready Empty" << endl;
 		TerminatProcess = nullptr;
 		IORequest = nullptr;
+		timeforrequest = 0;
         return;
     }
 

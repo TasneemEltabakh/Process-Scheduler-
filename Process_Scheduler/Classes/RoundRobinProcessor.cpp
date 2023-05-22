@@ -20,6 +20,8 @@ void RoundRobinProcessor::ScheduleAlgo()
 	{
 		if (RunningProcess->getCT() > 0)
 		{
+			
+
 			if (InternalsliceTime == 0) {
 				ReadyQueue.enqueue(RunningProcess);
 				ReadyQueue.Dequeue_In_Variable(RunningProcess);
@@ -30,12 +32,17 @@ void RoundRobinProcessor::ScheduleAlgo()
 
 			RunningProcess->setCT(RunningProcess->getCT() - 1);
 			expectedtime--;
+			timeforrequest++;
 			InternalsliceTime = InternalsliceTime - 1;
 
 
-			if (RunningProcess->getnIO() > 0 && currentTime == RunningProcess->seeTimeForAskForIO())
+			if (RunningProcess->getnIO() > 0 && timeforrequest == RunningProcess->seeTimeForAskForIO())
 			{
 				IORequest = new Process(*RunningProcess);
+				timeforrequest = 0;
+				RunningProcess = nullptr;
+				TerminatProcess = nullptr;
+				return;
 			}
 
 			cout << "Step" << endl;
@@ -45,6 +52,7 @@ void RoundRobinProcessor::ScheduleAlgo()
 		{
 			TerminatProcess = new Process(*RunningProcess);
 			RunningProcess = nullptr;
+			timeforrequest = 0;
 		}
 	}
 
@@ -52,6 +60,7 @@ void RoundRobinProcessor::ScheduleAlgo()
 	if (ReadyQueue.IsEmpty())
 	{
 		cout << "SJP Ready Empty" << endl;
+		timeforrequest = 0;
 		return;
 	}
 
