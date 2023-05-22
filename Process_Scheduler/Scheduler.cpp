@@ -22,13 +22,14 @@ Scheduler::Scheduler(string inputfilename)
 	loop = 1;
 	Timer = 0;
 	stopflag = false;
+	Forked = 0;
 	load(inputfilename);
 
 }
 void Scheduler::Run()
 {
 
-	while (true)
+	while (!stopflag)
 	{
 
 		updateTimer();
@@ -53,7 +54,7 @@ void Scheduler::Run()
 			int x = rand() % 100;
 			if (ForkingProcess->ISforked(x))
 			{
-
+				Forked++;
 				int AT = Timer;
 				int pid = TotaLNumberOfProcesses + 1;
 				TotaLNumberOfProcesses = TotaLNumberOfProcesses + 1;;
@@ -518,6 +519,7 @@ void Scheduler:: MoveProcessToReadyList()
 			ProcessorsList.returnkth(ShortestQueue())->AddToMyReadyList(*process);
 			cout << endl;
 		}
+		
 
 	}
 	

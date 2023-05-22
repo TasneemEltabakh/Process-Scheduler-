@@ -28,7 +28,10 @@ private:
 	int Heatingprop;
 	int timeOfRelaxing;
 	int loop;
-	
+	int Forked;
+	int Stolen;
+	int killed;
+
 public:
 	
 	Scheduler(string inputfilename);

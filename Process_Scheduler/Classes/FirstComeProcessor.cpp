@@ -1,7 +1,7 @@
 #include "FirstComeProcessor.h"
 
 
-//LinkedQueue<Process*> FirstComeProcessor::Killedprocesses;
+
 FirstComeProcessor::FirstComeProcessor(int max, int fork)
 {
 	KilledOne = nullptr;
@@ -255,10 +255,9 @@ bool FirstComeProcessor::ISforked(int x)
 	if (RunningProcess != nullptr && RunningProcess->getNumberChildren() == 0)
 	{
 		
-		cout << "THE RANDOM FORKING PROP IS: " << x << endl;
+	
 		if (x < forkprob)
 		{
-			cout << "i AM NOW FORKING "<<endl;
 			RunningProcess->setNumberChildren();
 			return true;
 		}
