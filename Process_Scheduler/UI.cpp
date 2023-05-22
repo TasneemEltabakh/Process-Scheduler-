@@ -4,6 +4,8 @@
 #include "DataStructures/LinkedList.h"
 #include "Process.h"
 #include "Classes/Processor.h"
+#include<fstream>
+
 
 UI::UI() {
 
@@ -72,4 +74,46 @@ void UI::OutPutScreen(LinkedQueue<Process*>& Terminal, LinkedQueue<Process*>& BL
 	for (int k = 0; k < Terminal.Count(); k++) {
 		cout << Terminal.returnkth(k)->getPID() << ", ";
 	}
+}
+
+bool OUT_BUT_FILE(LinkedQueue<Process*>& Terminal, LinkedList<Processor*>& ProcessorsList, int TotaLNumberOfProcesses, int Numberof_SJF, int Numberof_FCFS, int Numberof_RR, ofstream outfile)
+{
+	outfile.open("output");
+	outfile << "TT PID AT CT IO_D WT RT TRT \n";
+	for (int k = 0; k < Terminal.Count(); k++) {
+		outfile << Terminal.returnkth(k)->getTT()<<" " << Terminal.returnkth(k)->getPID() << " " << Terminal.returnkth(k)->getAT()<<" "<< Terminal.returnkth(k)->getCT()<<" "<< 10<<" "<< Terminal.returnkth(k)->getWT()<<" "<< Terminal.returnkth(k)->getRT()<<" "<< Terminal.returnkth(k)->getTRT() << "\n";
+	}
+	cout << "\n\n";
+	
+	/*Node<Process*>* pointer = Terminal.gethead();
+	for (int k = 0; k < Terminal.Count(); k++) {
+		if (pointer->getItem()) {
+			break;
+		}
+		outfile << pointer->getItem()->getTT() << " " << pointer->getItem()->getPID() << " " << pointer->getItem()->getAT() << " " << pointer->getItem()->getCT() << " " << 10 << " " << pointer->getItem()->getWT() << " " << pointer->getItem()->getRT() << " " << pointer->getItem()->getTRT() << "\n";
+		pointer = pointer->getNext();
+	}*/
+	outfile << "Processes: " << Terminal.Count() << "\n" << "Avg WT= " << 10 << ",   Avg RT = " << 10 << ",   Avg TRT = " << 10 << "\n";
+	outfile << "Migration %: " <<  "RTF= " << 10 << "%, MaxW = " << 10 << "%"<< "\n";
+	outfile << "Work Steal%: " << 10 << "%" << "\n";
+	outfile << "Forked Process: " << 10 << "%" << "\n";
+	outfile << "Killed Process: " << 10 << "%" << "\n\n";
+
+
+	outfile << "Processors: "<< ProcessorsList.Count()<<" ["<< Numberof_FCFS<<" FCFS, "<< Numberof_SJF<<" SJF, " << Numberof_RR<<" RR]" << "\n";
+	outfile << "Processors Load " << "\n";
+	for (int i = 0; i < ProcessorsList.Count();i++) {
+		outfile << "p" << i + 1 << "=" << 10 << "%,   ";
+	}
+	cout << "\n";
+	outfile << "Processors Utiliz " << "\n";
+	for (int i = 0; i < ProcessorsList.Count(); i++) {
+		outfile << "p" << i + 1 << "=" << 10 << "%,   ";
+	}
+	cout << "\n";
+	outfile << "Avg Utilization =  "<<10<<"% " << "\n";
+
+
+	outfile.close();
+	return true;
 }
