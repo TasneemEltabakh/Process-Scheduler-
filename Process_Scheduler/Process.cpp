@@ -16,7 +16,7 @@ Process::Process(int x, int y, int z, int l) {
 	CT = z;
 	nIO = l;
 	iskilled = false;
-
+	duration = 0;
 }
 Process::Process(const Process& other)
 {
@@ -26,7 +26,6 @@ Process::Process(const Process& other)
 	CT = other.CT;
 	nIO = other.nIO;
 	iskilled = other.iskilled;
-
 	IOpairs = other.IOpairs; 
 
 	
@@ -113,8 +112,25 @@ int Process::seeTimeForAskForIO() {  //R add for algo SJP
 	pair<int, int> pairsValue = IOpairs.pairs.Peek();
 	return pairsValue.first;
 }
+ void Process::seeDurationForAskForIO() { //R add for algo SJP
+
+	int xValue = IOpairs.x;
+	int yValue = IOpairs.y;
+	pair<int, int> pairsValue = IOpairs.pairs.Peek();
+	duration = pairsValue.second;
+	
+	
+}
 
 
+void  Process::downDuration()
+{
+	duration--;
+}
+int Process::get_duration()
+{
+	return duration;
+}
 void Process::setCT(int newCT) { //R add
 	CT = newCT;
 }

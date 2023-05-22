@@ -26,7 +26,8 @@ private:
 	Process* ParentQueue;  //R add
 	//bool finished;
 	int runningtime;
-
+	int duration;
+	
 	
 public:
 	Process();
@@ -36,8 +37,7 @@ public:
 	//////////////////////////////////////////
 	void addDatatoIOPairs(int x, int y);  //T edit
 	int seeTimeForAskForIO();  //R add2
-
-
+	void seeDurationForAskForIO();
 	~Process();
 	int getPID() const;
 	int getAT()const;
@@ -62,10 +62,11 @@ public:
 	void setParentQueue(Process* parent); //R add
 	Process* getAllList();  //R add
 	int operator<< (const Process& c) const;  //R add
-
+	
 	int getnIO();  //R add2
 
-	
+	void downDuration();
+	int get_duration();
 	//n
 	int getRemainingCT();
 	void setRemainingCT(int remainingCT);

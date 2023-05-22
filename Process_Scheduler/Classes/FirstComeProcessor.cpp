@@ -18,9 +18,14 @@ FirstComeProcessor::~FirstComeProcessor()
 {
 
 }
-
+bool FirstComeProcessor::isthisProcessrEmpty()
+{
+	if (this->ReadyQueue.IsEmpty())
+		return true;
+}
 void FirstComeProcessor::ScheduleAlgo()
 {
+
 //	if (ReadyQueue.IsEmpty()) {
 //		ProcessorState = IDLE;
 //		return;
@@ -67,8 +72,6 @@ void FirstComeProcessor::ScheduleAlgo()
 //		}
 //
 //}
-
-
 }
 
 void FirstComeProcessor::SetMAXW(int max)

@@ -106,7 +106,11 @@ Process* RoundRobinProcessor::getkth(int k)
 {
 	return ReadyQueue.returnkth(k);
 }
-
+bool RoundRobinProcessor::isthisProcessrEmpty()
+{
+	if (this->ReadyQueue.IsEmpty())
+		return true;
+}
 Process* RoundRobinProcessor::MoveMeToTerminal()
 {
 	TerminatProcess = RunningProcess;

@@ -40,11 +40,13 @@ public:
 	void  CreateProcessors(LinkedQueue<string>* dataProcessor);
 	void  InsertProcessToNew(LinkedQueue<string>* dataProcess);
 	void  MoveProcessToReadyList();
+	void MoveProcessToReadyListAgain(Process*);
 	void KillSignal(LinkedQueue<string>* KillData);
 	void KillSignalSearcher();
 	void TimeStepsiterator();
 	void  FakeSimulator();
 	void getTime() const;
+	bool isAllEmpty();
 	void Overheating();
 	void fork(Process* p);  
 	int ShortestQueue();
@@ -53,6 +55,8 @@ public:
 	void WorkStealing();
 	int ShortestQueueTime();
 	int LongestQueueTime();
+	void IORequestNeeded();
+	void countDownBLK();
 	//void KillOrohan();
 	
 };

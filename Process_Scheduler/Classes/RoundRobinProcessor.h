@@ -17,7 +17,7 @@ public:
     Process* getkth(int k) override;
     bool CheckIfemptyready();
     int getExpectedTime() override;
-
+    bool isthisProcessrEmpty();
     int getsliceTime();
     void setInternalsliceTime(int newtime);  //It is constant for each processor
     Process* RemoveProcess() override;

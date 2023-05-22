@@ -13,6 +13,7 @@ Processor::Processor()
 	RunningProcess = new Process;
 	TerminatProcess = nullptr;
 	IORequest = nullptr;
+	timeforrequest = 0;
 }
 
 Processor::~Processor(){
@@ -75,7 +76,14 @@ int Processor::CountDownBreak()
 	breaktime--;
 	return breaktime;
 }
-
+Process* Processor::getIO()
+{
+	return IORequest;
+}
+Process* Processor::getTerminal()
+{
+	return TerminatProcess;
+}
 
 
 
