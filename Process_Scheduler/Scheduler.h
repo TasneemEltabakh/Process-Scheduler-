@@ -46,6 +46,7 @@ public:
 	void TimeStepsiterator();
 	void  FakeSimulator();
 	void getTime() const;
+	void ForOutPutFile();
 	bool isAllEmpty();
 	void Overheating();
 	void fork(Process* p);  

@@ -332,7 +332,16 @@ int Scheduler::ShortestQueueTime()
 
 	return min;
 }
-
+void Scheduler::ForOutPutFile()
+{
+	for (int i = 0; i < ProcessorsList.Count(); i++)
+	{
+		if (ProcessorsList.returnkth(i)->getTerminal() != nullptr)
+		{
+			Terminal.enqueue(ProcessorsList.returnkth(i)->getTerminal());
+		}
+	}
+}
 bool Scheduler::isAllEmpty()
 {
 
