@@ -534,5 +534,40 @@ public:
 			current = current->getNext();
 		}
 	}
+	bool DeleteNodeindex(int index)
+	{
+		if (index < 0 || index >= size)
+			return false;
+
+		if (index == 0)
+		{
+			Node<T>* temp = Head;
+			Head = Head->getNext();
+			delete temp;
+			size--;
+			return true;
+		}
+
+		Node<T>* current = Head;
+		Node<T>* prev = nullptr;
+		int count = 0;
+
+		while (current != nullptr && count < index)
+		{
+			prev = current;
+			current = current->getNext();
+			count++;
+		}
+
+		if (current != nullptr)
+		{
+			prev->setNext(current->getNext());
+			delete current;
+			size--;
+			return true;
+		}
+
+		return false;
+	}
 };
 

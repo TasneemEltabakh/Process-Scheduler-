@@ -40,6 +40,7 @@ void RoundRobinProcessor::ScheduleAlgo()
 			{
 				IORequest = new Process(*RunningProcess);
 				timeforrequest = 0;
+				expectedtime = expectedtime - RunningProcess->getCT();
 				RunningProcess = nullptr;
 				TerminatProcess = nullptr;
 				return;
@@ -61,6 +62,7 @@ void RoundRobinProcessor::ScheduleAlgo()
 	{
 		cout << "SJP Ready Empty" << endl;
 		timeforrequest = 0;
+		expectedtime = 0;
 		return;
 	}
 

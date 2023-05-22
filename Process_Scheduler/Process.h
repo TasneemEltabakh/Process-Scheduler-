@@ -14,13 +14,13 @@ private:
 	bool Isforking;  //R add
 	LinkedQueue<Process*> ForkedList;  //R add
 	LinkedQueue<Process*> getChildren();
-	Process* Parent;
+	Process* HasAChild;
 	LinkedQueue<Process*> Children;
 	Process* ParentQueue;  //R add
 	//bool finished;
 	int runningtime;
 	int duration;
-	
+	int TakeItsChild;
 	
 public:
 	Process();
@@ -40,12 +40,18 @@ public:
 	int getRT() const;
 	int getTRT() const;
 	int getTT() const;
-	void setCT(int newCT);  //R add
+	void setCT(int newCT);  
+	int getNumberChildren();
+	void setNumberChildren();  
 	void addruntime(int x);
 	int getrunt() const;
 	void calcWT(int w);
 	void calcTRT();
 	void SetFOrk(); //R add
+	void PointToMyChild(Process* child);
+	Process* MyChild();
+	void SetProcessorId(int x);
+	int ProcessorId();
 	bool IsKilled();
 	void KillThisProcess();
 	bool findProcess(int i);

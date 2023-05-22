@@ -27,8 +27,10 @@ void ShortestJobProcessor::ScheduleAlgo()
             {
                 IORequest = new Process(*RunningProcess);
 				timeforrequest = 0;
+				expectedtime = expectedtime - RunningProcess->getCT();
 				RunningProcess = nullptr;
 				TerminatProcess = nullptr;
+				
 				return;
             }
 
@@ -52,6 +54,7 @@ void ShortestJobProcessor::ScheduleAlgo()
 		TerminatProcess = nullptr;
 		IORequest = nullptr;
 		timeforrequest = 0;
+		expectedtime = 0;
         return;
     }
 
