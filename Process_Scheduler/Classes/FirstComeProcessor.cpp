@@ -1,7 +1,7 @@
 #include "FirstComeProcessor.h"
 
 
-
+LinkedQueue<Process*> FirstComeProcessor::Killedprocesses;
 FirstComeProcessor::FirstComeProcessor(int max, int fork)
 {
 	KilledOne = nullptr;
@@ -45,7 +45,7 @@ void FirstComeProcessor::ScheduleAlgo()
 				return;
 			}
 
-			cout << "Step" << endl;
+			
 			return;
 		}
 		else
@@ -61,7 +61,7 @@ void FirstComeProcessor::ScheduleAlgo()
 
 	if (ReadyQueue.IsEmpty())
 	{
-		cout << "FCFS Ready Empty" << endl;
+		
 		TerminatProcess = nullptr;
 		IORequest = nullptr;
 		timeforrequest = 0;
@@ -75,12 +75,25 @@ void FirstComeProcessor::ScheduleAlgo()
 	RunningProcess = nextProcess;
 	RunningProcess->stCTstepn(RunningProcess->getCT());
 	RunningProcess->setRT(currentTime);  //for UI
-	cout << "Enter new element" << endl;
 	TerminatProcess = nullptr;
 	IORequest = nullptr;
 	return;
 
 }
+int FirstComeProcessor::killedCount()
+{
+	return Killedprocesses.Count();
+}
+Process* FirstComeProcessor::returnOneFromKilled()
+{
+	Process* Killed = nullptr;
+	if (!Killedprocesses.IsEmpty())
+	{
+		Killedprocesses.Dequeue_In_Variable(Killed);
+		return Killed;
+	}
+}
+
 //	if (ReadyQueue.IsEmpty()) {
 //		ProcessorState = IDLE;
 //		return;

@@ -68,5 +68,7 @@ public:
 	//void KillOrohan();
 	bool ISstop();  //for UI
 	int CalculateForkPercentage();
-	
+	int CalculateStealingPercentage();
+	int CalculateKillingPercentage();
+	void ForOutPutFileForKilled();
 };

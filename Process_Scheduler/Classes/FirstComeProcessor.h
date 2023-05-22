@@ -27,7 +27,8 @@ public:
     int returnMyRunningCT();
     void SetToRunningChild(Process* child);
     void KillProcessAndChildren(Process* process);
- 
+    int killedCount();
+    Process* returnOneFromKilled();
 private:
     //LinkedList <Process*> * ReadyQueue = new  LinkedList <Process*>;
     LinkedList <Process*>  ReadyQueue;
@@ -38,8 +39,8 @@ private:
     int maxw;
     int wt;
     int forkprob;
-   
-    LinkedQueue<Process*> Killedprocesses;
+    
+    static LinkedQueue<Process*> Killedprocesses;
     //static LinkedQueue<Process*> Killedprocesses;
     Process* KilledOne;
   

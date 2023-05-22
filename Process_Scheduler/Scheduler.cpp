@@ -80,7 +80,9 @@ void Scheduler::Run()
 		IORequestNeeded();
 		countDownBLK();
 		Overheating();
-		KillSignalSearcher();
+		//KillSignalSearcher();
+		//ForOutPutFileForKilled();
+	
 
 		output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
 		system("pause");
@@ -394,6 +396,16 @@ void Scheduler::ForOutPutFile()
 		}
 	}
 }
+void Scheduler::ForOutPutFileForKilled()
+{
+	
+	FirstComeProcessor* killedlistsn = dynamic_cast<FirstComeProcessor*>(ProcessorsList.returnkth(0));
+	int killedcounthere = killedlistsn->killedCount();
+	for (int i = 0; i < killedcounthere ; i++)
+	{
+		Terminal.enqueue(killedlistsn->returnOneFromKilled());
+	}
+}
 bool Scheduler::isAllEmpty()
 {
 
@@ -547,6 +559,18 @@ int Scheduler::CalculateForkPercentage()
 {
 	double forkedpercentage = (Forked / TotaLNumberOfProcesses) * 100;
 	return forkedpercentage;
+}
+int Scheduler::CalculateStealingPercentage()
+{
+	double Stolenpercentage = (Stolen / TotaLNumberOfProcesses) * 100;
+	return Stolenpercentage;
+}
+int Scheduler::CalculateKillingPercentage()
+{
+	FirstComeProcessor* first = dynamic_cast<FirstComeProcessor*>(ProcessorsList.returnkth(0));
+	killed = first->killedCount();
+	double Killingpercentage = (killed / TotaLNumberOfProcesses) * 100;
+	return Killingpercentage;
 }
 
 //void Scheduler::FakeSimulator()

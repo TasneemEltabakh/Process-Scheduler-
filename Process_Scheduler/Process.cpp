@@ -47,7 +47,7 @@ Process::Process(const Process& other)
 	IO_D = other.IO_D;  //for UI
 	TRT = other.TT - other.AT;  //for UI
 	WT = TRT - other.CT;  //for UI
-	RTAfterSum = other.AT - other.RT;  //for UI
+	RTAfterSum = other.RT - other.AT;  //for UI
 }
 Process::~Process() {
 
@@ -250,5 +250,6 @@ void Process::setRT(int newRT) {  //for UI
 	RT = newRT;
 }
 int Process::getRTAfterSum() {  //for UI
-	return RTAfterSum;
+	int x = this->RT - this->AT;
+	return x;
 }
