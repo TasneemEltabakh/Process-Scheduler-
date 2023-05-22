@@ -16,9 +16,9 @@ void ShortestJobProcessor::ScheduleAlgo()
 
     if (RunningProcess != nullptr)
     {
-        if (RunningProcess->getCT() > 0)
+        if (RunningProcess->getCTstepn() > 0)
         {
-            RunningProcess->setCT(RunningProcess->getCT() - 1);
+            RunningProcess->stCTstepn(RunningProcess->getCTstepn() - 1);
 			timeforrequest++;
             expectedtime--;
 
@@ -37,6 +37,8 @@ void ShortestJobProcessor::ScheduleAlgo()
         }
         else
         {
+			cout << "temnal time TT"<< currentTime << endl;
+			RunningProcess->setTT(currentTime);  //forUI
             TerminatProcess = new Process(*RunningProcess);
             RunningProcess = nullptr;
 			IORequest = nullptr;
@@ -60,6 +62,8 @@ void ShortestJobProcessor::ScheduleAlgo()
     ReadyQueue.Dequeue_In_Variable(shortestJob);
 
     RunningProcess = shortestJob;
+	RunningProcess->stCTstepn(RunningProcess->getCT());
+	RunningProcess->setRT(currentTime);  //for UI
     cout << "Enter new element" << endl;
 	TerminatProcess = nullptr;
 	IORequest = nullptr;

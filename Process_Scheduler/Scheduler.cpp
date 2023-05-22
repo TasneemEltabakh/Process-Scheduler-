@@ -28,7 +28,7 @@ Scheduler::Scheduler(string inputfilename)
 void Scheduler::Run()
 {
 
-	while (true)
+	while (ISstop())
 	{
 
 		updateTimer();
@@ -64,8 +64,11 @@ void Scheduler::Run()
 	output->OUT_BUT_FILE(Terminal, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR);
 }
 
-void Scheduler::chechstop() {
-	
+bool Scheduler::ISstop() {  //for UI
+	if ((Terminal.Count()- ProcessorsList.Count())== TotaLNumberOfProcesses) {
+		return false;
+	}
+	return true;
 }
 Scheduler::~Scheduler()
 {
@@ -435,10 +438,13 @@ void Scheduler::countDownBLK()
 			Process* process;
 
 			process = BLK.Peek();
-
+			
 
 			if (process->get_duration() != 0)
 			{
+				if (c == 0) {  //R add
+					process->setIO_D(process->get_duration());
+				}
 				process->downDuration();
 			}
 			else if (process->get_duration() == 0)
@@ -446,7 +452,7 @@ void Scheduler::countDownBLK()
 				BLK.Dequeue_In_Variable(process);
 				process->setdurationtozero();
 				MoveProcessToReadyListAgain(process);
-
+				c = 0;/// R add
 			}
 		}
 	}

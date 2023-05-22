@@ -18,7 +18,7 @@ void RoundRobinProcessor::ScheduleAlgo()
 
 	if (RunningProcess != nullptr)
 	{
-		if (RunningProcess->getCT() > 0)
+		if (RunningProcess->getCTstepn() > 0)
 		{
 			
 
@@ -30,7 +30,7 @@ void RoundRobinProcessor::ScheduleAlgo()
 				return;
 			}
 
-			RunningProcess->setCT(RunningProcess->getCT() - 1);
+			RunningProcess->stCTstepn(RunningProcess->getCTstepn() - 1);
 			expectedtime--;
 			timeforrequest++;
 			InternalsliceTime = InternalsliceTime - 1;
@@ -50,6 +50,7 @@ void RoundRobinProcessor::ScheduleAlgo()
 		}
 		else
 		{
+			RunningProcess->setTT(currentTime);  //forUI
 			TerminatProcess = new Process(*RunningProcess);
 			RunningProcess = nullptr;
 			timeforrequest = 0;
@@ -69,6 +70,8 @@ void RoundRobinProcessor::ScheduleAlgo()
 	ReadyQueue.Dequeue_In_Variable(shortestJob);
 	setInternalsliceTime(sliceTime);  //Restart the sliceTime
 	RunningProcess = shortestJob;
+	RunningProcess->stCTstepn(RunningProcess->getCT());
+	RunningProcess->setRT(currentTime);  //for UI
 	cout << "Enter new element" << endl;
 
 }

@@ -27,9 +27,9 @@ void FirstComeProcessor::ScheduleAlgo()
 {
 	if (RunningProcess != nullptr)
 	{
-		if (RunningProcess->getCT() > 0)
+		if (RunningProcess->getCTstepn() > 0)
 		{
-			RunningProcess->setCT(RunningProcess->getCT() - 1);
+			RunningProcess->stCTstepn(RunningProcess->getCTstepn() - 1);
 			timeforrequest++;
 			expectedtime--;
 
@@ -47,6 +47,7 @@ void FirstComeProcessor::ScheduleAlgo()
 		}
 		else
 		{
+			RunningProcess->setTT(currentTime);  //forUI
 			TerminatProcess = new Process(*RunningProcess);
 			RunningProcess = nullptr;
 			IORequest = nullptr;
@@ -68,6 +69,8 @@ void FirstComeProcessor::ScheduleAlgo()
 	ReadyQueue.Dequeue_In_Variable(nextProcess);
 
 	RunningProcess = nextProcess;
+	RunningProcess->stCTstepn(RunningProcess->getCT());
+	RunningProcess->setRT(currentTime);  //for UI
 	cout << "Enter new element" << endl;
 	TerminatProcess = nullptr;
 	IORequest = nullptr;
