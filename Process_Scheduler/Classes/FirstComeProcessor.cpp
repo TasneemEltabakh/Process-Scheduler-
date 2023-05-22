@@ -26,6 +26,53 @@ bool FirstComeProcessor::isthisProcessrEmpty()
 void FirstComeProcessor::ScheduleAlgo()
 {
 
+	TerminatProcess = nullptr;
+	IORequest = nullptr;
+
+	if (RunningProcess != nullptr)
+	{
+		if (RunningProcess->getCT() > 0)
+		{
+			RunningProcess->setCT(RunningProcess->getCT() - 1);
+			timeforrequest++;
+			expectedtime--;
+
+
+			if (RunningProcess->getnIO() > 0 && timeforrequest == RunningProcess->seeTimeForAskForIO())
+			{
+				IORequest = new Process(*RunningProcess);
+				timeforrequest = 0;
+				RunningProcess = nullptr;
+
+			}
+
+			cout << "Step" << endl;
+			return;
+		}
+		else
+		{
+			TerminatProcess = new Process(*RunningProcess);
+			RunningProcess = nullptr;
+		}
+	}
+
+
+	if (ReadyQueue.IsEmpty())
+	{
+		cout << "SJP Ready Empty" << endl;
+		return;
+	}
+
+
+	Process* shortestJob;
+	ReadyQueue.peek(shortestJob);
+	ReadyQueue.Dequeue_In_Variable(shortestJob);
+
+	RunningProcess = shortestJob;
+	cout << "Enter new element" << endl;
+}
+
+
 //	if (ReadyQueue.IsEmpty()) {
 //		ProcessorState = IDLE;
 //		return;
@@ -72,7 +119,6 @@ void FirstComeProcessor::ScheduleAlgo()
 //		}
 //
 //}
-}
 
 void FirstComeProcessor::SetMAXW(int max)
 {
