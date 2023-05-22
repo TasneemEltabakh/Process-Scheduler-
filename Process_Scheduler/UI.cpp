@@ -78,14 +78,14 @@ void UI::OutPutScreen(LinkedQueue<Process*>& Terminal, LinkedQueue<Process*>& BL
 	}
 }
 
-/*void OUT_BUT_FILE(LinkedQueue<Process*>& Terminal, LinkedList<Processor*>& ProcessorsList, int TotaLNumberOfProcesses, int Numberof_SJF, int Numberof_FCFS, int Numberof_RR, int WorkStealing)
+void UI::OUT_BUT_FILE(LinkedQueue<Process*>& Terminal, LinkedList<Processor*>& ProcessorsList, int TotaLNumberOfProcesses, int Numberof_SJF, int Numberof_FCFS, int Numberof_RR)
 {
 	ofstream outfile;  //for UI
 	outfile.open("output.txt");
 
 	outfile << "TT PID AT CT IO_D WT RT TRT \n";
 	for (int k = 0; k < Terminal.Count(); k++) {
-		outfile << Terminal.returnkth(k)->getTT()<<" " << Terminal.returnkth(k)->getPID() << " " << Terminal.returnkth(k)->getAT()<<" "<< Terminal.returnkth(k)->getCT()<<" "<< 10<<" "<< Terminal.returnkth(k)->getWT()<<" "<< Terminal.returnkth(k)->getRT()<<" "<< Terminal.returnkth(k)->getTRT() << "\n";
+		outfile << Terminal.returnkth(k)->getTT()<<"  " << Terminal.returnkth(k)->getPID() << "  " << Terminal.returnkth(k)->getAT()<<"  "<< Terminal.returnkth(k)->getCT()<<"    "<< 10<<"  "<< Terminal.returnkth(k)->getWT()<<"  "<< Terminal.returnkth(k)->getRT()<<"  "<< Terminal.returnkth(k)->getTRT() << "\n";
 	}
 	outfile << "\n\n";
 	
@@ -99,7 +99,7 @@ void UI::OutPutScreen(LinkedQueue<Process*>& Terminal, LinkedQueue<Process*>& BL
 	//}
 	outfile << "Processes: " << Terminal.Count() << "\n" << "Avg WT= " << 10 << ",   Avg RT = " << 10 << ",   Avg TRT = " << 10 << "\n";
 	outfile << "Migration %: " <<  "RTF= " << 10 << "%, MaxW = " << 10 << "%"<< "\n";
-	outfile << "Work Steal%: " << WorkStealing << "%" << "\n";
+	outfile << "Work Steal%: " << 10 << "%" << "\n";
 	outfile << "Forked Process: " << 10 << "%" << "\n";
 	outfile << "Killed Process: " << 10 << "%" << "\n\n";
 
@@ -119,4 +119,4 @@ void UI::OutPutScreen(LinkedQueue<Process*>& Terminal, LinkedQueue<Process*>& BL
 
 
 	outfile.close();
-}*/
+}

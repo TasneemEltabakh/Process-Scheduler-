@@ -14,6 +14,7 @@
 #include <chrono>
 
 
+
 using namespace std;
 
 Scheduler::Scheduler(string inputfilename)
@@ -27,8 +28,8 @@ Scheduler::Scheduler(string inputfilename)
 }
 void Scheduler::Run()
 {
-	
-	while (true)
+	int x = 30;
+	while (x>0)
 	{
 
 		updateTimer();
@@ -57,10 +58,13 @@ void Scheduler::Run()
 
 		output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
 		system("pause");
-		
+		x = x - 1;
 	}	
 		
-	//output->OUT_BUT_FILE(Terminal, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, counterWorkSteal);
+	output->OUT_BUT_FILE(Terminal, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR);
+}
+void Scheduler::chechstop() {
+	
 }
 Scheduler::~Scheduler()
 {
