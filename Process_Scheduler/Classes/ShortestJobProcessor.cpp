@@ -24,8 +24,6 @@ void ShortestJobProcessor::ScheduleAlgo()
 
 			if (RunningProcess->getnIO() > 0 && currentTime == RunningProcess->seeTimeForAskForIO())
 			{
-
-				cout << "time for request" << currentTime << endl;
 				IORequest = new Process(*RunningProcess);
 				RunningProcess = nullptr;
 			}
