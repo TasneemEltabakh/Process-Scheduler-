@@ -29,6 +29,7 @@ private:
 	int timeOfRelaxing;
 	int loop;
 	int counterWorkSteal;  //for UI
+	
 public:
 	
 	Scheduler(string inputfilename);

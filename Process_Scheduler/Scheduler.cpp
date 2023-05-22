@@ -56,9 +56,11 @@ void Scheduler::Run()
 		//KillSignalSearcher();
 
 		output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
-	    system("pause");
+		system("pause");
 		
-	}
+	}	
+		
+	//output->OUT_BUT_FILE(Terminal, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, counterWorkSteal);
 }
 Scheduler::~Scheduler()
 {
