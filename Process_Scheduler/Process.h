@@ -76,6 +76,6 @@ public:
 	LinkedQueue<Process*>& getchildren();
 	void set_AT_Cild(int newAT);
 	
-
+	void setdurationtozero();
 };
 
