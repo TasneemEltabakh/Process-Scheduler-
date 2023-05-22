@@ -72,11 +72,13 @@ void UI::OutPutScreen(LinkedQueue<Process*>& Terminal, LinkedQueue<Process*>& BL
 	cout << endl<< "-------------TRM Processes------------" << endl;
 	cout << Terminal.Count() << " " << "TRM: ";
 	for (int k = 0; k < Terminal.Count(); k++) {
-		cout << Terminal.returnkth(k)->getPID() << ", ";
+		if (Terminal.returnkth(k)!=nullptr) {
+			cout << Terminal.returnkth(k)->getPID() << ", ";
+		}
 	}
 }
 
-bool OUT_BUT_FILE(LinkedQueue<Process*>& Terminal, LinkedList<Processor*>& ProcessorsList, int TotaLNumberOfProcesses, int Numberof_SJF, int Numberof_FCFS, int Numberof_RR, ofstream outfile)
+bool OUT_BUT_FILE(LinkedQueue<Process*>& Terminal, LinkedList<Processor*>& ProcessorsList, int TotaLNumberOfProcesses, int Numberof_SJF, int Numberof_FCFS, int Numberof_RR,int WorkStealing, ofstream outfile)
 {
 	outfile.open("output");
 	outfile << "TT PID AT CT IO_D WT RT TRT \n";
@@ -95,7 +97,7 @@ bool OUT_BUT_FILE(LinkedQueue<Process*>& Terminal, LinkedList<Processor*>& Proce
 	}*/
 	outfile << "Processes: " << Terminal.Count() << "\n" << "Avg WT= " << 10 << ",   Avg RT = " << 10 << ",   Avg TRT = " << 10 << "\n";
 	outfile << "Migration %: " <<  "RTF= " << 10 << "%, MaxW = " << 10 << "%"<< "\n";
-	outfile << "Work Steal%: " << 10 << "%" << "\n";
+	outfile << "Work Steal%: " << WorkStealing << "%" << "\n";
 	outfile << "Forked Process: " << 10 << "%" << "\n";
 	outfile << "Killed Process: " << 10 << "%" << "\n\n";
 

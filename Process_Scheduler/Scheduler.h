@@ -28,6 +28,7 @@ private:
 	int Heatingprop;
 	int timeOfRelaxing;
 	int loop;
+	int counterWorkSteal;  //for UI
 public:
 	
 	Scheduler(string inputfilename);
@@ -46,6 +47,7 @@ public:
 	void TimeStepsiterator();
 	void  FakeSimulator();
 	void getTime() const;
+	void ForOutPutFile();
 	bool isAllEmpty();
 	void Overheating();
 	void fork(Process* p);  
@@ -57,6 +59,7 @@ public:
 	int LongestQueueTime();
 	void IORequestNeeded();
 	void countDownBLK();
+
 	//void KillOrohan();
 	
 };
