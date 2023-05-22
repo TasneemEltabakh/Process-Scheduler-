@@ -30,51 +30,49 @@ void FirstComeProcessor::ScheduleAlgo()
 		if (RunningProcess->getCT() > 0)
 		{
 			RunningProcess->setCT(RunningProcess->getCT() - 1);
+			timeforrequest++;
 			expectedtime--;
 
-
-			if (RunningProcess->getnIO() > 0 && currentTime == RunningProcess->seeTimeForAskForIO())
+			if (RunningProcess->getnIO() > 0 && timeforrequest == RunningProcess->seeTimeForAskForIO())
 			{
 				IORequest = new Process(*RunningProcess);
+				timeforrequest = 0;
+				RunningProcess = nullptr;
 				TerminatProcess = nullptr;
 				return;
 			}
 
-			std::cout << "Step" << endl;
-			TerminatProcess = nullptr;
-			IORequest = nullptr;
+			cout << "Step" << endl;
 			return;
 		}
 		else
 		{
 			TerminatProcess = new Process(*RunningProcess);
-			RunningProcess = nullptr; //**
+			RunningProcess = nullptr;
 			IORequest = nullptr;
+			timeforrequest = 0;
 			return;
 		}
 	}
 
-
 	if (ReadyQueue.IsEmpty())
 	{
-		std::cout << "FCF Ready Empty" << endl;
+		cout << "FCFS Ready Empty" << endl;
 		TerminatProcess = nullptr;
 		IORequest = nullptr;
+		timeforrequest = 0;
 		return;
 	}
 
+	Process* nextProcess;
+	ReadyQueue.Dequeue_In_Variable(nextProcess);
 
-	Process* shortestJob;
-	ReadyQueue.Dequeue_In_Variable(shortestJob);
-
-	RunningProcess = shortestJob;
-	std::cout << "Enter new element" << endl;//**
+	RunningProcess = nextProcess;
+	cout << "Enter new element" << endl;
 	TerminatProcess = nullptr;
 	IORequest = nullptr;
 	return;
-
 }
-
 
 //	if (ReadyQueue.IsEmpty()) {
 //		ProcessorState = IDLE;

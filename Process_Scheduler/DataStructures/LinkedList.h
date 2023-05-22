@@ -337,8 +337,10 @@ public:
 			p = p->getNext();
 			count++;
 		}
+		// Add a return statement here to handle the case when the index is not found
+		return T(); // Return a default value or handle it based on your requirements
 	}
-	
+
 
 	
 
@@ -479,20 +481,13 @@ public:
 		}
 	}
 	bool IsEmpty()
-	{
-		if (Head == NULL && Tail == NULL)
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
+{
+    return Head == nullptr;
+}
 
-	}
-	bool Dequeue_In_Variable(T& variable) {
+	bool Dequeue_In_Variable(T& variable)
+	{
 		if (IsEmpty()) {
-			
 			return false;
 		}
 		else if (Head == Tail)
@@ -500,15 +495,20 @@ public:
 			variable = Head->getItem();
 			delete Head;
 			Head = Tail = nullptr;
-			return true;
 		}
 		else {
 			Node<T>* delptr = Head;
 			Head = Head->getNext();
 			variable = delptr->getItem();
 			delete delptr;
-			return true;
 		}
+
+		// Check if the list is empty after dequeueing and update Tail pointer accordingly
+		if (Head == nullptr) {
+			Tail = nullptr;
+		}
+
+		return true;
 	}
 	bool peek(T& variable)
 	{

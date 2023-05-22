@@ -98,29 +98,27 @@ void  Process::KillThisProcess()
   ////////////////////////////////////////////////////////
  //                      I/O                    /////////
 ////////////////////////////////////////////////////////
-void Process::addDatatoIOPairs(int x, int y, int pairCount)
+void Process::addDatatoIOPairs(int x, int y)
 {
-	IOpairs.x = x;
-	IOpairs.y = y;
-	IOpairs.pairCount = pairCount;
-
-	IOpairs.pairs.enqueue(make_pair(x, y));
+	IOpairs.enqueue(x);
+	IOpairs.enqueue(y);
 }
 
 //Phase Two
 int Process::seeTimeForAskForIO() {  //R add for algo SJP
-	int xValue = IOpairs.x;
-	int yValue = IOpairs.y;
-	pair<int, int> pairsValue = IOpairs.pairs.Peek();
-	return pairsValue.first;
+
+	return IOpairs.Peek();
 }
 void Process::seeDurationForAskForIO()
 {
-	if (duration == 0 && !IOpairs.pairs.IsEmpty())
+	if (duration == 0 && IOpairs.IsEmpty()!= true)
 	{
-		pair<int, int> pairsValue = IOpairs.pairs.Peek();
-		duration = pairsValue.second;
-		cout << "duration is " << duration << endl;
+		int x;
+		IOpairs.Dequeue_In_Variable(x);
+		IOpairs.Dequeue_In_Variable(x);
+		nIO--;
+		duration = x;
+		cout << "duration is " << x << endl;
 		dequeueIO();
 	}
 	else
@@ -184,13 +182,7 @@ int Process::getnIO() {  //R add2
 }
 void Process:: dequeueIO()
 {
-	pair<int, int> pairsValue;
 
-	IOpairs.pairs.Dequeue_In_Variable(pairsValue);
-	IOpairs.x = 2;
-	IOpairs.y = 4;
-	IOpairs.pairCount = 2;
-	nIO--;
 }
 // nada for fork 
 void Process::setParent(Process* parent) {

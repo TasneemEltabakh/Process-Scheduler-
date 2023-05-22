@@ -41,21 +41,22 @@ void Scheduler::Run()
 
 		for (int i = 0; i < ProcessorsList.Count(); i++)
 		{
-			ProcessorsList.returnkth(i)->ScheduleAlgo();
-
+			Processor* processor = ProcessorsList.returnkth(i);
+			processor->ScheduleAlgo();
 		}
 
-		/*if (Timer == (STL * loop))
-		{
-			WorkStealing();
-			loop++;
-		}*/
+
+		//if (Timer == (STL * loop))
+		//{
+		//	WorkStealing();
+		//	loop++;
+		//}
 
 		ForOutPutFile();
 		IORequestNeeded();
 		countDownBLK();
-		//Overheating();
-		//KillSignalSearcher();
+		Overheating();
+		KillSignalSearcher();
 
 		output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
 		system("pause");
@@ -178,7 +179,6 @@ void  Scheduler:: CreateProcessors(LinkedQueue<string>* dataProcessor) //this fu
 		ProcessorsList.InsertEnd(new FirstComeProcessor(stoi(maxw), stoi(fork)));
 	}
 
-	
 	for (int i = 0; i < Numberof_SJF; i++)
 	{
 		ProcessorsList.InsertEnd(new ShortestJobProcessor());
@@ -206,7 +206,7 @@ void Scheduler::InsertProcessToNew(LinkedQueue<string>* dataProcess)
 		{
 			dataProcess->Dequeue_In_Variable(IoR);
 			dataProcess->Dequeue_In_Variable(IoD);
-			newprocess->addDatatoIOPairs(stoi(IoR), stoi(IoD), stoi(nio));
+			newprocess->addDatatoIOPairs(stoi(IoR), stoi(IoD));
 			cout << "the process id" << id << "is created with request at " << IoR << "for" << IoD << endl;
 		}
 	
