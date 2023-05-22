@@ -6,9 +6,9 @@
 struct ProcessPairs {
 	int x;
 	int y;
+	int pairCount;
 	LinkedQueue<pair<int, int>> pairs;
 };
-
 
 
 class Process
@@ -35,9 +35,10 @@ public:
 	Process(const Process& other);
 	//void addDatatoIOPairs(int x, int y);
 	//////////////////////////////////////////
-	void addDatatoIOPairs(int x, int y);  //T edit
+	void addDatatoIOPairs(int x, int y, int pairCount);  //T edit
 	int seeTimeForAskForIO();  //R add2
 	void seeDurationForAskForIO();
+	void dequeueIO();
 	~Process();
 	int getPID() const;
 	int getAT()const;

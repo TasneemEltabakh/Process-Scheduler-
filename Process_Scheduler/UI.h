@@ -12,8 +12,6 @@ public:
     void InPut();
     int getCurrentTime();
 
-
-
 private:
     //Scheduler* mainPointer;
 };

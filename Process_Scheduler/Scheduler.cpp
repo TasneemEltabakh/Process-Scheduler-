@@ -23,13 +23,12 @@ Scheduler::Scheduler(string inputfilename)
 	Timer = 0;
 	stopflag = false;
 	load(inputfilename);
-	counterWorkSteal = 0;
 
 }
 void Scheduler::Run()
 {
-	int x = 30;
-	while (x>0)
+	
+	while (true)
 	{
 
 		updateTimer();
@@ -45,21 +44,21 @@ void Scheduler::Run()
 			ProcessorsList.returnkth(i)->ScheduleAlgo();
 
 		}
-		//if (Timer == (STL * loop))
-		//{
-			//WorkStealing();
-			//loop++;
-		//}
-		ForOutPutFile();
-		//IORequestNeeded();
-		//countDownBLK();
+
+	/*if (Timer == (STL * loop))
+		{
+			WorkStealing();
+			loop++;
+		}*/
+
+
+		IORequestNeeded();
+		countDownBLK();
 		//Overheating();
 		//KillSignalSearcher();
-
+	
 		output->OutPutScreen(Terminal, BLK, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR, Timer);
-		system("pause");
-		x = x - 1;
-	}	
+	    system("pause");
 		
 	output->OUT_BUT_FILE(Terminal, ProcessorsList, TotaLNumberOfProcesses, Numberof_SJF, Numberof_FCFS, Numberof_RR);
 }
@@ -138,6 +137,8 @@ void Scheduler::TranslateData(string line, LinkedQueue<string>* Data)
 			
 			Data->enqueue(first);
 			Data->enqueue(second);
+			cout << first << endl;
+			cout << first << endl;
 			
 		
 		}
@@ -204,7 +205,8 @@ void Scheduler::InsertProcessToNew(LinkedQueue<string>* dataProcess)
 		{
 			dataProcess->Dequeue_In_Variable(IoR);
 			dataProcess->Dequeue_In_Variable(IoD);
-			newprocess->addDatatoIOPairs(stoi(IoR), stoi(IoD));
+			newprocess->addDatatoIOPairs(stoi(IoR), stoi(IoD), stoi(nio));
+			cout << "the process id" << id << "is created with request at " << IoR << "for" << IoD << endl;
 		}
 	
 	}
@@ -330,20 +332,11 @@ int Scheduler::ShortestQueueTime()
 
 	return min;
 }
-void Scheduler::ForOutPutFile()
-{
-	for (int i = 0; i < ProcessorsList.Count(); i++)
-	{
-		if (ProcessorsList.returnkth(i)->getTerminal() != nullptr)
-		{
-			Terminal.enqueue(ProcessorsList.returnkth(i)->getTerminal());
-		}
-	}
-}
+
 bool Scheduler::isAllEmpty()
 {
 
-	for (int i = 1; i < ProcessorsList.Count(); i++)
+	for (int i = 0; i < ProcessorsList.Count(); i++)
 	{
 		if (!ProcessorsList.returnkth(i)->isthisProcessrEmpty())
 		{
@@ -370,7 +363,7 @@ void Scheduler::WorkStealing()
 			index_S = ShortestQueue();
 			index_L = LongestQueue();
 			steal_limit = (LongestQueueTime() - ShortestQueueTime()) / LongestQueueTime();
-			counterWorkSteal = counterWorkSteal + 1;
+
 		}
 	}
 }
@@ -410,37 +403,45 @@ void Scheduler::Overheating()
 		}
 	}
 }
+
 void Scheduler::IORequestNeeded()
 {
-	for (int i = 1; i < ProcessorsList.Count(); i++)
+	for (int i = 0; i < ProcessorsList.Count(); i++)
 	{
 		if (ProcessorsList.returnkth(i)->getIO() != nullptr)
 		{
-			BLK.enqueue(ProcessorsList.returnkth(i)->getIO());
-			ProcessorsList.returnkth(i)->getIO()->seeDurationForAskForIO();
+			Process* newprocess = new Process(*ProcessorsList.returnkth(i)->getIO());
+			newprocess->seeDurationForAskForIO();
+			BLK.enqueue(newprocess);
 		}
 	}
 }
+
 void Scheduler::countDownBLK()
 {
-	for (int i = 1; i < BLK.Count(); i++)
-	{
-		Process* process;
-		process =BLK.Peek();
-	
-
-		if (process->get_duration() != 0)
+	if (!BLK.IsEmpty()) {
+		for (int i = 0; i < BLK.Count(); i++)
 		{
-			process->downDuration();
-		}
-		else if(process->get_duration() == 0)
-		{
-			BLK.Dequeue_In_Variable(process);
+			Process* process;
 
-			MoveProcessToReadyListAgain(process);
-		
+			process = BLK.Peek();
+
+
+			if (process->get_duration() != 0)
+			{
+				process->downDuration();
+			}
+			else if (process->get_duration() == 0)
+			{
+				BLK.Dequeue_In_Variable(process);
+
+				MoveProcessToReadyListAgain(process);
+
+			}
 		}
 	}
+	else
+		return;
 
 }
 

@@ -72,7 +72,7 @@ void UI::OutPutScreen(LinkedQueue<Process*>& Terminal, LinkedQueue<Process*>& BL
 	cout << endl<< "-------------TRM Processes------------" << endl;
 	cout << Terminal.Count() << " " << "TRM: ";
 	for (int k = 0; k < Terminal.Count(); k++) {
-		if (Terminal.returnkth(k)!=nullptr) {
+		if (Terminal.returnkth(k) != nullptr) {
 			cout << Terminal.returnkth(k)->getPID() << ", ";
 		}
 	}
@@ -82,21 +82,20 @@ void UI::OUT_BUT_FILE(LinkedQueue<Process*>& Terminal, LinkedList<Processor*>& P
 {
 	ofstream outfile;  //for UI
 	outfile.open("output.txt");
-
 	outfile << "TT PID AT CT IO_D WT RT TRT \n";
 	for (int k = 0; k < Terminal.Count(); k++) {
 		outfile << Terminal.returnkth(k)->getTT()<<"  " << Terminal.returnkth(k)->getPID() << "  " << Terminal.returnkth(k)->getAT()<<"  "<< Terminal.returnkth(k)->getCT()<<"    "<< 10<<"  "<< Terminal.returnkth(k)->getWT()<<"  "<< Terminal.returnkth(k)->getRT()<<"  "<< Terminal.returnkth(k)->getTRT() << "\n";
 	}
 	outfile << "\n\n";
 	
-	//Node<Process*>* pointer = Terminal.gethead();
-	//for (int k = 0; k < Terminal.Count(); k++) {
-		//if (pointer->getItem()) {
-			//break;
-		//}
-		//outfile << pointer->getItem()->getTT() << " " << pointer->getItem()->getPID() << " " << pointer->getItem()->getAT() << " " << pointer->getItem()->getCT() << " " << 10 << " " << pointer->getItem()->getWT() << " " << pointer->getItem()->getRT() << " " << pointer->getItem()->getTRT() << "\n";
-		//pointer = pointer->getNext();
-	//}
+	/*Node<Process*>* pointer = Terminal.gethead();
+	for (int k = 0; k < Terminal.Count(); k++) {
+		if (pointer->getItem()) {
+			break;
+		}
+		outfile << pointer->getItem()->getTT() << " " << pointer->getItem()->getPID() << " " << pointer->getItem()->getAT() << " " << pointer->getItem()->getCT() << " " << 10 << " " << pointer->getItem()->getWT() << " " << pointer->getItem()->getRT() << " " << pointer->getItem()->getTRT() << "\n";
+		pointer = pointer->getNext();
+	}*/
 	outfile << "Processes: " << Terminal.Count() << "\n" << "Avg WT= " << 10 << ",   Avg RT = " << 10 << ",   Avg TRT = " << 10 << "\n";
 	outfile << "Migration %: " <<  "RTF= " << 10 << "%, MaxW = " << 10 << "%"<< "\n";
 	outfile << "Work Steal%: " << 10 << "%" << "\n";

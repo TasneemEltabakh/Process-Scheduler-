@@ -34,6 +34,7 @@ public:
 	int CountDownBreak();
 	Process* getIO();
 	Process* getTerminal();
+	void setIORequest(Process* request);
 	virtual bool isthisProcessrEmpty()=0;
 	
 protected:
